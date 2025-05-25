@@ -140,7 +140,7 @@ XTide86 looks like in action:
 ![C++ Mode](Screenshots/Screenshot3.png)
 
 ### System Management in XTide86
-![System](Screensshots/Screenshot4.png)
+![System](Screenshots/Screenshot4.png)
 
 ### Study and reference
 ![Reference](Screenshots/Screenshot5.png)
