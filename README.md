@@ -111,6 +111,26 @@ Licensed under GPLv3 and included with permission.
 
 Pull requests, stars, and forks welcome 
 
+## Screenshots
+
+XTide86 looks like in action:
+
+### Full Interface (Cool-Retro-Term)
+![XTide86 Full Interface](Screenshots/Screenshot1.png)
+
+### Ipython
+![Python Mode](Screenshots/Screenshot2.png)
+
+### C/C++ Live Shell Mode
+![C++ Mode](Screenshots/Screenshot3.png)
+
+### System Management in XTide86
+![System](Screensshots/Screenshot4.png)
+
+### Study and reference
+![Reference](Screenshots/Screenshot5.png)
+
+
 ## Built With
 
 xtide86 uses and integrates the following open-source tools:
