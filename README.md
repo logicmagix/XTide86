@@ -1,3 +1,4 @@
+
 ## License
 
 xtide86 is licensed under the GNU General Public License v3.0 or later.  
@@ -143,5 +144,3 @@ Thanks to the developers of these projects for making powerful tools free and ac
 ## Acknowledgments
 
 - Thanks to my dad, whose passion for logic and engineering inspired this project.
-
-
