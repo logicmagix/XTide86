@@ -130,7 +130,7 @@ Pull requests, stars, and forks welcome
 
 XTide86 looks like in action:
 
-### Full Interface (Cool-Retro-Term)
+### Full Interface
 ![XTide86 Full Interface](Screenshots/Screenshot1.png)
 
 ### Ipython
