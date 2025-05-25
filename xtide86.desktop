@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=xtide86
+GenericName=Terminal IDE
+Comment=A custom tmux + nvim IDE with IPython and TermiC support
+Exec=xtide86
+Icon=xtide86
+Terminal=true
+Categories=Development;TerminalEmulator;Utility;
+StartupNotify=false
+
