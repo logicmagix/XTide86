@@ -302,7 +302,6 @@ endfunction
 " Reset window sizes to init.vim defaults
 function! s:ResetWindowSizes(maximize_editor) abort
   let current_win = winnr()
-  " Find each window
   let ipython_win = 0
   let matrix_win = 0
   let nerdtree_win = 0

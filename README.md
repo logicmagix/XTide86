@@ -59,7 +59,9 @@ Once in insert mode in any ``nvim`` buffer, the recommended way of entering comm
 ## Features
 
 - Full ``tmux`` and ``nvim`` '-powered terminal IDE with dynamic pane management
-- Seamless integration with ``TermiC``, and ``IPython``
+- Seamless integration with ``IPython``
+- ``TermiC`` support with quick pasting and testing C/C++ (smaller blocks recommended, see ``Termic`` 
+  documentation at https://github.com/hanoglu/TermiC)
 - Hotkey support for sending code directly into live interpreter sessions
 - Single-interface fallback for simple edits
 - Quick launch from Gnome via icon or keyboard shortcut
@@ -70,7 +72,7 @@ Once in insert mode in any ``nvim`` buffer, the recommended way of entering comm
 - ``tmux``
 - ``neovim`` 0.9.0+ (tested on 0.9.5)
 - ``vim-plug`` curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim (must run :PlugInstall within nvim to install plugins)
+https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 
 - ``TermiC`` wget "https://raw.githubusercontent.com/hanoglu/TermiC/main/TermiC.sh"  (live C/C++ shell)
 - ``Anaconda3`` with ``IPython`` (preferred, but may work with base ``IPython``)
 - ``bash``
@@ -81,7 +83,7 @@ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim (must run :P
 Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/xtide86.git
+git clone https://github.com/logicmagix/xtide86.git
 cd xtide86
 
 Usage
@@ -108,23 +110,6 @@ It installs automatically to /usr/local/bin/termic.
 Licensed under GPLv3 and included with permission.
 
 Pull requests, stars, and forks welcome 
-
-## Screenshots
-
-![XTide86 full layout](./Screenshot1.png)
-*A full IDE session running in terminal*
-
-![Code sent to IPython](./Screenshot2.png)
-*Pasting selected text into the IPython pane via hotkey*
-
-![Code sent to TermiC](./Screenshot3.png)
-*Pasting selected text into the TermiC pane via hotkey*
-
-![Additional uses](./Screenshot4.png)
-*Monitor system performance from within XTide86 and more*
-
-![Panel sizing](./Screenshot5.png)
-*Any configuration to match your workflow*
 
 ## Built With
 
