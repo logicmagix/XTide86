@@ -77,7 +77,7 @@ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 - ``TermiC`` wget "https://raw.githubusercontent.com/hanoglu/TermiC/main/TermiC.sh"  (live C/C++ shell)
 - ``Anaconda3`` with ``IPython`` (preferred, but may work with base ``IPython``)
 - ``bash``
-- Works on aarch64. Tested on a Raspberry Pi5 and nvim 0.9.5 had to be built from source. Check your distro and dependencies on ARM. 
+- Works on ARM. Tested on a Raspberry Pi5 and nvim 0.9.5 had to be built from source. Check your distro and dependencies on ARM. 
 
 
 ## Warning
@@ -87,9 +87,9 @@ Using commands like :w !sudo tee % in Vim may silently fail to prompt for a pass
 
 Solutions:
 Use a GUI editor instead within a Xtide86 terminal buffer to avoid leaving your session:
-sudoedit /etc/systemd/system/interception.service
+ex. sudoedit /etc/systemd/system/...
 Launch a root Vim in a nested terminal within XTide86:
-sudo vim /etc/systemd/system/interception.service
+ex. sudo vim /etc/systemd/system/...
 
 
 ## Installation
