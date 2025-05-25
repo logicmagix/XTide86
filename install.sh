@@ -97,5 +97,5 @@ fi
 echo "Installing Neovim plugins..."
 nvim +PlugInstall +qall
 
-echo "xtide86 installed! You can now launch it from the app menu or by typing 'xtide86'."
+echo "XTide86 installed! You can now launch it from the app menu or by typing 'xtide86'."
 
