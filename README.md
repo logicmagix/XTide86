@@ -64,7 +64,7 @@ Once in insert mode in any ``nvim`` buffer, the recommended way of entering comm
 
 - Full ``tmux`` and ``nvim`` '-powered terminal IDE with dynamic pane management
 - Seamless integration with ``IPython``
-- ``TermiC`` support with quick pasting and testing C/C++ (smaller blocks recommended, see ``Termic`` 
+- ``TermiC`` support with quick pasting and testing C/C++ (smaller blocks recommended or lambda specific functions) see ``Termic`` 
   documentation at https://github.com/hanoglu/TermiC)
 - Hotkey support for sending code directly into live interpreter sessions
 - Single-interface fallback for simple edits
