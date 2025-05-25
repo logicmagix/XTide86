@@ -83,9 +83,8 @@ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ## Warning
 
 If you're running XTide86 inside a tmux or custom terminal session, you might run into issues when trying to save root-owned files from within Vim or Neovim:
-##Problem:
-
 Using commands like :w !sudo tee % in Vim may silently fail to prompt for a password and kick you out after 3 attempts.
+
 Solutions:
 Use a GUI editor instead within a Xtide86 terminal buffer to avoid leaving your session:
 sudoedit /etc/systemd/system/interception.service
