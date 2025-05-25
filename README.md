@@ -17,6 +17,7 @@ An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.
 ## Controls
 
 ## Keyboard hotkey layout quick reference:
+
 Ctrl|\
 ====  =
 qw  | wer        iop
@@ -78,11 +79,25 @@ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 - ``bash``
 - Works on aarch64. Tested on a Raspberry Pi5 and nvim 0.9.5 had to be built from source. Check your distro and dependencies on ARM. 
 
+
+## Warning
+
+If you're running XTide86 inside a tmux or custom terminal session, you might run into issues when trying to save root-owned files from within Vim or Neovim:
+##Problem:
+
+Using commands like :w !sudo tee % in Vim may silently fail to prompt for a password and kick you out after 3 attempts.
+Solutions:
+Use a GUI editor instead within a Xtide86 terminal buffer to avoid leaving your session:
+sudoedit /etc/systemd/system/interception.service
+Launch a root Vim in a nested terminal within XTide86:
+sudo vim /etc/systemd/system/interception.service
+
+
 ## Installation
 
 Clone this repository:
 
-```bash
+```bash```
 git clone https://github.com/logicmagix/xtide86.git
 cd xtide86
 
