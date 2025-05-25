@@ -10,7 +10,7 @@ xtide86 includes `termic.sh`, a lightweight live shell launcher. It will be inst
 
 This script is licensed under GPLv3 and included with permission.
 
-# XTIDE86: eXTra IDE 86 
+# XTIDE86: XTra IDE 86 
 
 An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.  
 
