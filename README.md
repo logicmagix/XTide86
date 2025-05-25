@@ -54,7 +54,10 @@ Tmux pane controls (work in insert or command mode)
 `\b` = Back to default settings
 `\n` = Equalize vertical buffer dimensions
 
-Once in insert mode in any ``nvim`` buffer, the recommended way of entering command mode is `ctrl+w`
+`jk` = Command mode from nvim buffer
+`:Hs` = Quick command for horizontal split
+
+Once in insert mode in any ``nvim`` buffer, the recommended way of entering command mode is `jk` all other buffers will require `Esc`
 
 
 ## Features
