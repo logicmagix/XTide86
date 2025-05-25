@@ -60,20 +60,21 @@ set number
 set relativenumber
 set list
 set listchars=tab:>-,eol:$,trail:.,extends:>,precedes:<,space:.
+" Medieval Set:
 "set listchars=tab:⟭➳◎,eol:⚔,trail:♞,extends:♛,precedes:♚,space:␣,
 
-" Custom highlights (brown palette)
+" Custom highlights
 augroup CustomHighlights
     autocmd!
     autocmd ColorScheme * highlight clear CursorLine | highlight CursorLine ctermbg=238 guibg=#444444
-    autocmd ColorScheme * highlight clear CursorColumn | highlight CursorColumn ctermbg=238 guibg=#444444
+    autocmd ColorScheme * highlight clear CursorColumn | highlight CursorColumn ctermbg=230 guibg=#4e4e4e
     autocmd ColorScheme * highlight clear Visual | highlight Visual ctermbg=58 guibg=#5f5f00
     autocmd ColorScheme * highlight clear Search | highlight Search ctermbg=88 guibg=#870000 ctermfg=15 guifg=#ffffff
     autocmd ColorScheme * highlight clear MatchParen | highlight MatchParen ctermbg=94 guibg=#875f00
 augroup END
 " Highlights
 "highlight CursorLine ctermbg=52 guibg=#3c2f00
-highlight CursorColumn ctermbg=94 guibg=#875f00
+highlight CursorColumn ctermbg=239 guibg=#4e4e4e
 highlight Visual ctermbg=58 guibg=#5f5f00
 highlight Search ctermbg=88 guibg=#870000 ctermfg=94 guifg=#875f00
 highlight MatchParen ctermbg=94 guibg=#875f00
@@ -500,7 +501,7 @@ function! s:EnlargeWindow() abort
   echom "SET SIZE | Focus: (Currently Selected Buffer)"
 endfunction
 
-" Grid: Draw 4X4 or 8X8 grid
+" Grid: Draw 10x10 or 5X10 grid
 function! Grid(...) abort
     if exists('b:grid_row_grp') || exists('b:grid_prev_cc')
         call matchdelete(b:grid_row_grp)
@@ -546,7 +547,7 @@ endfunction
 
 
 " Grid styling
-augroup Portcullis
+augroup Grid
     autocmd!
     autocmd ColorScheme * highlight clear ColorColumn | highlight ColorColumn ctermbg=239 guibg=#4e4e4e
 highlight ColorColumn ctermbg=239 guibg=#4e4e4e
