@@ -309,7 +309,7 @@ endfunction
 function! s:ResetWindowSizes(maximize_editor) abort
   let current_win = winnr()
   let ipython_win = 0
-  let matrix_win = 0
+  let term_win = 0
   let nerdtree_win = 0
   let edit_win = 0
   for w in range(1, winnr('$'))
@@ -321,7 +321,7 @@ function! s:ResetWindowSizes(maximize_editor) abort
       if bufname =~ 'ipython'
         let ipython_win = w
       elseif bufname =~ 'termic'
-        let matrix_win = w
+        let term_win = w
       endif
     else
       let edit_win = w
@@ -331,8 +331,8 @@ function! s:ResetWindowSizes(maximize_editor) abort
     execute ipython_win . 'wincmd w'
     resize 1
   endif
-  if matrix_win > 0
-    execute matrix_win . 'wincmd w'
+  if term_win > 0
+    execute term_win . 'wincmd w'
     if !a:maximize_editor
       resize 8
     endif
