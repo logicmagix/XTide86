@@ -83,8 +83,11 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 ##
 `:Hs` = Quick command for horizontal split
 
+## Tips
 ## 
 Once in insert mode in any ``nvim`` buffer, the recommended way of entering command mode is `jk` all other buffers will require `Esc`
+##
+NERTree may be refreshed with Shift+r after performing operations in the terminal buffer.
 
 
 ## Features
