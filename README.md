@@ -62,7 +62,7 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 ##
 `\g` = Grid (5x10)
 
-##NeoVim buffer presets
+## NeoVim buffer presets
 ##
 `\z` = Maximize edit pane (lower)
 ##
