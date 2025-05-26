@@ -145,6 +145,9 @@ XTide86 looks like in action:
 ### Study and reference
 ![Reference](Screenshots/Screenshot5.png)
 
+### Expanded NVim Focus
+![Reference](Screenshots/Screenshot6.png)
+
 
 ## Built With
 
