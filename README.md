@@ -26,37 +26,64 @@ asd | fg         l
 
 Tmux based command: Ctrl-q + d (or gui exit button) = Exit and save tmux state (lost on restart of PC) 
 Nvim based command:Q = Force-quit the program (reset for new session)
-
+## Cycle nvim buffers within selected tmux buffer
 `Ctrl+ww` = Cycle between vim buffers within a tmux pane
+## Manually select vim buffer within seelcted tmux buffer
 `Ctrl+w` + <-, ^, ->, v = Selects vim buffer within current tmux panel
+## Fuzzy Finder
 `\w` = fzf selects vim buffer from menu within current tmux panel (fuzzy finder, vim plugin)
+## Telescope
 `\e` = Locate file within current directory
+## Ripgrep
 `\r` = ripgrep within file
+## Quick vertical resize within horizontal nvim buffer
 `\i` = vertical resize <NUMBER>
+## AI
 `\o` = optional OpenAI ChatGPT implementation with API key (stored in a global variable)
+## Send to IPython
 `\p` = Paste selected text into IPython panel and expand buffer, entering insert mode.
-
-Tmux pane controls (work in insert or command mode)
-`Ctrl+a` = Maximize left tmux pane
-`Ctrl+s` = Split tmux panes
-`Ctrl+d` = Maximize right tmux pane
-`Ctrl+q`  + <-, -> = Switch between tmux panels (selected panel matches tmux bar color on the bottom)
-
-`\f` = Grid (10x10)
-`\g` = Grid (5x10)
+## Send to TermiC
 `\l` = Paste selected text into TermiC panel and expand buffer, entering insert mode
 
+## Tmux pane controls (work in insert or command mode)
+##
+`Ctrl+a` = Maximize left tmux pane
+##
+`Ctrl+s` = Split tmux panes
+##
+`Ctrl+d` = Maximize right tmux pane
+##
+`Ctrl+q`  + <-, -> = Switch between tmux panels (selected panel matches tmux bar color on the bottom)
+
+
+## Grid
+##
+`\f` = Grid (10x10)
+##
+`\g` = Grid (5x10)
+
+##NeoVim buffer presets
+##
 `\z` = Maximize edit pane (lower)
+##
 `\x` = Maximize terminal group of panes (middle), main implementation of \i is to choose one of the two
+##
 `\c` = Maximize IPython pane (upper)
-
+##
 `\v` = Currently selected buffer
+##
 `\b` = Back to default settings
+##
 `\n` = Equalize vertical buffer dimensions
+##
 
+## Additional NeoVim commands for ease of buffer management
+##
 `jk` = Command mode from nvim buffer
+##
 `:Hs` = Quick command for horizontal split
 
+## 
 Once in insert mode in any ``nvim`` buffer, the recommended way of entering command mode is `jk` all other buffers will require `Esc`
 
 
