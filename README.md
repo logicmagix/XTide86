@@ -84,10 +84,14 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 `:Hs` = Quick command for horizontal split
 
 ## Tips
+##
+ggVG to select all when in nvim command mode followed by  \p or \l for efficient transfer of text into IPython or TermiC
 ## 
 Once in insert mode in any ``nvim`` buffer, the recommended way of entering command mode is `jk` all other buffers will require `Esc`
 ##
 NERTree may be refreshed with Shift+r after performing operations in the terminal buffer.
+##
+All NeoVim commands can also be used in the bash terminal. 
 
 
 ## Features
@@ -115,14 +119,14 @@ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 ## Warning
 
-If you're running XTide86 inside a tmux or custom terminal session, you might run into issues when trying to save root-owned files from within Vim or Neovim:
-Using commands like :w !sudo tee % in Vim may silently fail to prompt for a password and kick you out after 3 attempts.
+If you're running XTide86 inside a tmux or custom terminal session, you might run into issues when trying to save root-owned files from within Neovim:
+Using commands like :w !sudo tee % in NeoVim may silently fail to prompt for a password and kick you out after 3 attempts.
 
 Solutions:
 Use a GUI editor instead within a Xtide86 terminal buffer to avoid leaving your session:
 ex. sudoedit /etc/systemd/system/...
-Launch a root Vim in a nested terminal within XTide86:
-ex. sudo vim /etc/systemd/system/...
+Launch a root nvim in a nested terminal within XTide86:
+ex. sudo nvim /etc/systemd/system/...
 
 
 ## Installation
@@ -184,7 +188,7 @@ XTide86 looks like in action:
 ## Built With
 
 xtide86 uses and integrates the following open-source tools:
-
+- [NeoVim](https://neovim.io/)
 - [Vim](https://www.vim.org/)
 - [tmux](https://github.com/tmux/tmux)
 - [Anaconda3](https://www.anaconda.com/)
