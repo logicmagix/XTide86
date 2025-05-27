@@ -172,6 +172,7 @@ Clone this repository:
 ```bash```
 git clone https://github.com/logicmagix/xtide86.git
 cd xtide86
+./install.sh
 
 Usage
 Launch XTide86 from your terminal or assigned launcher. It will:
