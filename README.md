@@ -121,14 +121,21 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 
 ## Tips
 ##
-ggVG to select all when in nvim command mode followed by  \p or \l for efficient transfer of text into IPython or TermiC
-## 
-Once in insert mode in any ``nvim`` buffer, the recommended way of entering command mode is `jk` all other buffers will require `Esc`
-##
-NERTree may be refreshed with Shift+r after performing operations in the terminal buffer.
-##
-All NeoVim commands can also be used in the bash terminal. 
+- ggVG to select all when in nvim command mode followed by  \p or \l for efficient transfer of text into IPython or TermiC
+- Once in insert mode in any ``nvim`` buffer, the recommended way of entering command mode is `jk` all other buffers will require `Esc`
+- NERTree may be refreshed with Shift+r after performing operations in the terminal buffer.
+- All NeoVim commands can also be used in any other buffer. 
 
+
+## XTide86 Remote SSH Session
+##
+Work remotely. Drop connection. Pick up exactly where you left off.
+Instructions:
+- ssh user@remotehost
+- run xtide86 and use any buffer for file transfers or processing.
+- Do your work. Close the laptop. Disconnect. Go outside.
+- ssh user@remotehost
+- run xtid86 to reconnect to tmux protected XTide86 session.
 
 ## Features
 
