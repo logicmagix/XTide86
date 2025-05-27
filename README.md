@@ -224,6 +224,8 @@ XTide86 looks like in action:
 ### Efficient workflow
 ![Workflow](Screenshots/Screenshot7.png)
 
+### OpenAI Integration (Optional)
+![ChatGPT](Screenshots/Screenshot8.png)
 
 ## Built With
 
