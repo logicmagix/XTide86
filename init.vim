@@ -1,3 +1,4 @@
+
 " xtide86 - a terminal IDE powered by tmux and nvim
 " Copyright (C) 2025 Pavle Dzakula
 "

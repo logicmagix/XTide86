@@ -14,6 +14,9 @@ This script is licensed under GPLv3 and included with permission.
 
 An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.  
 
+## Coming Soon!
+Functionality to yank text from any buffer (IPython, TermiC, Terminal) and append to file editor for easy notes.
+
 ## Controls
 
 ## Keyboard hotkey layout quick reference:
@@ -183,6 +186,9 @@ XTide86 looks like in action:
 
 ### Expanded NVim Focus
 ![Reference](Screenshots/Screenshot6.png)
+
+### Efficient workflow
+![Workflow](Screenshots/Screenshot7.png)
 
 
 ## Built With
