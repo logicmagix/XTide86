@@ -231,7 +231,7 @@ XTide86 looks like in action:
 ### C/C++ Live Shell Mode
 ![C++ Mode](Screenshots/Screenshot3.png)
 
-### System Management in XTide86
+### System Monitoring in XTide86
 ![System](Screenshots/Screenshot4.png)
 
 ### Study and reference
