@@ -12,6 +12,12 @@ This script is licensed under GPLv3 and included with permission.
 
 # XTIDE86: XTra IDE 86 
 **Version:** `v1.1.0`
+>**New in v1.1.0:** XTide86 now fully supports 256-color terminals!
+> 
+> - Improved color rendering in all panes and status bars
+> - Toggle between classic **Portcullis** and modern **GRID** visual themes
+> - Screenshots updated to showcase enhanced visuals with tools like [`btop`](https://github.com/aristocratos/btop)or [`NPalette`](https://github.com/logicmagix/NPalette)
+
 
 <pre><code>
                                                     ███ ███ ███ ███                      
@@ -210,6 +216,11 @@ Pull requests, stars, and forks welcome
 ## Screenshots
 
 XTide86 looks like in action:
+
+### 	
+
+### XTide86 now supports 256 colors in tmux
+![256 Color](Screenshots/Screenshot0.png)
 
 ### Full Interface
 ![XTide86 Full Interface](Screenshots/Screenshot1.png)

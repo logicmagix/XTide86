@@ -512,7 +512,9 @@ function! Grid(...) abort
         call matchdelete(b:grid_row_grp)
         let &colorcolumn = b:grid_prev_cc
         unlet b:grid_row_grp b:grid_prev_cc
-        echo "PORTCULLIS | Gates have been raised"
+"       echo "PORTCULLIS | Gates have been raised"
+        return
+        echo "GRID | Grid Off"
         return
     endif
     if a:1 < 1 || a:2 < 1
@@ -547,7 +549,8 @@ function! Grid(...) abort
     let b:grid_row_grp = matchadd('ColorColumn', pat)
     let b:grid_prev_cc = &colorcolumn
     let &colorcolumn = join(cols, ',')
-    echo "PORTCULLIS | Gates have been lowered: rows every " . dr . ", cols every " . dc
+"   echo "PORTCULLIS | Gates have been lowered: rows every " . dr . ", cols every " . dc
+    echo "GRID | Grid On " . dr . ", cols every " . dc
 endfunction
 
 
