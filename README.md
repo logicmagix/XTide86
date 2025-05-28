@@ -63,11 +63,11 @@ asd | fg         l
 Tmux based command: Ctrl-q + d (or gui exit button) = Exit and save tmux state (lost on restart of PC) 
 Nvim based command:Q = Force-quit the program (reset for new session)
 ## Cycle nvim buffers within selected tmux buffer
-`Ctrl+ww` = Cycle between vim buffers within a tmux pane
+`Ctrl+ww` = Cycle between vim buffers within a tmux buffer
 ## Manually select vim buffer within seelcted tmux buffer
-`Ctrl+w` + <-, ^, ->, v = Selects vim buffer within current tmux panel
+`Ctrl+w` + <-, ^, ->, v = Selects vim buffer within current tmux buffer
 ## Fuzzy Finder
-`\w` = fzf selects vim buffer from menu within current tmux panel (fuzzy finder, vim plugin)
+`\w` = fzf selects vim buffer from menu within current tmux buffer (fuzzy finder, vim plugin)
 ## Telescope
 `\e` = Locate file within current directory
 ## Ripgrep
@@ -77,19 +77,19 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 ## AI
 `\o` = optional OpenAI ChatGPT implementation with API key (stored in a global variable)
 ## Send to IPython
-`\p` = Paste selected text into IPython panel and expand buffer, entering insert mode.
+`\p` = Paste selected text into IPython buffer and expand buffer, entering insert mode.
 ## Send to TermiC
-`\l` = Paste selected text into TermiC panel and expand buffer, entering insert mode
+`\l` = Paste selected text into TermiC buffer and expand buffer, entering insert mode
 
-## Tmux pane controls (work in insert or command mode)
+## Tmux buffer controls (work in insert or command mode)
 ##
-`Ctrl+a` = Maximize left tmux pane
+`Ctrl+a` = Maximize left tmux buffer
 ##
-`Ctrl+s` = Split tmux panes
+`Ctrl+s` = Split tmux buffers
 ##
-`Ctrl+d` = Maximize right tmux pane
+`Ctrl+d` = Maximize right tmux buffer
 ##
-`Ctrl+q`  + <-, -> = Switch between tmux panels (selected panel matches tmux bar color on the bottom)
+`Ctrl+q`  + <-, -> = Switch between tmux buffers (selected buffer matches tmux bar color on the bottom)
 
 
 ## Grid
@@ -100,11 +100,11 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 
 ## NeoVim buffer presets
 ##
-`\z` = Maximize edit pane (lower)
+`\z` = Maximize edit buffer (lower)
 ##
-`\x` = Maximize terminal group of panes (middle), main implementation of \i is to choose one of the two
+`\x` = Maximize terminal group of buffers (middle), main implementation of \i is to choose one of the two
 ##
-`\c` = Maximize IPython pane (upper)
+`\c` = Maximize IPython buffer (upper)
 ##
 `\v` = Currently selected buffer
 ##
@@ -125,7 +125,7 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 - Once in insert mode in any ``nvim`` buffer, the recommended way of entering command mode is `jk` all other buffers will require `Esc`
 - NERTree may be refreshed with Shift+r after performing operations in the terminal buffer.
 - All NeoVim commands can also be used in any other buffer. 
-
+- Quickly enter focused and expanded file editor mode with Ctrl A/D (make sure you are in the correct tmux buffer), \z, \i <1000>
 
 ## XTide86 Remote SSH Session
 ##
@@ -139,7 +139,7 @@ Instructions:
 
 ## Features
 
-- Full ``tmux`` and ``nvim`` '-powered terminal IDE with dynamic pane management
+- Full ``tmux`` and ``nvim`` '-powered terminal IDE with dynamic buffer management
 - Seamless integration with ``IPython``
 - ``TermiC`` support with quick pasting and testing C/C++ (smaller blocks recommended or lambda specific functions) see ``Termic`` 
   documentation at https://github.com/hanoglu/TermiC)
@@ -193,11 +193,11 @@ Automatic insert mode and buffer sizing for paste to Termic and paste to IPython
 Support session save (Ctrl+q+d) and reset with :Q
 
 Without tmux?
-Simply open nvim enjoy all the features without additional panes and ctrl q + d, ctrl q + a, ctrl q + s, and ctrl q + d controls.
+Simply open nvim enjoy all the features without additional buffers and ctrl q + d, ctrl q + a, ctrl q + s, and ctrl q + d controls.
 
 Customization
 See init.vim for plugin configuration, UI tweaks, and terminal behavior.
-Feel free to remix pane sizes and colors to match your workflow.
+Feel free to remix buffer sizes and colors to match your workflow.
 
 TermiC Support
 xtide86 includes termic.sh, a lightweight live shell.
