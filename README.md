@@ -11,6 +11,7 @@ xtide86 includes `termic.sh`, a lightweight live shell launcher. It will be inst
 This script is licensed under GPLv3 and included with permission.
 
 # XTIDE86: XTra IDE 86 
+**Version:** `v1.1.0`
 
 <pre><code>
                                                     ███ ███ ███ ███                      
