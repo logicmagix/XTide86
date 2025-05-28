@@ -15,7 +15,7 @@ This script is licensed under GPLv3 and included with permission.
 >**New in v1.1.0:** XTide86 now fully supports 256-color terminals!
 > 
 > - Improved color rendering in all panes and status bars
-> - Toggle between classic **Portcullis** and modern **GRID** visual themes
+> - Toggle between classic **Portcullis** and modern **GRID** visual themes or medieval listchars in init.vim
 > - Screenshots updated to showcase enhanced visuals with tools like [`btop`](https://github.com/aristocratos/btop)or [`NPalette`](https://github.com/logicmagix/NPalette)
 
 
