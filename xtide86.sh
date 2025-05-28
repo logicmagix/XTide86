@@ -24,6 +24,18 @@ if [[ $TERM == "xterm-256color" && -n "$TMUX" ]]; then
 fi
 export COLORTERM=truecolor
 
+# Ensure mouse support is enabled in user's tmux.conf
+TMUX_CONF="$HOME/.tmux.conf"
+if [ -f "$TMUX_CONF" ]; then
+  if ! grep -q "set -g mouse on" "$TMUX_CONF"; then
+    echo "set -g mouse on" >> "$TMUX_CONF"
+    echo "[XTide86] Enabled mouse support in ~/.tmux.conf"
+  fi
+else
+  echo "set -g mouse on" > "$TMUX_CONF"
+  echo "[XTide86] Created ~/.tmux.conf with mouse support"
+fi
+
 # Start tmux session only if it doesn't exist
 if ! tmux has-session -t xtide86 2>/dev/null; then
   tmux new-session -d -s xtide86
