@@ -135,7 +135,7 @@ Instructions:
 - run xtide86 and use any buffer for file transfers or processing.
 - Do your work. Close the laptop. Disconnect. Go outside.
 - ssh user@remotehost
-- run xtid86 to reconnect to tmux protected XTide86 session.
+- run xtide86 to reconnect to tmux protected XTide86 session.
 
 ## Features
 
