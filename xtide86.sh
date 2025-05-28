@@ -19,6 +19,8 @@
 
 #!/bin/bash
 
+export TERM=tmux-256color
+
 # Check if tmux session 'console' exists
 if tmux has-session -t console 2>/dev/null; then
     # Attach to existing session
@@ -46,4 +48,5 @@ else
 
     # Attach to the newly created session
     tmux attach-session -t console
+
 fi
