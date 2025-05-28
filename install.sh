@@ -93,6 +93,14 @@ else
   update-desktop-database ~/.local/share/applications || true
 fi
 
+if [ ! -f "$HOME/.tmux.conf" ]; then
+  cat <<EOF > "$HOME/.tmux.conf"
+set -g default-terminal "tmux-256color"
+set -as terminal-overrides ',*:Tc'
+EOF
+fi
+
+
 # Install Neovim plugins
 echo "Installing Neovim plugins..."
 nvim +PlugInstall +qall

@@ -16,37 +16,33 @@
 
 #This project includes TermiC from [Yusuf Kagan Hanoglu/Max Schillinger/TermiC], licensed under the [GPL3] License.
 
+#!/usr/bin/env bash
 
-#!/bin/bash
-
-export TERM=tmux-256color
-
-# Check if tmux session 'console' exists
-if tmux has-session -t console 2>/dev/null; then
-    # Attach to existing session
-    tmux attach-session -t console
-else
-    # Create new tmux session
-    tmux new-session -d -s console
-    tmux split-window -h
-    tmux send-keys -t console:0.1 'nvim' C-m
-    tmux send-keys -t console:0.0 'nvim' C-m
-
-    # Remap prefix from Ctrl-b to Ctrl-q
-    tmux unbind C-b
-    tmux set-option -g prefix C-q
-    tmux bind-key C-q send-prefix
-
-    # Set up keybindings
-    tmux bind-key -n C-a resize-pane -R 999 \; select-pane -t 1  # Maximize left pane
-    tmux bind-key -n C-d resize-pane -L 999 \; select-pane -t 0  # Maximize right pane
-    tmux bind-key -n C-s resize-pane -x 50%                      # Reset to vertical split
-
-    # Enable session saving (requires tmux-resurrect plugin for persistence)
-    # Ensure tmux-resurrect is installed, or this won't work
-    tmux set-option -g @resurrect-capture-pane-contents 'on'
-
-    # Attach to the newly created session
-    tmux attach-session -t console
-
+# Force truecolor inside tmux if needed
+if [[ $TERM == "xterm-256color" && -n "$TMUX" ]]; then
+  export TERM=tmux-256color
 fi
+export COLORTERM=truecolor
+
+# Start tmux session only if it doesn't exist
+if ! tmux has-session -t xtide86 2>/dev/null; then
+  tmux new-session -d -s xtide86
+  tmux split-window -h
+  tmux send-keys -t xtide86:0.0 'nvim' C-m
+  tmux send-keys -t xtide86:0.1 'nvim' C-m
+
+  # Keybindings
+  tmux unbind C-b
+  tmux set-option -g prefix C-q
+  tmux bind-key C-q send-prefix
+  tmux bind-key -n C-a resize-pane -R 999 \; select-pane -t 1
+  tmux bind-key -n C-d resize-pane -L 999 \; select-pane -t 0
+  tmux bind-key -n C-s resize-pane -x 50%
+fi
+
+tmux attach-session -t xtide86
+
+
+
+
+

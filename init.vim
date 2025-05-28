@@ -17,8 +17,6 @@
 
 "This project includes `termic.sh` from [Yusuf Kagan Hanoglu/Max Schillinger/TermiC], licensed under the [GPL3] License.
 
-
-
 syntax on
 filetype plugin indent on
 
@@ -47,6 +45,7 @@ require("chatgpt").setup({
 EOF
 
 " General settings for window management
+set termguicolors
 set mouse=nvi
 set laststatus=2
 set winminheight=1
@@ -55,7 +54,7 @@ let g:NERDTreeWinSize=10
 let NERDTreeShowHidden=1
 
 " Visual settings
-set cursorline
+"set cursorline
 set cursorcolumn
 set number
 set relativenumber
@@ -79,7 +78,7 @@ augroup CustomHighlights
     autocmd ColorScheme * highlight clear MatchParen | highlight MatchParen ctermbg=94 guibg=#875f00
 augroup END
 " Highlights
-"highlight CursorLine ctermbg=52 guibg=#3c2f00
+highlight CursorLine ctermbg=52 guibg=#3c2f00
 highlight CursorColumn ctermbg=239 guibg=#4e4e4e
 highlight Visual ctermbg=58 guibg=#5f5f00
 highlight Search ctermbg=88 guibg=#870000 ctermfg=94 guifg=#875f00
