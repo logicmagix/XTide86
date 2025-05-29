@@ -55,6 +55,45 @@ EOF
 
     echo "[XTide86] Applied full neon 256-color config."
     ;;
+  --update)
+    echo "[XTide86] Updating script from GitHub..."
+
+    # Check if in a git repository
+    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+      echo "[XTide86] Error: Not in a git repository. Please clone from GitHub first."
+      exit 1
+    fi
+
+    # Check if git is installed
+    if ! command -v git >/dev/null 2>&1; then
+      echo "[XTide86] Error: git not installed. Please install git."
+      exit 1
+    fi
+
+    # Get current branch
+    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+    # Pull latest changes
+    if git pull origin "$CURRENT_BRANCH" --rebase; then
+      echo "[XTide86] Successfully pulled latest changes from GitHub."
+      
+      # Ensure script is executable
+      chmod +x "$0"
+      
+      # Verify script file exists
+      if [ -s "$0" ]; then
+        echo "[XTide86] Script updated and ready to use."
+      else
+        echo "[XTide86] Error: Script file missing after update."
+        exit 1
+      fi
+    else
+      echo "[XTide86] Error: Failed to pull changes. Check for merge conflicts or connectivity."
+      exit 1
+    fi
+
+    exit 0
+    ;;
   *)
     IS_NO_COLOR=true
     echo "[XTide86] No flag provided, applying default hybrid 88-color scheme..."

@@ -137,9 +137,9 @@ autocmd VimEnter * resize 3
 autocmd VimEnter * belowright split
 autocmd VimEnter * terminal bash -c 'termic cpp; exec bash -i'
 autocmd VimEnter * belowright vs
-autocmd VimEnter * vertical resize 65
+autocmd VimEnter * vertical resize 86
 autocmd VimEnter * terminal
-autocmd VimEnter * resize 1
+autocmd VimEnter * resize 8
 autocmd VimEnter * wincmd j
 autocmd VimEnter * wincmd l
 
@@ -312,6 +312,8 @@ function! s:ResetWindowSizes(maximize_editor) abort
   let term_win = 0
   let nerdtree_win = 0
   let edit_win = 0
+
+  " Identify windows by their buffer types and names
   for w in range(1, winnr('$'))
     let buf = winbufnr(w)
     let bufname = bufname(buf)
@@ -327,44 +329,74 @@ function! s:ResetWindowSizes(maximize_editor) abort
       let edit_win = w
     endif
   endfor
+
+  " Resize NERDTree (left, width 18)
+  if nerdtree_win > 0
+    execute nerdtree_win . 'wincmd w'
+    vertical resize 18
+  endif
+
+  " Resize IPython terminal (top, height 3 for single line)
   if ipython_win > 0
     execute ipython_win . 'wincmd w'
     resize 1
+    setlocal winfixheight
   endif
+
+  " Resize termic terminal (vertical split, width 1, height 8)
   if term_win > 0
     execute term_win . 'wincmd w'
+    vertical resize 1
     if !a:maximize_editor
       resize 8
+    else
+      resize 1  " Minimize height when maximizing editor
     endif
   endif
-  wincmd j
-  if a:maximize_editor
-    wincmd _
-  endif
-  if nerdtree_win > 0
-    execute nerdtree_win . 'wincmd w'
-    vertical resize 20
-  endif
+
+  " Handle editor window
   if edit_win > 0
     execute edit_win . 'wincmd w'
   else
     wincmd l
     let edit_win = winnr()
   endif
-  wincmd |  " Maximize editing buffer width
+
+  " Set editor size
+  if a:maximize_editor
+    wincmd _  " Maximize height
+    wincmd |  " Maximize width
+  else
+    vertical resize 89  " Default editor width
+    " Height is implicitly set by remaining space after terminals
+  endif
+
+  " Navigate to editor window as in initialization
+  wincmd j
+  wincmd l
+
+  " Ensure NERDTree width is consistent
   if nerdtree_win > 0
     execute nerdtree_win . 'wincmd w'
-    vertical resize 20
+    vertical resize 18
   endif
+
+  " Ensure termic terminal width is consistent
+  if term_win > 0
+    execute term_win . 'wincmd w'
+    vertical resize 8
+  endif
+
+  " Return to editor window
   if edit_win > 0
     execute edit_win . 'wincmd w'
   else
     wincmd j
     wincmd l
   endif
+
   echom "SET SIZE | " . (a:maximize_editor ? "Focus : (File Editor)" : "Reset Default Configuration") . ""
 endfunction
-
 
 " Focus IPython buffer
 function! MaximizeIPythonBuffer() abort
