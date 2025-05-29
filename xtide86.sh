@@ -139,20 +139,8 @@ fi
 # === Check for existing session ===
 if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
   if tmux list-clients -t "$SESSION_NAME" >/dev/null 2>&1; then
-    echo "[XTide86] Warning: Session '$SESSION_NAME' is already attached."
-    echo "Options: [d]etach and reattach with new color profile, [c]ancel"
-    read -r -p "Choose an option (d/c): " choice
-    case "$choice" in
-      d|D)
-        # Detach all clients from the session
-        tmux detach-client -s "$SESSION_NAME" 2>/dev/null || true
-        echo "[XTide86] Detached existing clients."
-        ;;
-      c|C|*)
-        echo "[XTide86] Operation cancelled."
-        exit 1
-        ;;
-    esac
+    tmux detach-client -s "$SESSION_NAME" 2>/dev/null || true
+    echo "[XTide86] Detached existing clients to apply new color profile."
   else
     echo "[XTide86] Detached session '$SESSION_NAME' found."
   fi
@@ -174,7 +162,6 @@ if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
     exit 1
   fi
 fi
-
 # === Ensure mouse support in tmux.conf ===
 if [ -s "$TMUX_CONF" ]; then
   if ! grep -q "set -g mouse on" "$TMUX_CONF"; then
