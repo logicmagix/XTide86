@@ -198,10 +198,14 @@ Clone this repository:
 ```bash```
 git clone https://github.com/logicmagix/xtide86.git
 cd xtide86
-./install.sh
+# Make the script executable (one-time setup)
+chmod +x xtide86.sh termic.sh install.share
+./install
+xtide86 to start session
 
-Usage
-Launch XTide86 from your terminal or assigned launcher. It will:
+
+Usage""
+Launch XTide86 from your terminal or assigned launcher with xtide86. It will:
 
 Open a tmux session with vertically split nvim, TermiC, and IPython
 
