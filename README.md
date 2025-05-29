@@ -235,7 +235,7 @@ ex. sudo nvim /etc/systemd/system/...
 
 - Open a tmux session with vertically split nvim, TermiC, and IPython
 
-- Send text from the file editor to the live interpreter buffer with \p for ipython and \l for TermiC
+- Send text from the file editor to the live interpreter buffer with ggVG(select all) \p for ipython and \l for TermiC
 
 - Automatic insert mode and buffer sizing for paste to Termic and paste to IPython functions.
 
@@ -288,7 +288,7 @@ Pull requests, stars, and forks welcome
 ### Efficient workflow
 ![Workflow](Screenshots/Screenshot7.png)
 
-### OpenAI Integration shown in default color palette -Optional
+### OpenAI Integration shown in default color palette -Optional 
 ![ChatGPT](Screenshots/Screenshot8.png)
 
 ## Built With
