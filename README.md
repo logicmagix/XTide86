@@ -288,7 +288,7 @@ Pull requests, stars, and forks welcome
 ### Efficient workflow
 ![Workflow](Screenshots/Screenshot7.png)
 
-### OpenAI Integration (Optional)
+### OpenAI Integration shown in default color palette -Optional
 ![ChatGPT](Screenshots/Screenshot8.png)
 
 ## Built With
