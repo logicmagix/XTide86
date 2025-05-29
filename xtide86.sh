@@ -17,15 +17,72 @@
 #This project includes TermiC from [Yusuf Kagan Hanoglu/Max Schillinger/TermiC], licensed under the [GPL3] License.
 
 #!/usr/bin/env bash
+set -e
 
-# Force truecolor inside tmux if needed
-if [[ $TERM == "xterm-256color" && -n "$TMUX" ]]; then
-  export TERM=tmux-256color
+SESSION_NAME="xtide86"
+TMUX_CONF="$HOME/.tmux.conf"
+IS_NO_COLOR=false
+
+# Flag Parsing
+case "$1" in
+  --no-color|-nc)
+    IS_NO_COLOR=true
+    echo "[XTide86] Applying hybrid minimal color scheme..."
+
+    # Write tmux.conf for 16-color
+    cat <<EOF > "$TMUX_CONF"
+# XTide86: Hybrid minimal color scheme
+set -g default-terminal "xterm"
+set -sa terminal-overrides ",xterm*:colors=16"
+set -g mouse on
+EOF
+
+    echo "[XTide86] Hybrid minimal color config applied."
+    ;;
+  --color|-c)
+    IS_NO_COLOR=false
+    echo "[XTide86] Enabling full color mode..."
+
+    [ -f "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
+
+    cat <<EOF > "$TMUX_CONF"
+# XTide86: Full color mode
+set -g default-terminal "tmux-256color"
+set -as terminal-overrides ',*:Tc'
+set -g mouse on
+EOF
+
+    echo "[XTide86] Full color config applied."
+    ;;
+  *)
+    IS_NO_COLOR=false
+    echo "[XTide86] Applying default 256-color mode..."
+
+    [ -f "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
+
+    cat <<EOF > "$TMUX_CONF"
+# XTide86: Default 256-color mode
+set -g default-terminal "tmux-256color"
+set -as terminal-overrides ',*:Tc'
+set -g mouse on
+EOF
+
+    echo "[XTide86] Default 256-color config applied."
+    ;;
+esac
+(( $# )) && shift
+
+if [ "$IS_NO_COLOR" = false ]; then
+  export TERM="xterm-256color"
+  export COLORTERM=truecolor
+  unset NVIM_NO_COLOR
+else
+  export TERM="xterm"
+  unset COLORTERM
+  export NVIM_NO_COLOR=1
 fi
-export COLORTERM=truecolor
 
 # Ensure mouse support is enabled in user's tmux.conf
-TMUX_CONF="$HOME/.tmux.conf"
 if [ -f "$TMUX_CONF" ]; then
   if ! grep -q "set -g mouse on" "$TMUX_CONF"; then
     echo "set -g mouse on" >> "$TMUX_CONF"
@@ -53,8 +110,3 @@ if ! tmux has-session -t xtide86 2>/dev/null; then
 fi
 
 tmux attach-session -t xtide86
-
-
-
-
-
