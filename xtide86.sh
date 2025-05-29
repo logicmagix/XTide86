@@ -55,7 +55,7 @@ EOF
       echo "[XTide86] Applied full neon 256-color config."
       ;;
     --update)
-      echo "[XTide86] Updating script from GitHub..."
+      echo "[XTide86] Checking for updates from GitHub..."
       if ! command -v git >/dev/null 2>&1; then
         echo "[XTide86] Error: git not installed. Please install git."
         exit 1
@@ -71,6 +71,13 @@ EOF
         exit 1
       fi
       CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+      git fetch origin "$CURRENT_BRANCH"
+      LOCAL_HASH=$(git rev-parse HEAD)
+      REMOTE_HASH=$(git rev-parse "origin/$CURRENT_BRANCH")
+      if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
+        echo "[XTide86] No update needed: Repository is up-to-date."
+        exit 0
+      fi
       if git pull origin "$CURRENT_BRANCH" --rebase; then
         echo "[XTide86] Successfully pulled latest changes from GitHub."
         SCRIPT_NAME="xtide86.sh"
@@ -95,18 +102,6 @@ EOF
         exit 1
       fi
       exit 0
-      ;;
-    --version)
-      echo "[XTide86] Version 1.0.5"
-      exit 0
-      ;;
-    *)
-      if [ -z "$FILENAME" ]; then
-        FILENAME="$1"
-      else
-        echo "[XTide86] Error: Only one filename can be provided."
-        exit 1
-      fi
       ;;
   esac
   shift
