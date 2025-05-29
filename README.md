@@ -204,7 +204,7 @@ ex. sudo nvim /etc/systemd/system/...
 - cd XTIDE86
 
 # Make the script executable (one-time setup)
-- chmod +x xtide86.sh termic.sh install.share
+- chmod +x install.sh
 - ./install
 - xtide86 to start session
 
