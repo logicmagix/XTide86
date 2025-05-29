@@ -303,4 +303,6 @@ Thanks to the developers of these projects for making powerful tools free and ac
 
 ## Acknowledgments
 
+-Made for the engineers who taught us, built by the ones they inspired.
 - Thanks to my dad, whose passion for logic and engineering inspired this project.
+
