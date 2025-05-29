@@ -24,12 +24,14 @@ SESSION_NAME="xtide86"
 TMUX_CONF="$HOME/.tmux.conf"
 IS_NO_COLOR=false
 FILENAME=""
+COLOR_FLAG_PROVIDED=false
 
 # === Flag Parsing ===
 while [ $# -gt 0 ]; do
   case "$1" in
     --no-color|-nc)
       IS_NO_COLOR=true
+      COLOR_FLAG_PROVIDED=true
       echo "[XTide86] Applying hybrid 88-color scheme..."
       cat <<EOF > "$TMUX_CONF"
 # XTide86: Hybrid 88-color scheme
@@ -41,6 +43,7 @@ EOF
       ;;
     --color|-c)
       IS_NO_COLOR=""
+      COLOR_FLAG_PROVIDED=true
       echo "[>>>XTide86] Enabling full neon 256-color mode..."
       [ -s "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
       cat <<EOF > "$TMUX_CONF"
@@ -59,6 +62,12 @@ EOF
       fi
       if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         echo "[XTide86] Error: Not in a git repository. Please run from the XTide86 repo clone."
+        exit 1
+      fi
+      if ! git diff --quiet || ! git diff --cached --quiet; then
+        echo "[XTide86] Error: You have unstaged or uncommitted changes."
+        echo "Run 'git status' to see them."
+        echo "Options: Commit ('git add . && git commit'), stash ('git stash'), or discard ('git restore .')."
         exit 1
       fi
       CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -88,7 +97,7 @@ EOF
       exit 0
       ;;
     --version)
-      echo "[XTide86] Version 1.0.2"
+      echo "[XTide86] Version 1.0.5"
       exit 0
       ;;
     *)
@@ -114,10 +123,10 @@ else
   export NVIM_NO_COLOR=1
 fi
 
-# === Write default tmux.conf if no flags provided (except filename) ===
-if [ -z "$1" ] && [ -z "$FILENAME" ]; then
+# === Write default tmux.conf only if no color flag provided ===
+if [ "$COLOR_FLAG_PROVIDED" = false ] && [ -z "$FILENAME" ]; then
   IS_NO_COLOR=true
-  echo "[XTide86] No flag provided, applying default hybrid 88-color scheme..."
+  echo "[XTide86] No color flag provided, applying default hybrid 88-color scheme..."
   cat <<EOF > "$TMUX_CONF"
 # XTide86: Default hybrid 88-color scheme
 set -g default-terminal "xterm-88color"
@@ -127,33 +136,17 @@ EOF
   echo "[XTide86] Applied default hybrid 88-color config."
 fi
 
-# === Check for detached session ===
+# === Check for existing session ===
 if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
-  if ! tmux list-clients -t "$SESSION_NAME" >/dev/null 2>&1; then
-    echo "[XTide86] Warning: A detached tmux session named '$SESSION_NAME' exists."
-    echo "Options: [a]ttach to existing session, [n]ew session (kill existing), [c]ancel"
-    read -r -p "Choose an option (a/n/c): " choice
+  if tmux list-clients -t "$SESSION_NAME" >/dev/null 2>&1; then
+    echo "[XTide86] Warning: Session '$SESSION_NAME' is already attached."
+    echo "Options: [d]etach and reattach with new color profile, [c]ancel"
+    read -r -p "Choose an option (d/c): " choice
     case "$choice" in
-      a|A)
-        if [ -n "$FILENAME" ]; then
-          if tmux list-panes -t "$SESSION_NAME":0.0 >/dev/null 2>&1; then
-            tmux select-pane -t "$SESSION_NAME":0.0
-            tmux send-keys -t "$SESSION_NAME":0.0 C-c "nvim \"$FILENAME\"" C-m
-            echo "[XTide86] Opened $FILENAME in left pane of existing session."
-          else
-            echo "[XTide86] Warning: Left pane not available in existing session. Attaching without opening $FILENAME."
-          fi
-        fi
-        if ! tmux attach-session -t "$SESSION_NAME"; then
-          echo "[XTide86] Error: Failed to attach to session '$SESSION_NAME'. Try 'tmux kill-server' or check session state."
-          echo "Run 'tmux list-sessions' to inspect."
-          exit 1
-        fi
-        exit 0
-        ;;
-      n|N)
-        tmux kill-session -t "$SESSION_NAME"
-        echo "[XTide86] Killed existing session. Creating new session..."
+      d|D)
+        # Detach all clients from the session
+        tmux detach-client -s "$SESSION_NAME" 2>/dev/null || true
+        echo "[XTide86] Detached existing clients."
         ;;
       c|C|*)
         echo "[XTide86] Operation cancelled."
@@ -161,7 +154,23 @@ if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
         ;;
     esac
   else
-    echo "[XTide86] Error: An active tmux session named '$SESSION_NAME' is already attached."
+    echo "[XTide86] Detached session '$SESSION_NAME' found."
+  fi
+  # Apply color profile to the session
+  if [ -n "$FILENAME" ]; then
+    if tmux list-panes -t "$SESSION_NAME":0.0 >/dev/null 2>&1; then
+      tmux select-pane -t "$SESSION_NAME":0.0
+      tmux send-keys -t "$SESSION_NAME":0.0 C-c ":qall!" C-m "nvim \"$FILENAME\"" C-m
+      echo "[XTide86] Opened $FILENAME in left pane of existing session."
+    else
+      echo "[XTide86] Warning: Left pane not available. Attaching without opening $FILENAME."
+    fi
+  fi
+  # Attach to the session with the new color profile
+  if tmux attach-session -t "$SESSION_NAME"; then
+    exit 0
+  else
+    echo "[XTide86] Error: Failed to attach to session '$SESSION_NAME'. Try 'tmux kill-session -t $SESSION_NAME'."
     exit 1
   fi
 fi
@@ -177,7 +186,7 @@ else
   echo "[XTide86] Created ~/.tmux.conf with mouse support"
 fi
 
-# === Start tmux session ===
+# === Start new tmux session ===
 tmux new-session -d -s "$SESSION_NAME"
 tmux split-window -h
 
