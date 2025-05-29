@@ -10,14 +10,14 @@ xtide86 includes `termic.sh`, a lightweight live shell launcher. It will be inst
 
 This script is licensed under GPLv3 and included with permission.
 
-# XTIDE86: XTra IDE 86 
+# XTIDE86: XTra IDE 86 NEWS:
 **Version:** `v1.1.0`
 >**New in v1.1.0:** XTide86 now fully supports 256-color terminals!
 > 
 > - Improved color rendering in all panes and status bars
 > - Toggle between classic **Portcullis** and modern **GRID** visual themes or medieval listchars in init.vim
 > - Screenshots updated to showcase enhanced visuals with tools like [`btop`](https://github.com/aristocratos/btop)or [`NPalette`](https://github.com/logicmagix/NPalette)
-> - v1.1.0 Update: Added --color and -c for optional 256 color palette. (Tested on gnome-terminal)
+> - v1.1.0 Update: Added --color and -c for optional 256 color palette. (Tested on gnome-terminal). XTide86 supports clean minimal setups or full color-rice mode. Your terminal, your choice.
 
 
 <pre><code>
@@ -59,7 +59,13 @@ An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.
 Functionality to yank text from any buffer (IPython, TermiC, Terminal) and append to file editor for easy notes.
 
 ## Flags
---color or c: 256 color palette
+# Enable full color support (truecolor, terminal themes, etc.)
+xtide86 --color
+xtide86 -c
+
+# Or keep it classic
+xtide86
+
 
 ## Controls
 

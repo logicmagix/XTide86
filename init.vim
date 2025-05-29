@@ -139,7 +139,7 @@ autocmd VimEnter * terminal bash -c 'termic cpp; exec bash -i'
 autocmd VimEnter * belowright vs
 autocmd VimEnter * vertical resize 65
 autocmd VimEnter * terminal
-autocmd VimEnter * resize 8
+autocmd VimEnter * resize 1
 autocmd VimEnter * wincmd j
 autocmd VimEnter * wincmd l
 
