@@ -1,4 +1,4 @@
-
+#!/usr/bin/env bash
 # xtide86 - a terminal IDE powered by tmux and nvim
 # Copyright (C) 2025 Pavle Dzakula
 #
@@ -9,15 +9,15 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the# GNU General Public License for more details.
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
 # Credits
+# This project includes `termic.sh` from [Yusuf Kagan Hanoglu/Max Schillinger/TermiC], licensed under the [GPL3] License.
 
-#This project includes `termic.sh` from [Yusuf Kagan Hanoglu/Max Schillinger/TermiC], licensed under the [GPL3] License.
-
-#!/usr/bin/env bash
 set -e
 
 SESSION_NAME="xtide86"
@@ -88,7 +88,7 @@ EOF
       exit 0
       ;;
     --version)
-      echo "[XTide86] Version 1.0.2"  # Updated for reattachment fix
+      echo "[XTide86] Version 1.0.2"
       exit 0
       ;;
     *)
@@ -136,10 +136,8 @@ if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
     case "$choice" in
       a|A)
         if [ -n "$FILENAME" ]; then
-          # Check if left pane is active and running Neovim
           if tmux list-panes -t "$SESSION_NAME":0.0 >/dev/null 2>&1; then
             tmux select-pane -t "$SESSION_NAME":0.0
-            # Send C-c to exit any running command, then open new file
             tmux send-keys -t "$SESSION_NAME":0.0 C-c "nvim \"$FILENAME\"" C-m
             echo "[XTide86] Opened $FILENAME in left pane of existing session."
           else
