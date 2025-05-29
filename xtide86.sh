@@ -23,17 +23,17 @@ SESSION_NAME="xtide86"
 TMUX_CONF="$HOME/.tmux.conf"
 IS_NO_COLOR=false
 
-# Flag Parsing
+# === Flag Parsing ===
 case "$1" in
   --no-color|-nc)
     IS_NO_COLOR=true
     echo "[XTide86] Applying hybrid minimal color scheme..."
 
-    # Write tmux.conf for 16-color
+    # Write tmux.conf for 88-color mode
     cat <<EOF > "$TMUX_CONF"
 # XTide86: Hybrid minimal color scheme
-set -g default-terminal "xterm"
-set -sa terminal-overrides ",xterm*:colors=16"
+set -g default-terminal "xterm-88color"
+set -sa terminal-overrides ",xterm-88color*:colors=88"
 set -g mouse on
 EOF
 
@@ -52,11 +52,11 @@ set -as terminal-overrides ',*:Tc'
 set -g mouse on
 EOF
 
-    echo "[XTide86] Full color config applied."
+    echo "[XTide86] Applied full color config."
     ;;
   *)
     IS_NO_COLOR=false
-    echo "[XTide86] Applying default 256-color mode..."
+    echo "[XTide86] No flag provided, applying default 256-color mode..."
 
     [ -f "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
 
@@ -67,17 +67,20 @@ set -as terminal-overrides ',*:Tc'
 set -g mouse on
 EOF
 
-    echo "[XTide86] Default 256-color config applied."
+    echo "[XTide86] Applied default 256-color config."
     ;;
 esac
+
+# Shift remaining args (do this only once!)
 (( $# )) && shift
 
+# === Apply environment variables *after* flag handling ===
 if [ "$IS_NO_COLOR" = false ]; then
   export TERM="xterm-256color"
   export COLORTERM=truecolor
   unset NVIM_NO_COLOR
 else
-  export TERM="xterm"
+  export TERM="xterm-88color"  # 88-color palette
   unset COLORTERM
   export NVIM_NO_COLOR=1
 fi
