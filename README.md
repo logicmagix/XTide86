@@ -193,37 +193,58 @@ ex. sudo nvim /etc/systemd/system/...
 
 ## Installation
 
-Clone this repository:
-
+# Preferred for updates:
 ```bash```
-git clone https://github.com/logicmagix/xtide86.git
-cd xtide86
+- git clone https://github.com/logicmagix/xtide86.git
+- cd XTIDE86
+
 # Make the script executable (one-time setup)
-chmod +x xtide86.sh termic.sh install.share
-./install
-xtide86 to start session
+- chmod +x xtide86.sh termic.sh install.share
+- ./install
+- xtide86 to start session
+
+# If downloading .zip:
+- Go to https://github.com/logicmagix/XTIDE86 and click "Code" > "Download ZIP".
+- Extract the ZIP to a directory (e.g., ~/XTIDE86).
+- Run the installation script:
+- cd ~/XTIDE86
+- ./install.sh
+
+## Updating XTide86
+
+# To update xtide86 to the latest version, you must have a cloned Git repository.
+
+Navigate to the cloned repository directory: 
+- cd ~/XTIDE86  # Or your custom path, e.g., ~/REPOS/XTIDE86
+- sudo xtide86 --update
+
+## Notes:
+
+- You must run xtide86 --update from within a cloned - --repository directory (containing a .git/ folder), or you’ll see an error like fatal: not a git repository.
+- The sudo command may prompt for your password to modify /usr/local/bin.
+- If you used a ZIP download, you cannot use xtide86 --update unless you convert the directory to a Git repository.
 
 
-Usage""
-Launch XTide86 from your terminal or assigned launcher with xtide86. It will:
+## Usage
+- Launch XTide86 from your terminal or assigned launcher with xtide86. It will:
 
-Open a tmux session with vertically split nvim, TermiC, and IPython
+- Open a tmux session with vertically split nvim, TermiC, and IPython
 
-Send text from the file editor to the live interpreter buffer with \p for ipython and \l for TermiC
+- Send text from the file editor to the live interpreter buffer with \p for ipython and \l for TermiC
 
-Automatic insert mode and buffer sizing for paste to Termic and paste to IPython functions.
+- Automatic insert mode and buffer sizing for paste to Termic and paste to IPython functions.
 
-Support session save (Ctrl+q+d) and reset with :Q
+- Support session save (Ctrl+q+d) and reset with :Q
 
-Without tmux?
-Simply open nvim enjoy all the features without additional buffers and ctrl q + d, ctrl q + a, ctrl q + s, and ctrl q + d controls.
+# Without tmux?
+- Simply open nvim enjoy all the features without additional buffers and ctrl q + d, ctrl q + a, ctrl q + s, and ctrl q + d controls.
 
-Customization
-See init.vim for plugin configuration, UI tweaks, and terminal behavior.
+# Customization
+- See init.vim for plugin configuration, UI tweaks, and terminal behavior.
 Feel free to remix buffer sizes and colors to match your workflow.
 
-TermiC Support
-xtide86 includes termic.sh, a lightweight live shell.
+# TermiC Support
+- xtide86 includes termic.sh, a lightweight live shell.
 It installs automatically to /usr/local/bin/termic.
 Licensed under GPLv3 and included with permission.
 
@@ -231,9 +252,12 @@ Pull requests, stars, and forks welcome
 
 ## Screenshots
 
-XTide86 looks like in action:
+- See XTide86 in action:
 
 ### 	
+
+### XTide86 default color scheme
+![16 Color](Screenshots/Screenshot.png)
 
 ### XTide86 now supports 256 colors in tmux
 ![256 Color](Screenshots/Screenshot0.png)
