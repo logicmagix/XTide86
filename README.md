@@ -18,7 +18,9 @@ This script is licensed under GPLv3 and included with permission.
 > - Toggle between classic **Portcullis** and modern **GRID** visual themes or medieval listchars in init.vim
 > - Screenshots updated to showcase enhanced visuals with tools like [`btop`](https://github.com/aristocratos/btop)or [`NPalette`](https://github.com/logicmagix/NPalette)
 > - v1.1.0 Update: Added --color and -c for optional 256 color palette. (Tested on gnome-terminal). XTide86 supports clean minimal setups or full color-rice mode. Your terminal, your choice.
-> Update XTide86 from your repo directory with --update
+> - Update XTide86 from your repo directory with --update
+> - Now supports opening new files editing files with xtide86 <FILENAME>.
+
 
 
 <pre><code>
@@ -57,7 +59,8 @@ This script is licensed under GPLv3 and included with permission.
 An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.  
 
 ## Coming Soon!
-Functionality to yank text from any buffer (IPython, TermiC, Terminal) and append to file editor for easy notes.
+- Functionality to yank text from any buffer (IPython, TermiC, Terminal) and append to file editor for easy notes.
+- Opening second file in right tmux buffer if session is detached with a loaded file in the left (default).
 
 ## Flags
 # Enable full color support (truecolor, terminal themes, etc.)
@@ -215,7 +218,7 @@ ex. sudo nvim /etc/systemd/system/...
 
 # To update xtide86 to the latest version, you must have a cloned Git repository.
 
-Navigate to the cloned repository directory: 
+# Navigate to the cloned repository directory: 
 - cd ~/XTIDE86  # Or your custom path, e.g., ~/REPOS/XTIDE86
 - sudo xtide86 --update
 
@@ -227,7 +230,7 @@ Navigate to the cloned repository directory:
 
 
 ## Usage
-- Launch XTide86 from your terminal or assigned launcher with xtide86. It will:
+- Launch XTide86 from your terminal or assigned launcher with xtide86 or xtide86 <FILENAME>. It will:
 
 - Open a tmux session with vertically split nvim, TermiC, and IPython
 
