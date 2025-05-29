@@ -27,47 +27,47 @@ IS_NO_COLOR=false
 case "$1" in
   --no-color|-nc)
     IS_NO_COLOR=true
-    echo "[XTide86] Applying hybrid minimal color scheme..."
+    echo "[XTide86] Applying hybrid 88-color scheme..."
 
     # Write tmux.conf for 88-color mode
     cat <<EOF > "$TMUX_CONF"
-# XTide86: Hybrid minimal color scheme
+# XTide86: Hybrid 88-color scheme
 set -g default-terminal "xterm-88color"
 set -sa terminal-overrides ",xterm-88color*:colors=88"
 set -g mouse on
 EOF
 
-    echo "[XTide86] Hybrid minimal color config applied."
+    echo "[XTide86] Hybrid 88-color config applied."
     ;;
   --color|-c)
-    IS_NO_COLOR=false
-    echo "[XTide86] Enabling full color mode..."
+    IS_NO_COLOR=""
+    echo "[>>>XTide86] Enabling full neon 256-color mode..."
 
-    [ -f "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
+    [ -s "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
 
+    # Write tmux.conf for 256-color mode
     cat <<EOF > "$TMUX_CONF"
-# XTide86: Full color mode
+# XTide86: Full neon 256-color mode
 set -g default-terminal "tmux-256color"
-set -as terminal-overrides ',*:Tc'
+set -sa terminal-overrides ",*:Tc"
 set -g mouse on
 EOF
 
-    echo "[XTide86] Applied full color config."
+    echo "[XTide86] Applied full neon 256-color config."
     ;;
   *)
-    IS_NO_COLOR=false
-    echo "[XTide86] No flag provided, applying default 256-color mode..."
+    IS_NO_COLOR=true
+    echo "[XTide86] No flag provided, applying default hybrid 88-color scheme..."
 
-    [ -f "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
-
+    # Write tmux.conf for default 88-color mode
     cat <<EOF > "$TMUX_CONF"
-# XTide86: Default 256-color mode
-set -g default-terminal "tmux-256color"
-set -as terminal-overrides ',*:Tc'
+# XTide86: Default hybrid 88-color scheme
+set -g default-terminal "xterm-88color"
+set -sa terminal-overrides ",xterm-88color*:colors=88"
 set -g mouse on
 EOF
 
-    echo "[XTide86] Applied default 256-color config."
+    echo "[XTide86] Applied default hybrid 88-color config."
     ;;
 esac
 
@@ -75,18 +75,18 @@ esac
 (( $# )) && shift
 
 # === Apply environment variables *after* flag handling ===
-if [ "$IS_NO_COLOR" = false ]; then
+if [ -z "$IS_NO_COLOR" ]; then
   export TERM="xterm-256color"
   export COLORTERM=truecolor
-  unset NVIM_NO_COLOR
+  unset NVIM_NO_COLOR  # Use 256-color Neovim scheme
 else
   export TERM="xterm-88color"  # 88-color palette
-  unset COLORTERM
-  export NVIM_NO_COLOR=1
+  unset COLORTERM              # Disable truecolor
+  export NVIM_NO_COLOR=1       # Use 88-color Neovim scheme (desert)
 fi
 
 # Ensure mouse support is enabled in user's tmux.conf
-if [ -f "$TMUX_CONF" ]; then
+if [ -s "$TMUX_CONF" ]; then
   if ! grep -q "set -g mouse on" "$TMUX_CONF"; then
     echo "set -g mouse on" >> "$TMUX_CONF"
     echo "[XTide86] Enabled mouse support in ~/.tmux.conf"
