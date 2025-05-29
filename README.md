@@ -17,7 +17,7 @@ This script is licensed under GPLv3 and included with permission.
 > - Improved color rendering in all panes and status bars
 > - Toggle between classic **Portcullis** and modern **GRID** visual themes or medieval listchars in init.vim
 > - Screenshots updated to showcase enhanced visuals with tools like [`btop`](https://github.com/aristocratos/btop)or [`NPalette`](https://github.com/logicmagix/NPalette)
-> - v1.1.0 Update: Added --color and --no-color flags for optional hybrid/minimal color modes. (Tessted on gnome-terminal)
+> - v1.1.0 Update: Added --color and --no-color flags for optional hybrid/minimal color modes. (Tested on gnome-terminal)
 
 
 <pre><code>
