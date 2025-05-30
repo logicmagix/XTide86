@@ -74,9 +74,14 @@ EOF
         exit 1
       fi
 
-      if [ -f install.sh ]; then
-        chmod +x install.sh
-        ./install.sh
+      INSTALL_SCRIPT="$SCRIPT_DIR/install.sh"
+      if [ -f "$INSTALL_SCRIPT" ]; then
+        chmod +x "$INSTALL_SCRIPT"
+        "$INSTALL_SCRIPT"
+      else
+        log "Error: install.sh not found at $INSTALL_SCRIPT"
+      fi
+
       else
         log "Error: install.sh not found. Skipping re-install."
       fi
