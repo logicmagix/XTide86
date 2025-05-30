@@ -56,12 +56,18 @@ EOF
       ;;
     --update)
       echo "[XTide86] Checking for updates from GitHub..."
-      if ! command -v git >/dev/null 2>&1; then
-        echo "[XTide86] Error: git not installed. Please install git."
+      # Resolve repository root
+      REPO_DIR="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+      if [ -z "$REPO_DIR" ] || [ ! -d "$REPO_DIR/.git" ]; then
+        echo "[XTide86] Error: Not in a git repository or .git directory missing."
+        echo "Run 'git clone <your-repo-url>' and execute from the repository directory."
         exit 1
       fi
-      if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-        echo "[XTide86] Error: Not in a git repository. Please run from the XTide86 repo clone."
+      # Change to repository root
+      cd "$REPO_DIR" || { echo "[XTide86] Error: Failed to change to repository directory."; exit 1; }
+      echo "[XTide86] Working in repository: $REPO_DIR"
+      if ! command -v git >/dev/null 2>&1; then
+        echo "[XTide86] Error: git not installed. Please install git."
         exit 1
       fi
       if ! git diff --quiet || ! git diff --cached --quiet; then
@@ -70,10 +76,14 @@ EOF
         echo "Options: Commit ('git add . && git commit'), stash ('git stash'), or discard ('git restore .')."
         exit 1
       fi
-      CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-      git fetch origin "$CURRENT_BRANCH"
-      LOCAL_HASH=$(git rev-parse HEAD)
-      REMOTE_HASH=$(git rev-parse "origin/$CURRENT_BRANCH")
+      CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || { echo "[XTide86] Error: Failed to get current branch."; exit 1; })
+      echo "[XTide86] Current branch: $CURRENT_BRANCH"
+      if ! git fetch origin "$CURRENT_BRANCH" 2>/dev/null; then
+        echo "[XTide86] Error: Failed to fetch from origin. Check network or repository access."
+        exit 1
+      fi
+      LOCAL_HASH=$(git rev-parse HEAD 2>/dev/null || { echo "[XTide86] Error: Failed to get local commit hash."; exit 1; })
+      REMOTE_HASH=$(git rev-parse "origin/$CURRENT_BRANCH" 2>/dev/null || { echo "[XTide86] Error: Failed to get remote commit hash."; exit 1; })
       if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
         echo "[XTide86] No update needed: Repository is up-to-date."
         exit 0
@@ -96,6 +106,14 @@ EOF
         else
           echo "[XTide86] Error: Failed to copy $SCRIPT_NAME to $INSTALL_PATH."
           exit 1
+        fi
+        # Update termic.sh if present
+        if [ -f "termic.sh" ]; then
+          if sudo cp "termic.sh" /usr/local/bin/termic && sudo chmod +x /usr/local/bin/termic; then
+            echo "[XTide86] termic.sh updated and installed to /usr/local/bin/termic."
+          else
+            echo "[XTide86] Warning: Failed to update termic.sh."
+          fi
         fi
       else
         echo "[XTide86] Error: Failed to pull changes. Check for merge conflicts or connectivity."
