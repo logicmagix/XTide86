@@ -59,7 +59,29 @@ EOF
     --update)
       UPDATE_PROCESSED=true
       log "Checking for updates from GitHub..."
-      log "Updating... (placeholder replaced)"
+
+      SCRIPT_PATH="$(realpath "$0")"
+      SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+      cd "$SCRIPT_DIR" || exit 1
+
+      if [ -d .git ]; then
+        log "Working in repository: $SCRIPT_DIR"
+        CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+        log "Current branch: $CURRENT_BRANCH"
+        git pull origin "$CURRENT_BRANCH"
+      else
+        log "Not a git repository. Cannot perform update."
+        exit 1
+      fi
+
+      if [ -f install.sh ]; then
+        chmod +x install.sh
+        ./install.sh
+      else
+        log "Error: install.sh not found. Skipping re-install."
+      fi
+
+      exit 0
       ;;
     --version)
       log "XTide86 version $XTIDE_VERSION"
@@ -87,6 +109,7 @@ EOF
   esac
   shift
 done
+
 
 # === Handle --update logic ===
 if [ "$UPDATE_PROCESSED" = true ]; then
