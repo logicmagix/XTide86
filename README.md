@@ -75,9 +75,11 @@ NOTICE!! You must run xtide86 --update within your repo directory to fix install
 - Opening second file in right tmux buffer if session is detached with a loaded file in the left (default).
 
 ## Flags
-Enable full color support (truecolor, terminal themes, etc.):
-xtide86 --color
-xtide86 -c
+Enable full color support (truecolor, terminal themes, etc.): --color -cUpdate XTide86 (within repo directory):--update
+Check version: --version
+Silence log: --quiet
+Help: --help
+
 
 Or keep it classic:
 xtide86
