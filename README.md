@@ -20,7 +20,10 @@ This script is licensed under GPLv3 and included with permission.
 > - v1.1.0 Update: Added --color and -c for optional 256 color palette. (Tested on gnome-terminal requries ncurses-term package to be installed). XTide86 supports clean minimal setups or full color-rice mode. Your terminal, your choice.
 > - Must terminate current session to change color profile.
 > - Update XTide86 from your repo directory with --update
-> - Now supports opening new files editing files with xtide86 followed by the filename.
+> - Now supports opening new files editing files with xtide86 followed by the filename
+> - Note: You MUST have ncurses-term installed for default color profile, otherwise use xtide86 -c.
+. 
+ 
 
 
 
