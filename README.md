@@ -6,7 +6,7 @@ See the [LICENSE](./LICENSE) file for full details.
 
 ## TermiC Support
 
-xtide86 includes `termic.sh`, a lightweight live shell launcher. It will be installed automatically to `/usr/local/bin/termic` unless it already exists.
+xtide86 includes `termic.sh`, a lightweight, interactive C/C++ environment launcher. It will be installed automatically to `/usr/local/bin/termic` unless it already exists.
 
 This script is licensed under GPLv3 and included with permission.
 

@@ -14,6 +14,7 @@ sudo apt install -y \
   curl \
   git \
   fonts-powerline
+  ncurses-term
 
 # Install vim-plug
 if [ ! -f ~/.local/share/nvim/site/autoload/plug.vim ]; then
