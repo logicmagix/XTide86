@@ -28,10 +28,10 @@ An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.
 > - Screenshots updated to showcase enhanced visuals with tools like [`btop`](https://github.com/aristocratos/btop)or [`NPalette`](https://github.com/logicmagix/NPalette)
 > - v1.1.0 Update: Added --color and -c for optional 256 color palette. (Tested on gnome-terminal requries ncurses-term package to be installed). XTide86 supports clean minimal setups or full color-rice mode. Your terminal, your choice.
 > - Must terminate current session to change color profile.
-> - Update XTide86 from your anywhere with --update
 > - Now supports opening new files editing files with xtide86 followed by the filename
 > - Try out any combination of color settings in your terminal to dial XTide86 to your liking!
 > - Use flag --quiet or -q to hide log output.
+> - Update XTide86 from your anywhere with --update
 
 
 
