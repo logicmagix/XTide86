@@ -13,7 +13,7 @@ This script is licensed under GPLv3 and included with permission.
 ## XTide86:
 An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.  
 
-# XTIDE86: XTra IDE 86 NEWS:
+# XTra IDE 86 NEWS:
 
 NOTICE!! You must run xtide86 --update within your repo directory to fix install.sh issues related to the ncurses-term dependency if you run into issues or alternately re-clone the repo from GitHub for the fixed installer. 
 
