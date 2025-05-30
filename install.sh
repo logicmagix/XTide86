@@ -115,11 +115,17 @@ if ! chmod +x "$SCRIPT_DIR/xtide86.sh" "$SCRIPT_DIR/termic.sh"; then
 fi
 
 # Copy xtide86.sh to /usr/local/bin
-echo "Copying xtide86.sh to /usr/local/bin/..."
-if ! sudo cp -f "$SCRIPT_DIR/xtide86.sh" /usr/local/bin/xtide86; then
-  echo "Error: Failed to copy xtide86.sh to /usr/local/bin. Check permissions or disk space."
-  exit 1
-fi
+echo "Creating wrapper script at /usr/local/bin/xtide86..."
+
+cat <<EOF | sudo tee /usr/local/bin/xtide86 > /dev/null
+#!/usr/bin/env bash
+SCRIPT_DIR="$SCRIPT_DIR"
+bash "\$SCRIPT_DIR/xtide86.sh" "\$@"
+EOF
+
+sudo chmod +x /usr/local/bin/xtide86
+echo "Wrapper script created."
+
 echo "xtide86.sh installed to /usr/local/bin/xtide86."
 
 # Copy termic.sh to /usr/local/bin
