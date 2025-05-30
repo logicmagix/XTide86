@@ -1,5 +1,69 @@
-#!/bin/bash
-set -e  # Exit on error
+#! /usr/bin/env bash
+
+set -e
+
+# === Detect OS and Package Manager ===
+detect_os_and_pkg() {
+  OS=$(uname -s)
+
+  case "$OS" in
+    Darwin)
+      PKG_MANAGER="brew"
+      INSTALL_CMD="brew install"
+      INSTALL_PATH="/usr/local/bin/xtide86"
+      [ -d "/opt/homebrew/bin" ] && INSTALL_PATH="/opt/homebrew/bin/xtide86"  # Apple Silicon support
+      ;;
+    Linux)
+      if [ -f "/etc/arch-release" ]; then
+        PKG_MANAGER="pacman"
+        INSTALL_CMD="sudo pacman -S --noconfirm"
+        INSTALL_PATH="/usr/local/bin/xtide86"
+      elif [ -f "/etc/debian_version" ]; then
+        PKG_MANAGER="apt"
+        INSTALL_CMD="sudo apt install -y"
+        INSTALL_PATH="/usr/local/bin/xtide86"
+      else
+        PKG_MANAGER="unknown"
+        INSTALL_CMD="echo 'Please install manually:'"
+        INSTALL_PATH="/usr/local/bin/xtide86"
+      fi
+      ;;
+    *)
+      PKG_MANAGER="unknown"
+      INSTALL_CMD="echo 'Please install manually:'"
+      INSTALL_PATH="/usr/local/bin/xtide86"
+      ;;
+  esac
+
+  echo "[XTide86] Detected OS: $OS"
+  echo "[XTide86] Using package manager: $PKG_MANAGER"
+  echo "[XTide86] Install path: $INSTALL_PATH"
+}
+
+update_package_manager() {
+  case "$PKG_MANAGER" in
+    apt)
+      echo "[XTide86] Updating apt..."
+      sudo apt update
+      ;;
+    pacman)
+      echo "[XTide86] Updating pacman..."
+      sudo pacman -Sy
+      ;;
+    brew)
+      echo "[XTide86] Updating Homebrew..."
+      brew update
+      ;;
+    *)
+      echo "[XTide86] Skipping package manager update (unsupported or unknown)."
+      ;;
+  esac
+}
+
+# === Run OS detection and update ===
+detect_os_and_pkg
+update_package_manager
+  # Exit on error
 
 echo "Installing xtide86 dependencies..."
 
