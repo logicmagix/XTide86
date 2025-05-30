@@ -26,7 +26,7 @@ NOTICE FOR EXISTING USERS!! You must run xtide86 --update within your repo direc
 > - Screenshots updated to showcase enhanced visuals with tools like [`btop`](https://github.com/aristocratos/btop)or [`NPalette`](https://github.com/logicmagix/NPalette)
 > - v1.1.0 Update: Added --color and -c for optional 256 color palette. (Tested on gnome-terminal requries ncurses-term package to be installed). XTide86 supports clean minimal setups or full color-rice mode. Your terminal, your choice.
 > - Must terminate current session to change color profile.
-> - Update XTide86 from your repo directory with --update
+> - Update XTide86 from your anywhere with --update
 > - Now supports opening new files editing files with xtide86 followed by the filename
 > - Try out any combination of color settings in your terminal to dial XTide86 to your liking!
 > - Use flag --quiet or -q to hide log output.
@@ -75,10 +75,12 @@ NOTICE FOR EXISTING USERS!! You must run xtide86 --update within your repo direc
 - Opening second file in right tmux buffer if session is detached with a loaded file in the left (default).
 
 ## Flags
-Enable full color support (truecolor, terminal themes, etc.): --color -cUpdate XTide86 (within repo directory):--update
+Enable full color support (truecolor, terminal themes, etc.): --color -c
+Update XTide86 (anywhere):--update
 Check version: --version
 Silence log: --quiet
 Help: --help
+Install location: --whereami
 
 
 Or keep it classic:
@@ -232,13 +234,10 @@ ex. sudo nvim /etc/systemd/system/...
 
 # To update xtide86 to the latest version, you must have a cloned Git repository.
 
-# Navigate to the cloned repository directory: 
-- cd ~/XTIDE86  # Or your custom path, e.g., ~/REPOS/XTIDE86
-- sudo xtide86 --update
+- xtide86 --update
 
 ## Notes:
 
-- You must run xtide86 --update from within a cloned - --repository directory (containing a .git/ folder), or you’ll see an error like fatal: not a git repository.
 - The sudo command may prompt for your password to modify /usr/local/bin.
 - If you used a ZIP download, you cannot use xtide86 --update unless you convert the directory to a Git repository.
 

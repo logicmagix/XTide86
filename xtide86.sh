@@ -40,6 +40,13 @@ log() {
 
 while [ $# -gt 0 ]; do
   case "$1" in
+    --whereami)
+      SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
+      SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+      log "Script path: $SCRIPT_PATH"
+      log "Source directory: $SCRIPT_DIR"
+      exit 0
+      ;;
     --quiet|-q)
       IS_QUIET=true
       ;;
@@ -60,7 +67,7 @@ EOF
           UPDATE_PROCESSED=true
           log "Checking for updates from GitHub..."
 
-          SCRIPT_PATH="$(readlink -f "$0")"
+          SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
           SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
           cd "$SCRIPT_DIR" || exit 1
 
@@ -71,6 +78,9 @@ EOF
             git pull origin "$CURRENT_BRANCH"
           else
             log "Not a git repository. Cannot perform update."
+            log "Update failed: This install isn't a Git clone."
+            log "To enable automatic updates, clone XTide86 from GitHub like so:"
+            log "    git clone https://github.com/logicmagix/XTIDE86.git"
             exit 1
           fi
 
