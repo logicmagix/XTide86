@@ -178,6 +178,25 @@ if command -v conda &> /dev/null; then
   fi
 fi
 
+# === Install man page ===
+MANPAGE_SOURCE="$SCRIPT_DIR/xtide86.1"
+MANPAGE_TARGET="/usr/share/man/man1/xtide86.1.gz"
+
+if [ -f "$MANPAGE_SOURCE" ]; then
+  echo "[XTide86] Compressing man page..."
+  gzip -f -c "$MANPAGE_SOURCE" > xtide86.1.gz
+
+  echo "[XTide86] Installing man page to $MANPAGE_TARGET..."
+  sudo cp xtide86.1.gz "$MANPAGE_TARGET"
+
+  echo "[XTide86] Updating man page index..."
+  sudo mandb
+
+  echo "[XTide86] Man page installed. Try: man xtide86"
+else
+  echo "[XTide86] Warning: xtide86.1 not found. Skipping man page install."
+fi
+
 # Desktop launcher
 GLOBAL_INSTALL=false
 if [ "$1" == "--global" ]; then
