@@ -17,7 +17,7 @@ An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.
 
 05.30.25 XTide86 now includes multi system support (Debian, Arch, MacOS) a man page and automated updating from anywhere! (not just the repo directory)
 
-05.29.25 NOTICE FOR EXISTING USERS!! You must run xtide86 --update within your repo directory to fix install.sh issues related to the ncurses-term dependency if you run into issues or alternately re-clone the repo from GitHub for the fixed installer. 
+05.29.25 NOTICE FOR EXISTING USERS!! You must run xtide86 --update (anywhere) to fix install.sh issues related to the ncurses-term dependency if you run into issues or alternately re-clone the repo from GitHub for the fixed installer. 
 
 
 **Version:** `v1.1.0`
