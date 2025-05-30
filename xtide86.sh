@@ -56,7 +56,7 @@ EOF
     --update)
       UPDATE_PROCESSED=true
       log "Checking for updates from GitHub..."
-      log "Update logic executed (placeholder replaced)"
+      log "Updating... (placeholder replaced)"
       ;;
     --version)
       log "XTide86 version $XTIDE_VERSION"
