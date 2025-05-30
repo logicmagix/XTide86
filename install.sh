@@ -7,6 +7,7 @@ echo "Installing xtide86 dependencies..."
 sudo apt update
 sudo apt install -y \
   tmux \
+  ncurses-term \
   neovim \
   python3 \
   python3-pip \
@@ -14,7 +15,7 @@ sudo apt install -y \
   curl \
   git \
   fonts-powerline
-  ncurses-term \
+  
 
 # Install vim-plug
 if [ ! -f ~/.local/share/nvim/site/autoload/plug.vim ]; then
