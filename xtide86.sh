@@ -60,7 +60,7 @@ EOF
           UPDATE_PROCESSED=true
           log "Checking for updates from GitHub..."
 
-          SCRIPT_PATH="$(realpath "$0")"
+          SCRIPT_PATH="$(readlink -f "$0")"
           SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
           cd "$SCRIPT_DIR" || exit 1
 
@@ -72,7 +72,7 @@ EOF
           else
             log "Not a git repository. Cannot perform update."
             exit 1
-         fi
+          fi
 
           INSTALL_SCRIPT="$SCRIPT_DIR/install.sh"
           log "INSTALL_SCRIPT is: $INSTALL_SCRIPT"
@@ -83,9 +83,8 @@ EOF
           else
             log "Error: install.sh not found at $INSTALL_SCRIPT"
           fi
-
-          exit 0
-          ;;
+      exit 0
+      ;;
     --version)
       log "XTide86 version $XTIDE_VERSION"
       exit 0
