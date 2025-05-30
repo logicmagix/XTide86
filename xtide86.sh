@@ -82,6 +82,11 @@ EOF
             log "To enable automatic updates, clone XTide86 from GitHub like so:"
             log "    git clone https://github.com/logicmagix/XTIDE86.git"
             exit 1
+            LATEST_VERSION=$(git -C "$SCRIPT_DIR" ls-remote --tags origin | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | sort -V | tail -n1)
+          if [ "v$XTIDE_VERSION" = "$LATEST_VERSION" ]; then
+              log "Already on the latest version: $XTIDE_VERSION"
+              exit 0
+          fi
           fi
 
           INSTALL_SCRIPT="$SCRIPT_DIR/install.sh"

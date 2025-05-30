@@ -67,7 +67,7 @@ update_package_manager
 
 echo "Installing xtide86 dependencies..."
 
-# Update and install system packages
+# === Update and install system packages ===
 sudo apt update
 sudo apt install -y \
   tmux \
@@ -81,25 +81,25 @@ sudo apt install -y \
   fonts-powerline
   
 
-# Install vim-plug
+# === Install vim-plug ===
 if [ ! -f ~/.local/share/nvim/site/autoload/plug.vim ]; then
   echo "Installing vim-plug for Neovim..."
   curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
-# Copy nvim config
+# === Copy nvim config ===
 echo "Copying Neovim config..."
 mkdir -p ~/.config/nvim
 cp ./init.vim ~/.config/nvim/init.vim
 
-# Resolve the script's directory
+# === Resolve the script's directory ===
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Copy xtide86.sh and termic.sh to system path
+# === Copy xtide86.sh and termic.sh to system path ===
 echo "Installing xtide86 and TermiC launch scripts..."
 
-# Check if files exist
+# === Check if files exist ===
 for script in "$SCRIPT_DIR/xtide86.sh" "$SCRIPT_DIR/termic.sh"; do
   if [ ! -f "$script" ]; then
     echo "Error: $script not found in $SCRIPT_DIR. Please ensure the file exists."
@@ -107,14 +107,14 @@ for script in "$SCRIPT_DIR/xtide86.sh" "$SCRIPT_DIR/termic.sh"; do
   fi
 done
 
-# Set executable permissions locally (temporary for copying)
+# === Set executable permissions locally (temporary for copying) ===
 echo "Setting temporary executable permissions for xtide86.sh and termic.sh..."
 if ! chmod +x "$SCRIPT_DIR/xtide86.sh" "$SCRIPT_DIR/termic.sh"; then
   echo "Error: Failed to set executable permissions on scripts."
   exit 1
 fi
 
-# Copy xtide86.sh to /usr/local/bin
+# === Copy xtide86.sh to /usr/local/bin ===
 echo "Creating wrapper script at /usr/local/bin/xtide86..."
 
 cat <<EOF | sudo tee /usr/local/bin/xtide86 > /dev/null
@@ -128,7 +128,7 @@ echo "Wrapper script created."
 
 echo "xtide86.sh installed to /usr/local/bin/xtide86."
 
-# Copy termic.sh to /usr/local/bin
+# === Copy termic.sh to /usr/local/bin ===
 echo "Copying termic.sh to /usr/local/bin/..."
 if ! sudo cp -f "$SCRIPT_DIR/termic.sh" /usr/local/bin/termic; then
   echo "Error: Failed to copy termic.sh to /usr/local/bin. Check permissions or disk space."
@@ -136,14 +136,14 @@ if ! sudo cp -f "$SCRIPT_DIR/termic.sh" /usr/local/bin/termic; then
 fi
 echo "termic.sh installed to /usr/local/bin/termic."
 
-# Ensure destination files are executable
+# === Ensure destination files are executable ===
 echo "Ensuring installed scripts are executable..."
 if ! sudo chmod 755 /usr/local/bin/xtide86 /usr/local/bin/termic; then
   echo "Error: Failed to set executable permissions on installed scripts."
   exit 1
 fi
 
-# Remove executable permissions from source scripts and installer
+# === Remove executable permissions from source scripts and installer ====
 echo "Removing executable permissions from source scripts and installer..."
 if ! chmod -x "$SCRIPT_DIR/xtide86.sh" "$SCRIPT_DIR/termic.sh" "$SCRIPT_DIR/${BASH_SOURCE[0]}"; then
   echo "Warning: Failed to remove executable permissions from some source files."
@@ -152,55 +152,87 @@ echo "Source scripts are no longer executable. Use 'xtide86' or 'termic' from /u
 
 echo "Ensuring IPython is available..."
 
-# Try apt install for system-wide fallback
+# === Try apt install for system-wide fallback ===
 if ! command -v ipython3 &> /dev/null; then
   echo "Attempting to install ipython3 via apt..."
   sudo apt update
   sudo apt install -y python3-ipython || echo "Warning: apt install failed. You may need to install IPython manually."
 fi
 
-# Check for conda-based installs
-if command -v conda &> /dev/null; then
-  echo "Conda detected. Ensuring IPython is installed via conda..."
-  conda install -y ipython || echo "Warning: Conda install failed. Check your environment."
-fi
+# === Ensure IPython is available ===
+ensure_ipython() {
+  echo "[XTide86] Ensuring IPython is available..."
 
-# Create a symlink for 'ipython' if it's not already present
-if ! command -v ipython &> /dev/null; then
-  if command -v ipython3 &> /dev/null; then
-    echo "Creating symlink for 'ipython' -> 'ipython3'"
-    sudo ln -sf $(which ipython3) /usr/local/bin/ipython
+  # Check if ipython or ipython3 is already available
+  if command -v ipython &> /dev/null; then
+    echo "[XTide86] 'ipython' is available."
+    return 0
+  elif command -v ipython3 &> /dev/null; then
+    echo "[XTide86] 'ipython3' is available. Creating symlink for 'ipython'..."
+    sudo ln -sf "$(which ipython3)" /usr/local/bin/ipython
+    if command -v ipython &> /dev/null; then
+      echo "[XTide86] Symlink created successfully."
+      return 0
+    else
+      echo "[XTide86] Warning: Failed to create 'ipython' symlink."
+    fi
+  fi
+
+  # No ipython or ipython3 found, try installing
+  if command -v conda &> /dev/null; then
+    echo "[XTide86] Conda detected. Installing IPython via conda..."
+    if conda install -y ipython; then
+      echo "[XTide86] IPython installed via conda."
+    else
+      echo "[XTide86] Warning: Conda install failed. Check your environment."
+    fi
   else
-    echo "Warning: No 'ipython' or 'ipython3' detected. XTide86 may not function properly."
+    echo "[XTide86] Attempting to install ipython3 via apt..."
+    sudo apt update
+    if sudo apt install -y python3-ipython; then
+      echo "[XTide86] IPython installed via apt."
+    else
+      echo "[XTide86] Warning: apt install failed. You may need to install IPython manually."
+    fi
   fi
-else
-  echo "'ipython' is available."
-fi
 
-if command -v conda &> /dev/null; then
-  echo "Conda detected. Checking for IPython..."
+  # Final check for ipython
   if ! command -v ipython &> /dev/null && ! command -v ipython3 &> /dev/null; then
-    conda install -y ipython || echo "Warning: Conda install failed. Check your environment."
+    echo "[XTide86] Warning: No 'ipython' or 'ipython3' detected. XTide86 may not function properly."
+  elif command -v ipython3 &> /dev/null && ! command -v ipython &> /dev/null; then
+    echo "[XTide86] Creating symlink for 'ipython' -> 'ipython3'..."
+    sudo ln -sf "$(which ipython3)" /usr/local/bin/ipython
+    if ! command -v ipython &> /dev/null; then
+      echo "[XTide86] Warning: Failed to create 'ipython' symlink."
+    fi
   fi
+}
+
+echo "Removing executable permissions from source scripts and installer..."
+if ! chmod -x "$SCRIPT_DIR/xtide86.sh" "$SCRIPT_DIR/termic.sh" "$SCRIPT_DIR/${BASH_SOURCE[0]}"; then
+  echo "Warning: Failed to remove executable permissions from some source files."
 fi
+echo "Source scripts are no longer executable. Use 'xtide86' or 'termic' from /usr/local/bin."
+
+ensure_ipython
+
 
 # === Install man page ===
 MANPAGE_SOURCE="$SCRIPT_DIR/xtide86.1"
 MANPAGE_TARGET="/usr/share/man/man1/xtide86.1.gz"
 
 if [ -f "$MANPAGE_SOURCE" ]; then
-  echo "[XTide86] Compressing man page..."
-  gzip -f -c "$MANPAGE_SOURCE" > xtide86.1.gz
-
-  echo "[XTide86] Installing man page to $MANPAGE_TARGET..."
-  sudo cp xtide86.1.gz "$MANPAGE_TARGET"
-
-  echo "[XTide86] Updating man page index..."
-  sudo mandb
-
-  echo "[XTide86] Man page installed. Try: man xtide86"
+    echo "[XTide86] Compressing man page..."
+    if gzip -f -c "$MANPAGE_SOURCE" > xtide86.1.gz; then
+        echo "[XTide86] Installing man page to $MANPAGE_TARGET..."
+        sudo cp xtide86.1.gz "$MANPAGE_TARGET"
+        sudo mandb
+        echo "[XTide86] Man page installed. Try: man xtide86"
+    else
+        echo "[XTide86] Error: Failed to compress man page."
+    fi
 else
-  echo "[XTide86] Warning: xtide86.1 not found. Skipping man page install."
+    echo "[XTide86] Warning: xtide86.1 not found. Skipping man page install."
 fi
 
 # Desktop launcher
@@ -229,7 +261,7 @@ set -as terminal-overrides ',*:Tc'
 EOF
 fi
 
-# Install Neovim plugins
+# === Install Neovim plugins ===
 echo "Installing Neovim plugins..."
 nvim +PlugInstall +qall
 
