@@ -26,6 +26,8 @@ NOTICE!! You must run xtide86 --update within your repo directory to fix install
 > - Update XTide86 from your repo directory with --update
 > - Now supports opening new files editing files with xtide86 followed by the filename
 > - Try out any combination of color settings in your terminal to dial XTide86 to your liking!
+> - Use flag --quiet or -q to hide log output.
+
 
 
 
