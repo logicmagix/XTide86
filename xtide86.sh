@@ -57,34 +57,35 @@ EOF
       log "Applied 256-color config."
       ;;
     --update)
-      UPDATE_PROCESSED=true
-      log "Checking for updates from GitHub..."
+          UPDATE_PROCESSED=true
+          log "Checking for updates from GitHub..."
 
-      SCRIPT_PATH="$(realpath "$0")"
-      SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
-      cd "$SCRIPT_DIR" || exit 1
+          SCRIPT_PATH="$(realpath "$0")"
+          SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+          cd "$SCRIPT_DIR" || exit 1
 
-      if [ -d .git ]; then
-        log "Working in repository: $SCRIPT_DIR"
-        CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-        log "Current branch: $CURRENT_BRANCH"
-        git pull origin "$CURRENT_BRANCH"
-      else
-        log "Not a git repository. Cannot perform update."
-        exit 1
-      fi
+          if [ -d .git ]; then
+            log "Working in repository: $SCRIPT_DIR"
+            CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+            log "Current branch: $CURRENT_BRANCH"
+            git pull origin "$CURRENT_BRANCH"
+          else
+            log "Not a git repository. Cannot perform update."
+            exit 1
+         fi
 
-      INSTALL_SCRIPT="$SCRIPT_DIR/install.sh"
-      if [ -f "$INSTALL_SCRIPT" ]; then
-        chmod +x "$INSTALL_SCRIPT"
-        "$INSTALL_SCRIPT"
-      else
-        log "Error: install.sh not found at $INSTALL_SCRIPT"
-      fi
+          INSTALL_SCRIPT="$SCRIPT_DIR/install.sh"
+          log "INSTALL_SCRIPT is: $INSTALL_SCRIPT"
 
-      exit 0
-      ;;
+          if [ -f "$INSTALL_SCRIPT" ]; then
+            chmod +x "$INSTALL_SCRIPT"
+            bash "$INSTALL_SCRIPT"
+          else
+            log "Error: install.sh not found at $INSTALL_SCRIPT"
+          fi
 
+          exit 0
+          ;;
     --version)
       log "XTide86 version $XTIDE_VERSION"
       exit 0
