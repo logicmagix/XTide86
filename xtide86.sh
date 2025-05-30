@@ -22,6 +22,7 @@
 set -e
 echo "[XTide86] Running..."  # Debug: Confirm script runs
 
+
 IS_NO_COLOR=false
 IS_QUIET=false
 FILENAME=""
@@ -31,9 +32,11 @@ UPDATE_PROCESSED=false
 SESSION_NAME="xtide86"
 TMUX_CONF="$HOME/.tmux.conf"
 
+
 log() {
   $IS_QUIET || echo "[XTide86] $@"
 }
+
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -43,15 +46,15 @@ while [ $# -gt 0 ]; do
     --color|-c)
       IS_NO_COLOR=""
       COLOR_FLAG_PROVIDED=true
-      log "Enabling full neon 256-color mode..."
+      log "Enabling full neon 256-color config..."
       [ -s "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
       cat <<EOF > "$TMUX_CONF"
-# XTide86: Full neon 256-color mode
+# XTide86: 256-color config
 set -g default-terminal "tmux-256color"
 set -sa terminal-overrides ",*:Tc"
 set -g mouse on
 EOF
-      log "Applied full neon 256-color config."
+      log "Applied 256-color config."
       ;;
     --update)
       UPDATE_PROCESSED=true
@@ -85,7 +88,16 @@ EOF
   shift
 done
 
+# === Handle --update logic ===
+if [ "$UPDATE_PROCESSED" = true ]; then
+  log "Pulling latest changes..."
+  git -C "$SCRIPT_DIR" pull --rebase
 
+  log "Re-running installer..."
+  bash "$SCRIPT_DIR/install.sh"
+
+  exit 0
+fi
 
 # Exit if --update was processed
 if [ "$UPDATE_PROCESSED" = true ]; then
