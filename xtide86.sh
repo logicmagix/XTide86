@@ -19,15 +19,18 @@
 # This project includes `termic.sh` from [Yusuf Kagan Hanoglu/Max Schillinger/TermiC], licensed under the [GPL3] License.
 
 set -e
+echo "[XTide86] Script started"  # Debug: Confirm script runs
 
 SESSION_NAME="xtide86"
 TMUX_CONF="$HOME/.tmux.conf"
 IS_NO_COLOR=false
 FILENAME=""
 COLOR_FLAG_PROVIDED=false
+UPDATE_PROCESSED=false  # Track if --update was handled
 
 # === Flag Parsing ===
 while [ $# -gt 0 ]; do
+  echo "[XTide86] Processing argument: $1"  # Debug: Log arguments
   case "$1" in
     --no-color|-nc)
       IS_NO_COLOR=true
@@ -55,6 +58,7 @@ EOF
       echo "[XTide86] Applied full neon 256-color config."
       ;;
     --update)
+      UPDATE_PROCESSED=true  # Mark update as handled
       echo "[XTide86] Checking for updates from GitHub..."
       # Resolve repository root
       REPO_DIR="$(git rev-parse --show-toplevel 2>/dev/null || true)"
@@ -121,9 +125,27 @@ EOF
       fi
       exit 0
       ;;
+    --version)
+      echo "[XTide86] Version 1.0.5"
+      exit 0
+      ;;
+    *)
+      if [ -z "$FILENAME" ]; then
+        FILENAME="$1"
+      else
+        echo "[XTide86] Error: Only one filename can be provided."
+        exit 1
+      fi
+      ;;
   esac
   shift
 done
+
+# Exit if --update was processed
+if [ "$UPDATE_PROCESSED" = true ]; then
+  echo "[XTide86] Update process completed, exiting."
+  exit 0
+fi
 
 # === Apply environment variables ===
 if [ -z "$IS_NO_COLOR" ]; then
@@ -175,6 +197,7 @@ if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
     exit 1
   fi
 fi
+
 # === Ensure mouse support in tmux.conf ===
 if [ -s "$TMUX_CONF" ]; then
   if ! grep -q "set -g mouse on" "$TMUX_CONF"; then
