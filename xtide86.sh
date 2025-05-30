@@ -82,12 +82,9 @@ EOF
         log "Error: install.sh not found at $INSTALL_SCRIPT"
       fi
 
-      else
-        log "Error: install.sh not found. Skipping re-install."
-      fi
-
       exit 0
       ;;
+
     --version)
       log "XTide86 version $XTIDE_VERSION"
       exit 0
