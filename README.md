@@ -69,11 +69,11 @@ An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.
 - Opening second file in right tmux buffer if session is detached with a loaded file in the left (default).
 
 ## Flags
-# Enable full color support (truecolor, terminal themes, etc.)
+Enable full color support (truecolor, terminal themes, etc.):
 xtide86 --color
 xtide86 -c
 
-# Or keep it classic
+Or keep it classic:
 xtide86
 
 
