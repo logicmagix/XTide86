@@ -12,7 +12,8 @@ This script is licensed under GPLv3 and included with permission.
 
 # XTIDE86: XTra IDE 86 NEWS:
 
-NOTICE!! You must run xtide86 --update within your repo directory to fix install.sh issues related to the ncurses-term dependency if you run into issues or alternately re-clone the repo from GitHub for the fixed installer.
+NOTICE!! You must run xtide86 --update within your repo directory to fix install.sh issues related to the ncurses-term dependency if you run into issues or alternately re-clone the repo from GitHub for the fixed installer. 
+
 
 **Version:** `v1.1.0`
 >**New in v1.1.0:** XTide86 now fully supports 256-color terminals!
@@ -24,6 +25,7 @@ NOTICE!! You must run xtide86 --update within your repo directory to fix install
 > - Must terminate current session to change color profile.
 > - Update XTide86 from your repo directory with --update
 > - Now supports opening new files editing files with xtide86 followed by the filename
+> - Try out any combination of color settings in your terminal to dial XTide86 to your liking!
 
 
 
