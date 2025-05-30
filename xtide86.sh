@@ -18,20 +18,28 @@
 # Credits
 # This project includes `termic.sh` from [Yusuf Kagan Hanoglu/Max Schillinger/TermiC], licensed under the [GPL3] License.
 
+
 set -e
 echo "[XTide86] Script started"  # Debug: Confirm script runs
 
-SESSION_NAME="xtide86"
-TMUX_CONF="$HOME/.tmux.conf"
+
 IS_NO_COLOR=false
+IS_QUIET=false
 FILENAME=""
 COLOR_FLAG_PROVIDED=false
-UPDATE_PROCESSED=false  # Track if --update was handled
+UPDATE_PROCESSED=false
+SESSION_NAME="xtide86"
+TMUX_CONF="$HOME/.tmux.conf"
 
-# === Flag Parsing ===
+log() {
+  $IS_QUIET || echo "[XTide86] $@"
+}
+
 while [ $# -gt 0 ]; do
-  echo "[XTide86] Processing argument: $1"  # Debug: Log arguments
   case "$1" in
+    --quiet|-q)
+      IS_QUIET=true
+      ;;
     --no-color|-nc)
       IS_NO_COLOR=true
       COLOR_FLAG_PROVIDED=true
@@ -141,11 +149,13 @@ EOF
   shift
 done
 
+
 # Exit if --update was processed
 if [ "$UPDATE_PROCESSED" = true ]; then
   echo "[XTide86] Update process completed, exiting."
   exit 0
 fi
+
 
 # === Apply environment variables ===
 if [ -z "$IS_NO_COLOR" ]; then
@@ -157,6 +167,7 @@ else
   unset COLORTERM
   export NVIM_NO_COLOR=1
 fi
+
 
 # === Write default tmux.conf only if no color flag provided ===
 if [ "$COLOR_FLAG_PROVIDED" = false ] && [ -z "$FILENAME" ]; then
@@ -170,6 +181,7 @@ set -g mouse on
 EOF
   echo "[XTide86] Applied default hybrid 88-color config."
 fi
+
 
 # === Check for existing session ===
 if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
@@ -198,6 +210,7 @@ if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
   fi
 fi
 
+
 # === Ensure mouse support in tmux.conf ===
 if [ -s "$TMUX_CONF" ]; then
   if ! grep -q "set -g mouse on" "$TMUX_CONF"; then
@@ -209,9 +222,11 @@ else
   echo "[XTide86] Created ~/.tmux.conf with mouse support"
 fi
 
+
 # === Start new tmux session ===
 tmux new-session -d -s "$SESSION_NAME"
 tmux split-window -h
+
 
 # Open file in left pane (pane 0) if filename provided, otherwise open nvim
 if [ -n "$FILENAME" ]; then
@@ -221,6 +236,7 @@ else
 fi
 tmux send-keys -t "$SESSION_NAME":0.1 'nvim' C-m
 
+
 # Keybindings
 tmux unbind C-b
 tmux set-option -g prefix C-q
@@ -228,5 +244,6 @@ tmux bind-key C-q send-prefix
 tmux bind-key -n C-a resize-pane -R 999 \; select-pane -t 1
 tmux bind-key -n C-d resize-pane -L 999 \; select-pane -t 0
 tmux bind-key -n C-s resize-pane -x 50%
+
 
 tmux attach-session -t "$SESSION_NAME"
