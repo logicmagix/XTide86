@@ -63,22 +63,59 @@ update_package_manager() {
 # === Run OS detection and update ===
 detect_os_and_pkg
 update_package_manager
-  # Exit on error
 
-echo "Installing xtide86 dependencies..."
+# === Install system packages ===
+echo "[XTide86] Installing xtide86 dependencies..."
 
-# === Update and install system packages ===
-sudo apt update
-sudo apt install -y \
-  tmux \
-  ncurses-term \
-  neovim \
-  python3 \
-  python3-pip \
-  python3-ipython \
-  curl \
-  git \
-  fonts-powerline
+# Define packages (map different names if needed)
+declare -A PKG_NAMES=(
+  ["tmux"]="tmux"
+  ["ncurses"]="ncurses-term"  # apt-specific, adjust below for others
+  ["neovim"]="neovim"         # pacman uses 'neovim', brew uses 'neovim'
+  ["python3"]="python3"
+  ["python3-pip"]="python3-pip"
+  ["ipython"]="python3-ipython"
+  ["curl"]="curl"
+  ["git"]="git"
+  ["fonts-powerline"]="fonts-powerline"
+)
+
+# Adjust package names for specific package managers
+case "$PKG_MANAGER" in
+  pacman)
+    PKG_NAMES["ncurses"]="ncurses"
+    PKG_NAMES["python3-pip"]="python-pip"
+    PKG_NAMES["ipython"]="python-ipython"
+    PKG_NAMES["fonts-powerline"]="powerline-fonts"
+    ;;
+  brew)
+    PKG_NAMES["ncurses"]="ncurses"
+    PKG_NAMES["python3-pip"]="python-pip"
+    PKG_NAMES["ipython"]="ipython"
+    PKG_NAMES["fonts-powerline"]="powerline-fonts"
+    ;;
+esac
+
+# Build package list for installation
+PKG_LIST=""
+for pkg in "${!PKG_NAMES[@]}"; do
+  PKG_LIST="${PKG_LIST} ${PKG_NAMES[$pkg]}"
+done
+
+# Install packages using the appropriate command
+if [ "$PKG_MANAGER" = "unknown" ]; then
+  echo "[XTide86] Unknown package manager. Please install the following packages manually:"
+  for pkg in "${!PKG_NAMES[@]}"; do
+    echo "- ${PKG_NAMES[$pkg]}"
+  done
+  exit 1
+else
+  echo "[XTide86] Installing packages: $PKG_LIST"
+  $INSTALL_CMD $PKG_LIST || {
+    echo "[XTide86] Failed to install packages. Please check the package manager and try again."
+    exit 1
+  }
+fi
   
 
 # === Install vim-plug ===
