@@ -1,12 +1,12 @@
 
 ## License
 
-xtide86 is licensed under the GNU General Public License v3.0 or later.  
+XTide86 is licensed under the GNU General Public License v3.0 or later.  
 See the [LICENSE](./LICENSE) file for full details.
 
 ## TermiC Support
 
-xtide86 includes `termic.sh`, a lightweight, interactive C/C++ environment launcher. It will be installed automatically to `/usr/local/bin/termic` unless it already exists.
+XTide86 includes `termic.sh`, a lightweight, interactive C/C++ environment launcher. It will be installed automatically to `/usr/local/bin/termic` unless it already exists.
 
 This script is licensed under GPLv3 and included with permission.
 
@@ -15,7 +15,7 @@ An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.
 
 # XTra IDE 86 NEWS:
 
-NOTICE!! You must run xtide86 --update within your repo directory to fix install.sh issues related to the ncurses-term dependency if you run into issues or alternately re-clone the repo from GitHub for the fixed installer. 
+NOTICE FOR EXISTING USERS!! You must run xtide86 --update within your repo directory to fix install.sh issues related to the ncurses-term dependency if you run into issues or alternately re-clone the repo from GitHub for the fixed installer. 
 
 
 **Version:** `v1.1.0`
