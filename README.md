@@ -96,7 +96,7 @@ xtide86
 Ctrl|\
 ====  =
 qw  | wer        iop
-asd | fg         l
+asd | sfg         l
 |zxcvbn
 </code></pre>
 
@@ -141,8 +141,9 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 ## NeoVim buffer presets
 ##
 `\z` = Maximize edit buffer (lower)
+`\s` = Maximize and enter TermiC buffer (left)
 ##
-`\x` = Maximize terminal group of buffers (middle), main implementation of \i is to choose one of the two
+`\x` = Maximize and enter Terminal buffer(right)
 ##
 `\c` = Maximize IPython buffer (upper)
 ##

@@ -104,7 +104,8 @@ endif
 if !exists(':ResetWindowsDefault')
   command! ResetWindowsDefault call s:ResetWindowSizes(0)
 endif
-nnoremap <silent> <leader>x :MaximizeTerminalBuffer<CR>
+nnoremap <leader>s :call <SID>MaximizeTerminalBuffer('left')<CR>
+nnoremap <leader>x :call <SID>MaximizeTerminalBuffer('right')<CR>
 nnoremap <silent> <leader>c :MaximizeIPythonBuffer<CR>
 nnoremap <silent> <leader>b :ResetWindowsDefault<CR>
 nnoremap <silent> <leader>z :ResetWindowsMaxEditor<CR>
@@ -452,8 +453,8 @@ function! MaximizeIPythonBuffer() abort
 endfunction
 
 
-" Focus TermiC buffer
-function! s:MaximizeTerminalBuffer() abort
+" Focus Terminal buffer
+function! s:MaximizeTerminalBuffer(direction = 'left') abort
   silent! try
     let l:initial_win = winnr()
     let l:terminal_wins = []
@@ -512,11 +513,16 @@ function! s:MaximizeTerminalBuffer() abort
       execute l:nerdtree_win . 'wincmd w'
       silent! vertical resize 15
     endif
-    execute l:terminal_wins[0] . 'wincmd w'
+    " Jump to the specified terminal buffer (left or right)
+    if a:direction == 'right'
+      execute l:terminal_wins[1] . 'wincmd w'
+    else
+      execute l:terminal_wins[0] . 'wincmd w'
+    endif
     redraw
-    echo "SET SIZE | Focus: (Shell Prompt (Default: TermiC | Shell))"
+    echo "SET SIZE | Focus: (Shell Prompt (Default: TermiC | Shell)) - " . a:direction
   finally
-    if winnr() != l:terminal_wins[0]
+    if winnr() != (a:direction == 'right' ? l:terminal_wins[1] : l:terminal_wins[0])
       execute l:initial_win . 'wincmd w'
     endif
   endtry
