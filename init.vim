@@ -127,15 +127,7 @@ inoremap jk <Esc>
 command! Hs split
 command! Q call ForceQuitAndKillTmux()
 
-" Ensure Home/End work in normal and insert modes
-nnoremap <Home> 0
-inoremap <Home> <C-o>0
-nnoremap <End> $
-inoremap <End> <C-o>$
 
-" Map Home/End in terminal mode to navigate lines
-tnoremap <Home> <C-\><C-n>0i
-tnoremap <End> <C-\><C-n>$i
 
 
 " Initialization
