@@ -71,19 +71,21 @@ set listchars=tab:>-,eol:$,trail:.,extends:>,precedes:<,space:.
 " Custom highlights
 augroup CustomHighlights
     autocmd!
-    autocmd ColorScheme * highlight clear CursorLine | highlight CursorLine ctermbg=238 guibg=#444444
+    " Comment out or set CursorLine to underline only
+    autocmd ColorScheme * highlight clear CursorLine | highlight CursorLine cterm=underline gui=underline
     autocmd ColorScheme * highlight clear CursorColumn | highlight CursorColumn ctermbg=230 guibg=#4e4e4e
     autocmd ColorScheme * highlight clear Visual | highlight Visual ctermbg=58 guibg=#5f5f00
     autocmd ColorScheme * highlight clear Search | highlight Search ctermbg=88 guibg=#870000 ctermfg=15 guifg=#ffffff
     autocmd ColorScheme * highlight clear MatchParen | highlight MatchParen ctermbg=94 guibg=#875f00
 augroup END
-" Highlights
-highlight CursorLine ctermbg=52 guibg=#3c2f00
+
+" Comment out duplicate direct highlights to avoid conflicts
+" highlight CursorLine ctermbg=52 guibg=#3c2f00
 highlight CursorColumn ctermbg=239 guibg=#4e4e4e
 highlight Visual ctermbg=58 guibg=#5f5f00
 highlight Search ctermbg=88 guibg=#870000 ctermfg=94 guifg=#875f00
+highlight MatchParen ctermbg=94 guibg=#875f00rmfg=94 guifg=#875f00
 highlight MatchParen ctermbg=94 guibg=#875f00
-
 
 " Key mappings and commands
 if !exists(':EqualizeWindows')
@@ -124,6 +126,16 @@ nnoremap <leader>e :Files<CR>
 inoremap jk <Esc>
 command! Hs split
 command! Q call ForceQuitAndKillTmux()
+
+" Ensure Home/End work in normal and insert modes
+nnoremap <Home> 0
+inoremap <Home> <C-o>0
+nnoremap <End> $
+inoremap <End> <C-o>$
+
+" Map Home/End in terminal mode to navigate lines
+tnoremap <Home> <C-\><C-n>0i
+tnoremap <End> <C-\><C-n>$i
 
 
 " Initialization

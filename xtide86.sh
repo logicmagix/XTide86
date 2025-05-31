@@ -20,10 +20,9 @@
 
 
 set -e
-echo "[XTide86] Running..."  # Debug: Confirm script runs
+echo "[XTide86] Running..."
 
-
-IS_NO_COLOR=false
+IS_LOW_COLOR=false  # Changed from IS_NO_COLOR to IS_LOW_COLOR for clarity
 IS_QUIET=false
 FILENAME=""
 XTIDE_VERSION="1.1.0"
@@ -32,11 +31,9 @@ UPDATE_PROCESSED=false
 SESSION_NAME="xtide86"
 TMUX_CONF="$HOME/.tmux.conf"
 
-
 log() {
   $IS_QUIET || echo "[XTide86] $@"
 }
-
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -51,9 +48,9 @@ while [ $# -gt 0 ]; do
       IS_QUIET=true
       ;;
     --color|-c)
-      IS_NO_COLOR=""
+      IS_LOW_COLOR=false
       COLOR_FLAG_PROVIDED=true
-      log "Enabling full neon 256-color config..."
+      log "Enabling full 256-color config..."
       [ -s "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
       cat <<EOF > "$TMUX_CONF"
 # XTide86: 256-color config
@@ -63,59 +60,58 @@ set -g mouse on
 EOF
       log "Applied 256-color config."
       ;;
+    --low-color|-lc)  # New flag for 88-color mode
+      IS_LOW_COLOR=true
+      COLOR_FLAG_PROVIDED=true
+      log "Enabling low-color (88-color) mode. Warning: Home/End keys may not work."
+      [ -s "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
+      cat <<EOF > "$TMUX_CONF"
+# XTide86: 88-color config
+set -g default-terminal "xterm-88color"
+set -sa terminal-overrides ",xterm-88color*:colors=88"
+set -g mouse on
+EOF
+      log "Applied 88-color config."
+      ;;
     --update)
-  UPDATE_PROCESSED=true
-  log "Checking for updates from GitHub..."
-
-  SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
-  SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
-  cd "$SCRIPT_DIR" || { log "Error: Cannot access directory $SCRIPT_DIR"; exit 1; }
-
-  if [ -d .git ]; then
-    log "Working in repository: $SCRIPT_DIR"
-    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
-    log "Current branch: $CURRENT_BRANCH"
-
-    # Check network and remote connectivity
-    if ! git ls-remote --exit-code origin >/dev/null 2>&1; then
-      log "Error: Cannot connect to GitHub. Check network or remote configuration."
-      exit 1
-    fi
-
-    # Fetch latest tags
-    git fetch origin --tags >/dev/null 2>&1 || { log "Error: Failed to fetch updates."; exit 1; }
-
-    # Get latest version
-    LATEST_VERSION=$(git ls-remote --tags origin | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | sort -V | tail -n1)
-    if [ -z "$LATEST_VERSION" ]; then
-      log "Error: Could not determine latest version. Check repository tags."
-      exit 1
-    fi
-
-    # Compare versions
-    if [ "v$XTIDE_VERSION" = "$LATEST_VERSION" ]; then
-      log "Already on the latest version: $XTIDE_VERSION"
-      exit 0
-    fi
-
-    # Pull updates
-    if ! git pull origin "$CURRENT_BRANCH" >/dev/null 2>&1; then
-      log "Error: Failed to pull updates. Check for conflicts or branch issues."
-      exit 1
-    fi
-    else
+      UPDATE_PROCESSED=true
+      log "Checking for updates from GitHub..."
+      SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
+      SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+      cd "$SCRIPT_DIR" || { log "Error: Cannot access directory $SCRIPT_DIR"; exit 1; }
+      if [ -d .git ]; then
+        log "Working in repository: $SCRIPT_DIR"
+        CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
+        log "Current branch: $CURRENT_BRANCH"
+        if ! git ls-remote --exit-code origin >/dev/null 2>&1; then
+          log "Error: Cannot connect to GitHub. Check network or remote configuration."
+          exit 1
+        fi
+        git fetch origin --tags >/dev/null 2>&1 || { log "Error: Failed to fetch updates."; exit 1; }
+        LATEST_VERSION=$(git ls-remote --tags origin | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | sort -V | tail -n1)
+        if [ -z "$LATEST_VERSION" ]; then
+          log "Error: Could not determine latest version. Check repository tags."
+          exit 1
+        fi
+        if [ "v$XTIDE_VERSION" = "$LATEST_VERSION" ]; then
+          log "Already on the latest version: $XTIDE_VERSION"
+          exit 0
+        fi
+        if ! git pull origin "$CURRENT_BRANCH" >/dev/null 2>&1; then
+          log "Error: Failed to pull updates. Check for conflicts or branch issues."
+          exit 1
+        fi
+      else
         log "Error: Not a git repository. Cannot perform update."
         log "To enable automatic updates, clone XTide86 from GitHub:"
         log "    git clone https://github.com/logicmagix/XTIDE86.git"
         exit 1
-       fi
-
-     # Run install script
+      fi
       INSTALL_SCRIPT="$SCRIPT_DIR/install.sh"
-     if [ -f "$INSTALL_SCRIPT" ]; then
+      if [ -f "$INSTALL_SCRIPT" ]; then
         chmod +x "$INSTALL_SCRIPT"
         if ! bash "$INSTALL_SCRIPT"; then
-         log "Error: Installation script failed."
+          log "Error: Installation script failed."
           exit 1
         fi
         log "Update completed successfully."
@@ -130,14 +126,16 @@ EOF
       exit 0
       ;;
     --help|-h)
-      echo "Usage: ./xtide86.sh [--color | --no-color] [--update] [--quiet] [--version]"
+      echo "Usage: ./xtide86.sh [--color | --low-color] [--update] [--quiet] [--version] [filename]"
       echo ""
       echo "Options:"
-      echo "  --color,  -c       Enable 256-color mode"
+      echo "  --color,  -c       Enable 256-color mode (default)"
+      echo "  --low-color, -lc   Enable 88-color mode (warning: Home/End keys may not work)"
       echo "  --quiet,  -q       Suppress log output"
       echo "  --update           Pull latest Git changes and reinstall"
       echo "  --version          Show current version"
       echo "  --help,   -h       Show this help message"
+      echo "  [filename]         Open specified file in Neovim"
       exit 0
       ;;
     *)
@@ -152,95 +150,77 @@ EOF
   shift
 done
 
-
-# === Handle --update logic ===
-if [ "$UPDATE_PROCESSED" = true ]; then
-  log "Pulling latest changes..."
-  git -C "$SCRIPT_DIR" pull --rebase
-
-  log "Re-running installer..."
-  bash "$SCRIPT_DIR/install.sh"
-
-  exit 0
-fi
-
 # Exit if --update was processed
 if [ "$UPDATE_PROCESSED" = true ]; then
-  echo "[XTide86] Update process completed, exiting."
+  log "Update process completed, exiting."
   exit 0
 fi
 
-
 # === Apply environment variables ===
-if [ -z "$IS_NO_COLOR" ]; then
-  export TERM="xterm-256color"
-  export COLORTERM=truecolor
-  unset NVIM_NO_COLOR
-else
+if [ "$IS_LOW_COLOR" = true ]; then
   export TERM="xterm-88color"
   unset COLORTERM
   export NVIM_NO_COLOR=1
+  log "Using 88-color mode. Note: Home/End keys may not function."
+else
+  export TERM="xterm-256color"
+  export COLORTERM=truecolor
+  unset NVIM_NO_COLOR
+  log "Using default 256-color mode."
 fi
-
 
 # === Write default tmux.conf only if no color flag provided ===
-if [ "$COLOR_FLAG_PROVIDED" = false ] && [ -z "$FILENAME" ]; then
-  IS_NO_COLOR=true
-  echo "[XTide86] No color flag provided, applying default hybrid 88-color scheme..."
+if [ "$COLOR_FLAG_PROVIDED" = false ]; then
+  log "No color flag provided, applying default 256-color scheme..."
+  [ -s "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
   cat <<EOF > "$TMUX_CONF"
-# XTide86: Default hybrid 88-color scheme
-set -g default-terminal "xterm-88color"
-set -sa terminal-overrides ",xterm-88color*:colors=88"
+# XTide86: Default 256-color scheme
+set -g default-terminal "tmux-256color"
+set -sa terminal-overrides ",*:Tc"
 set -g mouse on
 EOF
-  echo "[XTide86] Applied default hybrid 88-color config."
+  log "Applied default 256-color config."
 fi
-
 
 # === Check for existing session ===
 if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
   if tmux list-clients -t "$SESSION_NAME" >/dev/null 2>&1; then
     tmux detach-client -s "$SESSION_NAME" 2>/dev/null || true
-    echo "[XTide86] Detached existing clients to apply new color profile."
+    log "Detached existing clients to apply new color profile."
   else
-    echo "[XTide86] Detached session '$SESSION_NAME' found."
+    log "Detached session '$SESSION_NAME' found."
   fi
-  # Apply color profile to the session
   if [ -n "$FILENAME" ]; then
     if tmux list-panes -t "$SESSION_NAME":0.0 >/dev/null 2>&1; then
       tmux select-pane -t "$SESSION_NAME":0.0
       tmux send-keys -t "$SESSION_NAME":0.0 C-c ":qall!" C-m "nvim \"$FILENAME\"" C-m
-      echo "[XTide86] Opened $FILENAME in left pane of existing session."
+      log "Opened $FILENAME in left pane of existing session."
     else
-      echo "[XTide86] Warning: Left pane not available. Attaching without opening $FILENAME."
+      log "Warning: Left pane not available. Attaching without opening $FILENAME."
     fi
   fi
-  # Attach to the session with the new color profile
   if tmux attach-session -t "$SESSION_NAME"; then
     exit 0
   else
-    echo "[XTide86] Error: Failed to attach to session '$SESSION_NAME'. Try 'tmux kill-session -t $SESSION_NAME'."
+    log "Error: Failed to attach to session '$SESSION_NAME'. Try 'tmux kill-session -t $SESSION_NAME'."
     exit 1
   fi
 fi
-
 
 # === Ensure mouse support in tmux.conf ===
 if [ -s "$TMUX_CONF" ]; then
   if ! grep -q "set -g mouse on" "$TMUX_CONF"; then
     echo "set -g mouse on" >> "$TMUX_CONF"
-    echo "[XTide86] Enabled mouse support in ~/.tmux.conf"
+    log "Enabled mouse support in ~/.tmux.conf"
   fi
 else
   echo "set -g mouse on" > "$TMUX_CONF"
-  echo "[XTide86] Created ~/.tmux.conf with mouse support"
+  log "Created ~/.tmux.conf with mouse support"
 fi
-
 
 # === Start new tmux session ===
 tmux new-session -d -s "$SESSION_NAME"
 tmux split-window -h
-
 
 # Open file in left pane (pane 0) if filename provided, otherwise open nvim
 if [ -n "$FILENAME" ]; then
@@ -250,7 +230,6 @@ else
 fi
 tmux send-keys -t "$SESSION_NAME":0.1 'nvim' C-m
 
-
 # Keybindings
 tmux unbind C-b
 tmux set-option -g prefix C-q
@@ -258,6 +237,5 @@ tmux bind-key C-q send-prefix
 tmux bind-key -n C-a resize-pane -R 999 \; select-pane -t 1
 tmux bind-key -n C-d resize-pane -L 999 \; select-pane -t 0
 tmux bind-key -n C-s resize-pane -x 50%
-
 
 tmux attach-session -t "$SESSION_NAME"
