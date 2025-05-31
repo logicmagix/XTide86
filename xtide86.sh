@@ -64,40 +64,65 @@ EOF
       log "Applied 256-color config."
       ;;
     --update)
-          UPDATE_PROCESSED=true
-          log "Checking for updates from GitHub..."
+  UPDATE_PROCESSED=true
+  log "Checking for updates from GitHub..."
 
-          SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
-          SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
-          cd "$SCRIPT_DIR" || exit 1
+  SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
+  SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+  cd "$SCRIPT_DIR" || { log "Error: Cannot access directory $SCRIPT_DIR"; exit 1; }
 
-          if [ -d .git ]; then
-            log "Working in repository: $SCRIPT_DIR"
-            CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-            log "Current branch: $CURRENT_BRANCH"
-            git pull origin "$CURRENT_BRANCH"
-          else
-            log "Not a git repository. Cannot perform update."
-            log "Update failed: This install isn't a Git clone."
-            log "To enable automatic updates, clone XTide86 from GitHub like so:"
-            log "    git clone https://github.com/logicmagix/XTIDE86.git"
-            exit 1
-            LATEST_VERSION=$(git -C "$SCRIPT_DIR" ls-remote --tags origin | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | sort -V | tail -n1)
-          if [ "v$XTIDE_VERSION" = "$LATEST_VERSION" ]; then
-              log "Already on the latest version: $XTIDE_VERSION"
-              exit 0
-          fi
-          fi
+  if [ -d .git ]; then
+    log "Working in repository: $SCRIPT_DIR"
+    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
+    log "Current branch: $CURRENT_BRANCH"
 
-          INSTALL_SCRIPT="$SCRIPT_DIR/install.sh"
-          log "INSTALL_SCRIPT is: $INSTALL_SCRIPT"
+    # Check network and remote connectivity
+    if ! git ls-remote --exit-code origin >/dev/null 2>&1; then
+      log "Error: Cannot connect to GitHub. Check network or remote configuration."
+      exit 1
+    fi
 
-          if [ -f "$INSTALL_SCRIPT" ]; then
-            chmod +x "$INSTALL_SCRIPT"
-            bash "$INSTALL_SCRIPT"
-          else
-            log "Error: install.sh not found at $INSTALL_SCRIPT"
-          fi
+    # Fetch latest tags
+    git fetch origin --tags >/dev/null 2>&1 || { log "Error: Failed to fetch updates."; exit 1; }
+
+    # Get latest version
+    LATEST_VERSION=$(git ls-remote --tags origin | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | sort -V | tail -n1)
+    if [ -z "$LATEST_VERSION" ]; then
+      log "Error: Could not determine latest version. Check repository tags."
+      exit 1
+    fi
+
+    # Compare versions
+    if [ "v$XTIDE_VERSION" = "$LATEST_VERSION" ]; then
+      log "Already on the latest version: $XTIDE_VERSION"
+      exit 0
+    fi
+
+    # Pull updates
+    if ! git pull origin "$CURRENT_BRANCH" >/dev/null 2>&1; then
+      log "Error: Failed to pull updates. Check for conflicts or branch issues."
+      exit 1
+    fi
+    else
+        log "Error: Not a git repository. Cannot perform update."
+        log "To enable automatic updates, clone XTide86 from GitHub:"
+        log "    git clone https://github.com/logicmagix/XTIDE86.git"
+        exit 1
+       fi
+
+     # Run install script
+      INSTALL_SCRIPT="$SCRIPT_DIR/install.sh"
+     if [ -f "$INSTALL_SCRIPT" ]; then
+        chmod +x "$INSTALL_SCRIPT"
+        if ! bash "$INSTALL_SCRIPT"; then
+         log "Error: Installation script failed."
+          exit 1
+        fi
+        log "Update completed successfully."
+      else
+        log "Error: install.sh not found at $INSTALL_SCRIPT"
+        exit 1
+      fi
       exit 0
       ;;
     --version)
