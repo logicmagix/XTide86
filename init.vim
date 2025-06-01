@@ -524,8 +524,6 @@ function! MaximizeIPythonBuffer() abort
   endtry
 endfunction
 
-
-" Focus Terminal buffer
 function! s:MaximizeTerminalBuffer(direction = 'left') abort
   silent! try
     let l:initial_win = winnr()
@@ -548,6 +546,7 @@ function! s:MaximizeTerminalBuffer(direction = 'left') abort
         let l:editor_win = w
       endif
     endfor
+    echo "Debug: Terminal wins: " . string(l:terminal_wins) . " | IPython win: " . l:ipython_win . " | NERDTree win: " . l:nerdtree_win . " | Editor win: " . l:editor_win
     if len(l:terminal_wins) < 2 || l:ipython_win == 0
       echo "Error: Could not find dual terminal windows or IPython terminal"
       execute l:initial_win . 'wincmd w'
@@ -555,6 +554,7 @@ function! s:MaximizeTerminalBuffer(direction = 'left') abort
     endif
     execute l:terminal_wins[0] . 'wincmd w'
     let l:middle_win = winnr()
+    echo "Debug: Selected terminal_wins[0] as middle_win: " . l:middle_win
     wincmd k
     if getbufvar(winbufnr(winnr()), '&buftype') != 'terminal' || bufname(winbufnr(winnr())) =~ 'ipython'
       execute l:middle_win . 'wincmd w'
@@ -569,27 +569,39 @@ function! s:MaximizeTerminalBuffer(direction = 'left') abort
         return
       endif
     endif
+    echo "Debug: Middle window finalized: " . l:middle_win
     for w in range(1, winnr('$'))
-      if w != l:middle_win && w != l:terminal_wins[1] " Skip middle window and its vertical split
+      if w != l:middle_win && w != l:terminal_wins[1]
         execute w . 'wincmd w'
         if w == l:ipython_win
-          silent! resize 3 " IPython to 3 lines
+          silent! resize 3
+          echo "Debug: Resized IPython (win " . w . ") to height 3"
         else
-          silent! resize 1 " Other windows to minimum (winminheight=1)
+          silent! resize 1
+          echo "Debug: Resized window " . w . " to height 1"
         endif
       endif
     endfor
     execute l:middle_win . 'wincmd w'
     silent! wincmd _
+    echo "Debug: Maximized middle window (win " . l:middle_win . ") vertically"
     if l:nerdtree_win > 0
       execute l:nerdtree_win . 'wincmd w'
       silent! vertical resize 15
+      echo "Debug: Resized NERDTree (win " . l:nerdtree_win . ") to width 15"
     endif
-    " Jump to the specified terminal buffer (left or right)
     if a:direction == 'right'
       execute l:terminal_wins[1] . 'wincmd w'
+      echo "Debug: Focused right terminal (win " . l:terminal_wins[1] . ")"
+      silent! vertical resize 1000
+      silent! wincmd _
+      echo "Debug: Applied vertical resize 1000 and wincmd _ to right terminal"
     else
       execute l:terminal_wins[0] . 'wincmd w'
+      echo "Debug: Focused left terminal (win " . l:terminal_wins[0] . ")"
+      silent! vertical resize 1000
+      silent! wincmd _
+      echo "Debug: Applied vertical resize 1000 and wincmd _ to left terminal"
     endif
     redraw
     echo "SET SIZE | Focus: (Shell Prompt (Default: TermiC | Shell)) - " . a:direction
@@ -599,7 +611,6 @@ function! s:MaximizeTerminalBuffer(direction = 'left') abort
     endif
   endtry
 endfunction
-
 
 " Equalize window sizes (mimic Ctrl-w =)
 function! s:EqualizeWindows() abort
