@@ -16,6 +16,11 @@
 " Credits
 
 "This project includes `termic.sh` from [Yusuf Kagan Hanoglu/Max Schillinger/TermiC], licensed under the [GPL3] License.
+" Disable swapfile globally
+set noswapfile
+
+" Re-enable it for normal files (but never for NERDTree)
+autocmd BufWinEnter * if &filetype !=# 'nerdtree' | setlocal swapfile | endif
 
 syntax on
 filetype plugin indent on

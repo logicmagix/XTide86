@@ -20,7 +20,16 @@ Tide42 is inspired in part by *The Hitchhiker’s Guide to the Galaxy*, where "4
 This project reflects that same spirit: a terminal IDE that encourages curiosity, simplicity, and discovery—*you ask the questions*. Tide42 is meant to be your solution, leaving the questions in your hands. 
 
 # Tide42 NEWS:
-06.01.25 Added a new AppendToEditor function that lets you seamlessly append selected text from visual mode to another editor buffer with a single keypress. Enjoy a smooth workflow with silent operation or optional verbose debugging for easy troubleshooting!
+06.01.25 Added a new AppendToEditor function that lets you seamlessly append selected text from visual mode to another editor buffer with a single keypress. Enjoy a smooth workflow with silent operation or optional verbose debugging for easy troubleshooting! 
+
+Fixed intermittent NERDTree swapfile creation by disabling swap globally
+
+- Added global `set noswapfile` to prevent swap creation on startup
+- Re-enabled swapfile only for non-NERDTree buffers via BufWinEnter autocmd
+- Eliminated rare `.swp` file generation in terminal sessions
+- Optional: silently delete swapfiles via SwapExists to suppress flash warnings
+
+This resolves the last recurring UX bug for 1.2.0 stable.
 
 05.30.25 tide42 now includes multi system support (Debian, Arch, MacOS) a man page and automated updating from anywhere! (not just the repo directory)
 
