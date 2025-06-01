@@ -1,5 +1,5 @@
 
-" xtide86 - a terminal IDE powered by tmux and nvim
+" tide42 (formerly xtide86) - a terminal IDE powered by tmux and nvim
 " Copyright (C) 2025 Pavle Dzakula
 "
 " This program is free software: you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# xtide86 - a terminal IDE powered by tmux and nvim
+# tide42 - a terminal IDE powered by tmux and nvim
 # Copyright (C) 2025 Pavle Dzakula
 #
 # This program is free software: you can redistribute it and/or modify
@@ -20,19 +20,19 @@
 
 
 set -e
-echo "[XTide86] Running..."
+echo "[tide86] Running..."
 
 IS_LOW_COLOR=false  # Changed from IS_NO_COLOR to IS_LOW_COLOR for clarity
 IS_QUIET=false
 FILENAME=""
-XTIDE_VERSION="1.1.0"
+TIDE_VERSION="1.1.0"
 COLOR_FLAG_PROVIDED=false
 UPDATE_PROCESSED=false
-SESSION_NAME="xtide86"
+SESSION_NAME="tide42"
 TMUX_CONF="$HOME/.tmux.conf"
 
 log() {
-  $IS_QUIET || echo "[XTide86] $@"
+  $IS_QUIET || echo "[tide42] $@"
 }
 
 while [ $# -gt 0 ]; do
@@ -53,7 +53,7 @@ while [ $# -gt 0 ]; do
       log "Enabling low-color (88-color) mode. Warning: Home/End keys may not work."
       [ -s "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
       cat <<EOF > "$TMUX_CONF"
-# XTide86: 88-color config
+# tide42: 88-color config
 set -g default-terminal "xterm-88color"
 set -sa terminal-overrides ",xterm-88color*:colors=88"
 set -g mouse on
@@ -80,8 +80,8 @@ EOF
           log "Error: Could not determine latest version. Check repository tags."
           exit 1
         fi
-        if [ "v$XTIDE_VERSION" = "$LATEST_VERSION" ]; then
-          log "Already on the latest version: $XTIDE_VERSION"
+        if [ "v$TIDE_VERSION" = "$LATEST_VERSION" ]; then
+          log "Already on the latest version: $TIDE_VERSION"
           exit 0
         fi
         if ! git pull origin "$CURRENT_BRANCH" >/dev/null 2>&1; then
@@ -90,8 +90,8 @@ EOF
         fi
       else
         log "Error: Not a git repository. Cannot perform update."
-        log "To enable automatic updates, clone XTide86 from GitHub:"
-        log "    git clone https://github.com/logicmagix/XTIDE86.git"
+        log "To enable automatic updates, clone tide42 from GitHub:"
+        log "    git clone https://github.com/logicmagix/tide42.git"
         exit 1
       fi
       INSTALL_SCRIPT="$SCRIPT_DIR/install.sh"
@@ -109,11 +109,11 @@ EOF
       exit 0
       ;;
     --version)
-      log "XTide86 version $XTIDE_VERSION"
+      log "tide42 version $TIDE_VERSION"
       exit 0
       ;;
     --help|-h)
-      echo "Usage: ./xtide86.sh [--color | --low-color] [--update] [--quiet] [--version] [filename]"
+      echo "Usage: tide42 [--color | --low-color] [--update] [--quiet] [--version] [filename]"
       echo ""
       echo "Options:"
       echo "  --color,  -c       Enable 256-color mode (default)"
@@ -161,7 +161,7 @@ if [ "$COLOR_FLAG_PROVIDED" = false ]; then
   log "No color flag provided, applying default 256-color scheme..."
   [ -s "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
   cat <<EOF > "$TMUX_CONF"
-# XTide86: Default 256-color scheme
+# tide42: Default 256-color scheme
 set -g default-terminal "tmux-256color"
 set -sa terminal-overrides ",*:Tc"
 set -g mouse on

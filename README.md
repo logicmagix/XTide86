@@ -211,7 +211,7 @@ If you're running tide42 inside a tmux or custom terminal session, you might run
 Using commands like :w !sudo tee % in NeoVim may silently fail to prompt for a password and kick you out after 3 attempts.
 
 Solutions:
-Use a GUI editor instead within a Xtide86 terminal buffer to avoid leaving your session:
+Use a GUI editor instead within a tide42 terminal buffer to avoid leaving your session:
 ex. sudoedit /etc/systemd/system/...
 Launch a root nvim in a nested terminal within tide42:
 ex. sudo nvim /etc/systemd/system/...
@@ -222,7 +222,7 @@ ex. sudo nvim /etc/systemd/system/...
 # Preferred for updates:
 ```bash```
 - git clone https://github.com/logicmagix/tide42.git
-- cd XTIDE86
+- cd tide42
 
 # Make the script executable (one-time setup)
 - chmod +x install.sh
@@ -230,10 +230,10 @@ ex. sudo nvim /etc/systemd/system/...
 - tide42 to start session
 
 # If downloading .zip:
-- Go to https://github.com/logicmagix/XTIDE86 and click "Code" > "Download ZIP".
-- Extract the ZIP to a directory (e.g., ~/XTIDE86).
+- Go to https://github.com/logicmagix/tide42 and click "Code" > "Download ZIP".
+- Extract the ZIP to a directory (e.g., ~/tide42/).
 - Run the installation script:
-- cd ~/XTIDE86
+- cd ~/tide42/
 - ./install.sh
 
 ## Updating tide42
