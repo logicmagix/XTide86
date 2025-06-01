@@ -21,21 +21,32 @@ TermiC (lightweight live shell for C/C++)
 Enable full 256-color support in all terminal panes and status bars.
 
 .TP
+.BR \-\-low-color ", " \-lc
+Enable 88-color mode (limited compatibility; some keybindings like Home/End may not function correctly).
+
+.TP
 .BR \-\-quiet ", " \-q
 Suppress verbose logging messages during initialization.
+
+.TP
+.BR \-\-update
+Self-update tide42 from the GitHub repository. Requires a clean working directory.
+
+.TP
+.BR \-\-force-update
+Discard uncommitted local changes and update to the latest version.
 
 .TP
 .BR \-\-version
 Print the installed version and exit.
 
 .TP
-.BR \-\-update
-Self-update tide42 from the GitHub repository.
-Must be run from within the local repo directory (containing a \fI.git\fR folder).
+.BR \-\-help ", " \-h
+Display this help message and exit.
 
 .TP
-.BR \-\-help
-Display this help and exit.
+.I filename
+Optional. Open the specified file directly in Neovim within the tide42 environment.
 
 .SH FEATURES
 .IP \[bu] 2
