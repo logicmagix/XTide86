@@ -44,6 +44,11 @@ while [ $# -gt 0 ]; do
       log "Source directory: $SCRIPT_DIR"
       exit 0
       ;;
+      --lite)
+      shift
+      log "[tide42] Launching in lite mode (no tmux)..."
+      exec nvim "$@"
+      ;;
     --quiet|-q)
       IS_QUIET=true
       ;;
@@ -125,6 +130,9 @@ EOF
       echo "Usage: tide42 [--color | --low-color] [--update] [--quiet] [--version] [filename]"
       echo ""
       echo "Options:"
+      echo "  --whereami         Display git installation directory"
+      echo "  --lite             Lite edit mode without a tmux session"
+      echo "  --edit -e          Launch without tmux for quick editing or low-resource systems"
       echo "  --color,  -c       Enable 256-color mode (default)"
       echo "  --low-color, -lc   Enable 88-color mode (warning: Home/End keys may not work)"
       echo "  --quiet,  -q       Suppress log output"
