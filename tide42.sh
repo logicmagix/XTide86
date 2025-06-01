@@ -25,7 +25,7 @@ echo "[tide86] Running..."
 IS_LOW_COLOR=false  # Changed from IS_NO_COLOR to IS_LOW_COLOR for clarity
 IS_QUIET=false
 FILENAME=""
-TIDE_VERSION="1.1.0"
+TIDE_VERSION="1.2.0"
 COLOR_FLAG_PROVIDED=false
 UPDATE_PROCESSED=false
 SESSION_NAME="tide42"
