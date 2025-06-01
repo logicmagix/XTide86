@@ -20,6 +20,7 @@ Tide42 is inspired in part by *The Hitchhiker’s Guide to the Galaxy*, where "4
 This project reflects that same spirit: a terminal IDE that encourages curiosity, simplicity, and discovery—*you ask the questions*. Tide42 is meant to be your solution, leaving the questions in your hands. 
 
 # Terminal IDE 42 NEWS:
+06.01.25 Added a new AppendToEditor function that lets you seamlessly append selected text from visual mode to another editor buffer with a single keypress. Enjoy a smooth workflow with silent operation or optional verbose debugging for easy troubleshooting!
 
 05.30.25 tide42 now includes multi system support (Debian, Arch, MacOS) a man page and automated updating from anywhere! (not just the repo directory)
 
@@ -27,7 +28,7 @@ This project reflects that same spirit: a terminal IDE that encourages curiosity
 
 
 **Version:** `v1.2.0`
->**New in v1.2.0:** tide42 now fully supports 256-color terminals!
+>**New in v1.2.0:** - Functionality to yank text from any buffer (IPython, TermiC, Terminal) and append to file editor for easy notes.
 > 
 > - Lite mode with --lite to open tide42 with no tmux session for quick edits or low resource systems.
 > - Improved color rendering in all panes and status bars
@@ -78,7 +79,6 @@ This project reflects that same spirit: a terminal IDE that encourages curiosity
 
 
 ## Coming Soon!
-- Functionality to yank text from any buffer (IPython, TermiC, Terminal) and append to file editor for easy notes.
 - Opening second file in right tmux buffer if session is detached with a loaded file in the left (default).
 
 ## Flags
@@ -101,7 +101,7 @@ Ctrl|\
 ====  =
 qw  | wer        iop
 asd | sfg         l
-|zxcvbn
+|zxcvbnm
 </code></pre>
 
 Tmux based command: Ctrl-q + d (or gui exit button) = Exit and save tmux state (lost on restart of PC) 
@@ -124,6 +124,8 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 `\p` = Paste selected text into IPython buffer and expand buffer, entering insert mode.
 ## Send to TermiC
 `\l` = Paste selected text into TermiC buffer and expand buffer, entering insert mode
+## Append to Editor
+`\m\` = Paste selected text into nvim file editor buffer from any buffer: terminal, ipython, or termic.
 
 ## Tmux buffer controls (work in insert or command mode)
 ##

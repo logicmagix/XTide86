@@ -9,7 +9,7 @@
 "
 " This program is distributed in the hope that it will be useful,
 " but WITHOUT ANY WARRANTY; without even the implied warranty of
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the# GNU General Public License for more details.
+" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the# GNU General Public License for more details.
 "
 " You should have received a copy of the GNU General Public License
 " along with this program. If not, see <https://www.gnu.org/licenses/>.
@@ -116,6 +116,7 @@ nnoremap <silent> <leader>n :EqualizeWindows<CR>
 nnoremap <leader>i :vertical resize <C-r>=input('Resize to: ')<CR><CR>
 xnoremap <silent> <leader>p :<C-u>call SendToIPython()<CR>
 xnoremap <silent> <leader>l :<C-u>call SendToTermiC()<CR>
+vnoremap <silent> <leader>m :<C-u>call AppendToEditor()<CR>
 nnoremap <silent> <leader>o :ChatGPT<CR>
 tnoremap <Esc> <C-\><C-n>
 nnoremap <leader>g :call Grid(5, 10)<CR>  " Lift 5x10 gate
@@ -307,6 +308,67 @@ function! SendToTermiC() abort
     if mode() =~# '[vV]'
       execute "normal! \<Esc>"
     endif
+  endtry
+endfunction
+
+" Append any buffer selection to editor buffer
+function! AppendToEditor() abort
+  " Initialize debounce variables
+  if !exists('s:last_run')
+    let s:last_run = 0
+    let s:debounce_ms = 100
+  endif
+
+  " Debounce check
+  let current_time = reltimefloat(reltime()) * 1000
+  if current_time - s:last_run < s:debounce_ms
+    return
+  endif
+  let s:last_run = current_time
+
+  try
+    let src_buf = bufnr('%')
+    let current_win = winnr()
+
+    " Check for visual mode
+    if mode() =~# '[vV\<C-v>]'
+      normal! gv"zy
+      let src_lines = split(getreg('z'), '\n')
+    else
+      echom "Error: Not in visual mode"
+      return
+    endif
+
+    if empty(src_lines)
+      echom "Error: No content in selection"
+      return
+    endif
+
+    " Find editor window
+    let editor_win = 0
+    for w in range(1, winnr('$'))
+      let buf = winbufnr(w)
+      if getbufvar(buf, '&buftype') == '' && bufname(buf) !~ 'NERD'
+        let editor_win = w
+        break
+      endif
+    endfor
+
+    if editor_win == 0
+      echom "Error: No suitable editor buffer found"
+      return
+    endif
+
+    " Append to editor buffer
+    execute editor_win . 'wincmd w'
+    execute 'resize 35'
+    let editor_buf = bufnr('%')
+    let last_line = line('$')
+    call appendbufline(editor_buf, last_line, src_lines)
+    execute (last_line + len(src_lines)) . "normal! $"
+    startinsert
+  catch
+    echom "Error: " . v:exception
   endtry
 endfunction
 
