@@ -5,6 +5,20 @@
 - Installer, wrapper, and manpage updated accordingly
 - Legacy support for `xtide86 --update` remains functional
 
+### Added
+- `--force-update` flag to reset local changes and reinstall from latest Git tag
+- `--lite`, `-li` mode for running `nvim` without tmux (quick edit mode)
+- Help output and manpage expanded with clearer flag documentation
+
+### Fixed
+- Swapfile suppression for NERDTree buffers to avoid `.swp` file spam
+- False positive dirty state in updater due to untracked/generated files
+- `.gitignore` restored to ignore `install.sh`, manpages, and swapfiles
+
+### Notes
+- Declared `1.2.0` as first stable release after extended field testing
+- Internals cleaned, redundant permissions removed from `install.sh`
+
 
 ## [1.1.0] - 2025-05-28
 ### Added
