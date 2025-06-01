@@ -47,19 +47,6 @@ while [ $# -gt 0 ]; do
     --quiet|-q)
       IS_QUIET=true
       ;;
-    --color|-c)
-      IS_LOW_COLOR=false
-      COLOR_FLAG_PROVIDED=true
-      log "Enabling full 256-color config..."
-      [ -s "$TMUX_CONF" ] && cp "$TMUX_CONF" "$TMUX_CONF.bak"
-      cat <<EOF > "$TMUX_CONF"
-# XTide86: 256-color config
-set -g default-terminal "tmux-256color"
-set -sa terminal-overrides ",*:Tc"
-set -g mouse on
-EOF
-      log "Applied 256-color config."
-      ;;
     --low-color|-lc)  # New flag for 88-color mode
       IS_LOW_COLOR=true
       COLOR_FLAG_PROVIDED=true

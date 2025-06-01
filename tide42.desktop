@@ -9,4 +9,5 @@ Icon=xtide86
 Terminal=true
 Categories=Development;TerminalEmulator;Utility;
 StartupNotify=false
+Name[en_US]=tide42.desktop
 

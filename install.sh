@@ -2,6 +2,17 @@
 
 set -e
 
+# Inside install.sh
+BIN_DIR="$HOME/.local/bin"
+mkdir -p "$BIN_DIR"
+
+# Copy wrappers
+cp ./tide42 "$BIN_DIR/tide42"
+cp ./xtide86 "$BIN_DIR/xtide86"
+
+chmod +x "$BIN_DIR/tide42" "$BIN_DIR/xtide86"
+echo "[+] Installed tide42 and legacy xtide86 wrappers to $BIN_DIR"
+
 # === Detect OS and Package Manager ===
 detect_os_and_pkg() {
   OS=$(uname -s)
@@ -10,52 +21,52 @@ detect_os_and_pkg() {
     Darwin)
       PKG_MANAGER="brew"
       INSTALL_CMD="brew install"
-      INSTALL_PATH="/usr/local/bin/xtide86"
-      [ -d "/opt/homebrew/bin" ] && INSTALL_PATH="/opt/homebrew/bin/xtide86"  # Apple Silicon support
+      INSTALL_PATH="/usr/local/bin/tide42"
+      [ -d "/opt/homebrew/bin" ] && INSTALL_PATH="/opt/homebrew/bin/tide42"  # Apple Silicon support
       ;;
     Linux)
       if [ -f "/etc/arch-release" ]; then
         PKG_MANAGER="pacman"
         INSTALL_CMD="sudo pacman -S --noconfirm"
-        INSTALL_PATH="/usr/local/bin/xtide86"
+        INSTALL_PATH="/usr/local/bin/tide42"
       elif [ -f "/etc/debian_version" ]; then
         PKG_MANAGER="apt"
         INSTALL_CMD="sudo apt install -y"
-        INSTALL_PATH="/usr/local/bin/xtide86"
+        INSTALL_PATH="/usr/local/bin/tide42"
       else
         PKG_MANAGER="unknown"
         INSTALL_CMD="echo 'Please install manually:'"
-        INSTALL_PATH="/usr/local/bin/xtide86"
+        INSTALL_PATH="/usr/local/bin/tide42"
       fi
       ;;
     *)
       PKG_MANAGER="unknown"
       INSTALL_CMD="echo 'Please install manually:'"
-      INSTALL_PATH="/usr/local/bin/xtide86"
+      INSTALL_PATH="/usr/local/bin/tide42"
       ;;
   esac
 
-  echo "[XTide86] Detected OS: $OS"
-  echo "[XTide86] Using package manager: $PKG_MANAGER"
-  echo "[XTide86] Install path: $INSTALL_PATH"
+  echo "[tide42] Detected OS: $OS"
+  echo "[tide42] Using package manager: $PKG_MANAGER"
+  echo "[tide42] Install path: $INSTALL_PATH"
 }
 
 update_package_manager() {
   case "$PKG_MANAGER" in
     apt)
-      echo "[XTide86] Updating apt..."
+      echo "[tide42] Updating apt..."
       sudo apt update
       ;;
     pacman)
-      echo "[XTide86] Updating pacman..."
+      echo "[tide42] Updating pacman..."
       sudo pacman -Sy
       ;;
     brew)
-      echo "[XTide86] Updating Homebrew..."
+      echo "[tide42] Updating Homebrew..."
       brew update
       ;;
     *)
-      echo "[XTide86] Skipping package manager update (unsupported or unknown)."
+      echo "[tide42] Skipping package manager update (unsupported or unknown)."
       ;;
   esac
 }
@@ -65,7 +76,7 @@ detect_os_and_pkg
 update_package_manager
 
 # === Install system packages ===
-echo "[XTide86] Installing xtide86 dependencies..."
+echo "[tide42] Installing tide42 dependencies..."
 
 # Define packages (map different names if needed)
 declare -A PKG_NAMES=(
@@ -104,15 +115,15 @@ done
 
 # Install packages using the appropriate command
 if [ "$PKG_MANAGER" = "unknown" ]; then
-  echo "[XTide86] Unknown package manager. Please install the following packages manually:"
+  echo "[tide42] Unknown package manager. Please install the following packages manually:"
   for pkg in "${!PKG_NAMES[@]}"; do
     echo "- ${PKG_NAMES[$pkg]}"
   done
   exit 1
 else
-  echo "[XTide86] Installing packages: $PKG_LIST"
+  echo "[tide42] Installing packages: $PKG_LIST"
   $INSTALL_CMD $PKG_LIST || {
-    echo "[XTide86] Failed to install packages. Please check the package manager and try again."
+    echo "[tide42] Failed to install packages. Please check the package manager and try again."
     exit 1
   }
 fi
@@ -133,11 +144,11 @@ cp ./init.vim ~/.config/nvim/init.vim
 # === Resolve the script's directory ===
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# === Copy xtide86.sh and termic.sh to system path ===
-echo "Installing xtide86 and TermiC launch scripts..."
+# === Copy tide42.sh and termic.sh to system path ===
+echo "Installing tide42 and TermiC launch scripts..."
 
 # === Check if files exist ===
-for script in "$SCRIPT_DIR/xtide86.sh" "$SCRIPT_DIR/termic.sh"; do
+for script in "$SCRIPT_DIR/tide42.sh" "$SCRIPT_DIR/termic.sh"; do
   if [ ! -f "$script" ]; then
     echo "Error: $script not found in $SCRIPT_DIR. Please ensure the file exists."
     exit 1
@@ -145,25 +156,25 @@ for script in "$SCRIPT_DIR/xtide86.sh" "$SCRIPT_DIR/termic.sh"; do
 done
 
 # === Set executable permissions locally (temporary for copying) ===
-echo "Setting temporary executable permissions for xtide86.sh and termic.sh..."
-if ! chmod +x "$SCRIPT_DIR/xtide86.sh" "$SCRIPT_DIR/termic.sh"; then
+echo "Setting temporary executable permissions for tide42.sh and termic.sh..."
+if ! chmod +x "$SCRIPT_DIR/tide42.sh" "$SCRIPT_DIR/termic.sh"; then
   echo "Error: Failed to set executable permissions on scripts."
   exit 1
 fi
 
-# === Copy xtide86.sh to /usr/local/bin ===
-echo "Creating wrapper script at /usr/local/bin/xtide86..."
+# === Copy tide42.sh to /usr/local/bin ===
+echo "Creating wrapper script at /usr/local/bin/tide42..."
 
-cat <<EOF | sudo tee /usr/local/bin/xtide86 > /dev/null
+cat <<EOF | sudo tee /usr/local/bin/tide42 > /dev/null
 #!/usr/bin/env bash
 SCRIPT_DIR="$SCRIPT_DIR"
-bash "\$SCRIPT_DIR/xtide86.sh" "\$@"
+bash "\$SCRIPT_DIR/tide42.sh" "\$@"
 EOF
 
-sudo chmod +x /usr/local/bin/xtide86
+sudo chmod +x /usr/local/bin/tide42
 echo "Wrapper script created."
 
-echo "xtide86.sh installed to /usr/local/bin/xtide86."
+echo "tide42.sh installed to /usr/local/bin/tide42."
 
 # === Copy termic.sh to /usr/local/bin ===
 echo "Copying termic.sh to /usr/local/bin/..."
@@ -175,17 +186,17 @@ echo "termic.sh installed to /usr/local/bin/termic."
 
 # === Ensure destination files are executable ===
 echo "Ensuring installed scripts are executable..."
-if ! sudo chmod 755 /usr/local/bin/xtide86 /usr/local/bin/termic; then
+if ! sudo chmod 755 /usr/local/bin/tide42 /usr/local/bin/termic; then
   echo "Error: Failed to set executable permissions on installed scripts."
   exit 1
 fi
 
 # === Remove executable permissions from source scripts and installer ====
 echo "Removing executable permissions from source scripts and installer..."
-if ! chmod -x "$SCRIPT_DIR/xtide86.sh" "$SCRIPT_DIR/termic.sh" "$SCRIPT_DIR/${BASH_SOURCE[0]}"; then
+if ! chmod -x "$SCRIPT_DIR/tide42.sh" "$SCRIPT_DIR/termic.sh" "$SCRIPT_DIR/${BASH_SOURCE[0]}"; then
   echo "Warning: Failed to remove executable permissions from some source files."
 fi
-echo "Source scripts are no longer executable. Use 'xtide86' or 'termic' from /usr/local/bin."
+echo "Source scripts are no longer executable. Use 'tide42' or 'termic' from /usr/local/bin."
 
 echo "Ensuring IPython is available..."
 
@@ -198,78 +209,78 @@ fi
 
 # === Ensure IPython is available ===
 ensure_ipython() {
-  echo "[XTide86] Ensuring IPython is available..."
+  echo "[tide42] Ensuring IPython is available..."
 
   # Check if ipython or ipython3 is already available
   if command -v ipython &> /dev/null; then
-    echo "[XTide86] 'ipython' is available."
+    echo "[tide42] 'ipython' is available."
     return 0
   elif command -v ipython3 &> /dev/null; then
-    echo "[XTide86] 'ipython3' is available. Creating symlink for 'ipython'..."
+    echo "[tide42] 'ipython3' is available. Creating symlink for 'ipython'..."
     sudo ln -sf "$(which ipython3)" /usr/local/bin/ipython
     if command -v ipython &> /dev/null; then
-      echo "[XTide86] Symlink created successfully."
+      echo "[tide42] Symlink created successfully."
       return 0
     else
-      echo "[XTide86] Warning: Failed to create 'ipython' symlink."
+      echo "[tide42] Warning: Failed to create 'ipython' symlink."
     fi
   fi
 
   # No ipython or ipython3 found, try installing
   if command -v conda &> /dev/null; then
-    echo "[XTide86] Conda detected. Installing IPython via conda..."
+    echo "[tide42] Conda detected. Installing IPython via conda..."
     if conda install -y ipython; then
-      echo "[XTide86] IPython installed via conda."
+      echo "[tide42] IPython installed via conda."
     else
-      echo "[XTide86] Warning: Conda install failed. Check your environment."
+      echo "[tide42] Warning: Conda install failed. Check your environment."
     fi
   else
-    echo "[XTide86] Attempting to install ipython3 via apt..."
+    echo "[tide42] Attempting to install ipython3 via apt..."
     sudo apt update
     if sudo apt install -y python3-ipython; then
-      echo "[XTide86] IPython installed via apt."
+      echo "[tide42] IPython installed via apt."
     else
-      echo "[XTide86] Warning: apt install failed. You may need to install IPython manually."
+      echo "[tide42] Warning: apt install failed. You may need to install IPython manually."
     fi
   fi
 
   # Final check for ipython
   if ! command -v ipython &> /dev/null && ! command -v ipython3 &> /dev/null; then
-    echo "[XTide86] Warning: No 'ipython' or 'ipython3' detected. XTide86 may not function properly."
+    echo "[tide42] Warning: No 'ipython' or 'ipython3' detected. tide42 may not function properly."
   elif command -v ipython3 &> /dev/null && ! command -v ipython &> /dev/null; then
-    echo "[XTide86] Creating symlink for 'ipython' -> 'ipython3'..."
+    echo "[tide42] Creating symlink for 'ipython' -> 'ipython3'..."
     sudo ln -sf "$(which ipython3)" /usr/local/bin/ipython
     if ! command -v ipython &> /dev/null; then
-      echo "[XTide86] Warning: Failed to create 'ipython' symlink."
+      echo "[tide42] Warning: Failed to create 'ipython' symlink."
     fi
   fi
 }
 
 echo "Removing executable permissions from source scripts and installer..."
-if ! chmod -x "$SCRIPT_DIR/xtide86.sh" "$SCRIPT_DIR/termic.sh" "$SCRIPT_DIR/${BASH_SOURCE[0]}"; then
+if ! chmod -x "$SCRIPT_DIR/tide42.sh" "$SCRIPT_DIR/termic.sh" "$SCRIPT_DIR/${BASH_SOURCE[0]}"; then
   echo "Warning: Failed to remove executable permissions from some source files."
 fi
-echo "Source scripts are no longer executable. Use 'xtide86' or 'termic' from /usr/local/bin."
+echo "Source scripts are no longer executable. Use 'tide42' or 'termic' from /usr/local/bin."
 
 ensure_ipython
 
 
 # === Install man page ===
-MANPAGE_SOURCE="$SCRIPT_DIR/xtide86.1"
-MANPAGE_TARGET="/usr/share/man/man1/xtide86.1.gz"
+MANPAGE_SOURCE="$SCRIPT_DIR/tide42.1"
+MANPAGE_TARGET="/usr/share/man/man1/tide42.1.gz"
 
 if [ -f "$MANPAGE_SOURCE" ]; then
-    echo "[XTide86] Compressing man page..."
-    if gzip -f -c "$MANPAGE_SOURCE" > xtide86.1.gz; then
-        echo "[XTide86] Installing man page to $MANPAGE_TARGET..."
-        sudo cp xtide86.1.gz "$MANPAGE_TARGET"
+    echo "[tide42] Compressing man page..."
+    if gzip -f -c "$MANPAGE_SOURCE" > tide42.1.gz; then
+        echo "[tide42] Installing man page to $MANPAGE_TARGET..."
+        sudo cp tide42.1.gz "$MANPAGE_TARGET"
         sudo mandb
-        echo "[XTide86] Man page installed. Try: man xtide86"
+        echo "[tide42] Man page installed. Try: man tide42"
     else
-        echo "[XTide86] Error: Failed to compress man page."
+        echo "[tide42] Error: Failed to compress man page."
     fi
 else
-    echo "[XTide86] Warning: xtide86.1 not found. Skipping man page install."
+    echo "[tide42] Warning: tide42.1 not found. Skipping man page install."
 fi
 
 # Desktop launcher
@@ -280,14 +291,14 @@ fi
 
 if [ "$GLOBAL_INSTALL" = true ]; then
   echo "Installing system-wide .desktop launcher..."
-  sudo cp ./xtide86.desktop /usr/share/applications/
-  sudo cp ./xtide86.png /usr/share/icons/hicolor/64x64/apps/
+  sudo cp ./tide42.desktop /usr/share/applications/
+  sudo cp ./tide42.png /usr/share/icons/hicolor/64x64/apps/
   sudo update-desktop-database /usr/share/applications || true
 else
   echo "Installing user-local .desktop launcher..."
-  cp ./xtide86.desktop ~/.local/share/applications/
+  cp ./tide42.desktop ~/.local/share/applications/
   mkdir -p ~/.local/share/icons/hicolor/64x64/apps
-  cp ./xtide86.png ~/.local/share/icons/hicolor/64x64/apps/
+  cp ./tide42.png ~/.local/share/icons/hicolor/64x64/apps/
   update-desktop-database ~/.local/share/applications || true
 fi
 
@@ -302,4 +313,4 @@ fi
 echo "Installing Neovim plugins..."
 nvim +PlugInstall +qall
 
-echo "XTide86 installed! You can now launch it from the app menu or by typing 'xtide86'."
+echo "tide42 installed! You can now launch it from the app menu or by typing 'tide42'."

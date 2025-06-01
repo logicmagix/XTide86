@@ -1,34 +1,40 @@
 
 ## License
 
-XTide86 is licensed under the GNU General Public License v3.0 or later.  
+tide42 is licensed under the GNU General Public License v3.0 or later.  
 See the [LICENSE](./LICENSE) file for full details.
 
 ## TermiC Support
 
-XTide86 includes `termic.sh`, a lightweight, interactive C/C++ environment launcher. It will be installed automatically to `/usr/local/bin/termic` unless it already exists.
+tide42 includes `termic.sh`, a lightweight, interactive C/C++ environment launcher. It will be installed automatically to `/usr/local/bin/termic` unless it already exists.
 
 This script is licensed under GPLv3 and included with permission.
 
-## XTide86:
-An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.  
+## tide42:
+An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.
 
-# XTra IDE 86 NEWS:
+### Why the name?
 
-05.30.25 XTide86 now includes multi system support (Debian, Arch, MacOS) a man page and automated updating from anywhere! (not just the repo directory)
+Tide42 is inspired in part by *The Hitchhiker’s Guide to the Galaxy*, where "42" is famously revealed as the Answer to the Ultimate Question of Life, the Universe, and Everything. 
 
-05.29.25 NOTICE FOR EXISTING USERS!! You must run xtide86 --update (anywhere) to fix install.sh issues related to the ncurses-term dependency if you run into issues or alternately re-clone the repo from GitHub for the fixed installer. 
+This project reflects that same spirit: a terminal IDE that encourages curiosity, simplicity, and discovery—*you ask the questions*. Tide42 is meant to be your solution, leaving the questions in your hands. 
+
+# Terminal IDE 42 NEWS:
+
+05.30.25 tide42 now includes multi system support (Debian, Arch, MacOS) a man page and automated updating from anywhere! (not just the repo directory)
+
+05.29.25 NOTICE FOR EXISTING USERS!! Xtide86 has been renamed tide42 shortly after its release. This reflects a change that is meant to be geared towards you, the user, and your own questions, solutions, and outcomes. All alias logic is handled by install.sh so that --update remains functional. Simply run xtide86 --update from anywhere and use either xtide86 or tide42 to launch.
 
 
-**Version:** `v1.1.0`
->**New in v1.1.0:** XTide86 now fully supports 256-color terminals!
+**Version:** `v1.2.0`
+>**New in v1.2.0:** tide42 now fully supports 256-color terminals!
 > 
 > - Improved color rendering in all panes and status bars
 > - Toggle between classic **Portcullis** and modern **GRID** visual themes or medieval listchars in init.vim
-> - v1.1.0 Update: Added --color and -c for optional 256 color palette. (Tested on gnome-terminal requries ncurses-term package to be installed). XTide86 supports clean minimal setups or full color-rice mode. Your terminal, your choice.
-> - Now supports opening new files editing files with xtide86 followed by the filename
+> - v1.1.0 Update: Added --color and -c for optional 256 color palette. (Tested on gnome-terminal requries ncurses-term package to be installed). tide42 supports clean minimal setups or full color-rice mode. Your terminal, your choice.
+> - Now supports opening new files editing files with tide42 followed by the filename
 > - Use flag --quiet or -q to suppress log output.
-> - Update XTide86 from your anywhere with --update
+> - Update tide42 from your anywhere with --update
 > - Added keybinding \s to expand and select TermiC or \x to perform the same action for the terminal buffer. 
 
 
@@ -75,8 +81,7 @@ An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.
 - Opening second file in right tmux buffer if session is detached with a loaded file in the left (default).
 
 ## Flags
-Enable full color support (truecolor, terminal themes, etc.): --color -c
-Update XTide86 (anywhere):--update
+Enable 88 color support (256 is default) with --low-color or -lcUpdate tide42 (anywhere):--update
 Check version: --version
 Silence log: --quiet
 Help: --help
@@ -84,7 +89,7 @@ Install location: --whereami
 
 
 Or keep it classic:
-xtide86
+tide42
 
 
 ## Controls
@@ -167,15 +172,15 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 - All NeoVim commands can also be used in any other buffer. 
 - Quickly enter focused and expanded file editor mode with Ctrl A/D (make sure you are in the correct tmux buffer), \z, \i <1000>
 
-## XTide86 Remote SSH Session
+## tide42 Remote SSH Session
 ##
 Work remotely. Drop connection. Pick up exactly where you left off.
 Instructions:
 - ssh user@remotehost
-- run xtide86 and use any buffer for file transfers or processing.
+- run tide42 and use any buffer for file transfers or processing.
 - Do your work. Close the laptop. Disconnect. Go outside.
 - ssh user@remotehost
-- run xtide86 to reconnect to tmux protected XTide86 session.
+- run tide42 to reconnect to tmux protected tide42 session.
 
 ## Features
 
@@ -202,13 +207,13 @@ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 ## Warning
 
-If you're running XTide86 inside a tmux or custom terminal session, you might run into issues when trying to save root-owned files from within Neovim:
+If you're running tide42 inside a tmux or custom terminal session, you might run into issues when trying to save root-owned files from within Neovim:
 Using commands like :w !sudo tee % in NeoVim may silently fail to prompt for a password and kick you out after 3 attempts.
 
 Solutions:
 Use a GUI editor instead within a Xtide86 terminal buffer to avoid leaving your session:
 ex. sudoedit /etc/systemd/system/...
-Launch a root nvim in a nested terminal within XTide86:
+Launch a root nvim in a nested terminal within tide42:
 ex. sudo nvim /etc/systemd/system/...
 
 
@@ -216,13 +221,13 @@ ex. sudo nvim /etc/systemd/system/...
 
 # Preferred for updates:
 ```bash```
-- git clone https://github.com/logicmagix/xtide86.git
+- git clone https://github.com/logicmagix/tide42.git
 - cd XTIDE86
 
 # Make the script executable (one-time setup)
 - chmod +x install.sh
 - ./install
-- xtide86 to start session
+- tide42 to start session
 
 # If downloading .zip:
 - Go to https://github.com/logicmagix/XTIDE86 and click "Code" > "Download ZIP".
@@ -231,20 +236,20 @@ ex. sudo nvim /etc/systemd/system/...
 - cd ~/XTIDE86
 - ./install.sh
 
-## Updating XTide86
+## Updating tide42
 
-# To update xtide86 to the latest version, you must have a cloned Git repository.
+# To update tide42 to the latest version, you must have a cloned Git repository.
 
-- xtide86 --update
+- tide42 --update
 
 ## Notes:
 
 - The sudo command may prompt for your password to modify /usr/local/bin.
-- If you used a ZIP download, you cannot use xtide86 --update unless you convert the directory to a Git repository.
+- If you used a ZIP download, you cannot use tide42 --update unless you convert the directory to a Git repository.
 
 
 ## Usage
-- Launch XTide86 from your terminal or assigned launcher with xtide86 or xtide86 <FILENAME>. It will:
+- Launch tide42 from your terminal or assigned launcher with tide42 or tide42 <FILENAME>. It will:
 
 - Open a tmux session with vertically split nvim, TermiC, and IPython
 
@@ -262,7 +267,7 @@ ex. sudo nvim /etc/systemd/system/...
 Feel free to remix buffer sizes and colors to match your workflow.
 
 # TermiC Support
-- xtide86 includes termic.sh, a lightweight live shell.
+- tide42 includes termic.sh, a lightweight live shell.
 It installs automatically to /usr/local/bin/termic.
 Licensed under GPLv3 and included with permission.
 
@@ -270,18 +275,18 @@ Pull requests, stars, and forks welcome
 
 ## Screenshots
 
-- See XTide86 in action:
+- See tide42 in action:
 
 ### 	
 
-### XTide86 default color scheme
+### tide42 default color scheme
 ![16 Color](Screenshots/Screenshot.png)
 
-### XTide86 now supports 256 colors in tmux
+### tide42 now supports 256 colors in tmux
 ![256 Color](Screenshots/Screenshot0.png)
 
 ### Full Interface
-![XTide86 Full Interface](Screenshots/Screenshot1.png)
+![tide42 Full Interface](Screenshots/Screenshot1.png)
 
 ### Ipython
 ![Python Mode](Screenshots/Screenshot2.png)
@@ -289,7 +294,7 @@ Pull requests, stars, and forks welcome
 ### C/C++ Live Shell Mode
 ![C++ Mode](Screenshots/Screenshot3.png)
 
-### System Monitoring in XTide86
+### System Monitoring in tide42
 ![System](Screenshots/Screenshot4.png)
 
 ### Study and reference
@@ -306,7 +311,7 @@ Pull requests, stars, and forks welcome
 
 ## Built With
 
-xtide86 uses and integrates the following open-source tools:
+tide42 uses and integrates the following open-source tools:
 - [NeoVim](https://neovim.io/)
 - [Vim](https://www.vim.org/)
 - [tmux](https://github.com/tmux/tmux)
