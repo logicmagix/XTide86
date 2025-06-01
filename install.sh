@@ -2,16 +2,16 @@
 
 set -e
 
-# Inside install.sh
-BIN_DIR="$HOME/.local/bin"
-mkdir -p "$BIN_DIR"
-
-# Copy wrappers
-cp ./tide42 "$BIN_DIR/tide42"
-cp ./xtide86 "$BIN_DIR/xtide86"
-
-chmod +x "$BIN_DIR/tide42" "$BIN_DIR/xtide86"
 echo "[+] Installed tide42 and legacy xtide86 wrappers to $BIN_DIR"
+
+# === Legacy xtide86 alias ===
+cat <<EOF | sudo tee /usr/local/bin/xtide86 > /dev/null
+#!/usr/bin/env bash
+echo "[XTide86] XTide86 has been renamed to Tide42."
+exec tide42 "\$@"
+EOF
+
+sudo chmod +x /usr/local/bin/xtide86
 
 # === Detect OS and Package Manager ===
 detect_os_and_pkg() {
