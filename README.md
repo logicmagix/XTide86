@@ -42,7 +42,6 @@ This resolves the last recurring UX bug for 1.2.0 stable.
 > - Lite mode with --lite to open tide42 with no tmux session for quick edits or low resource systems.
 > - Improved color rendering in all panes and status bars
 > - Toggle between classic **Portcullis** and modern **GRID** visual themes or medieval listchars in init.vim
-> - v1.1.0 Update: Added --color and -c for optional 256 color palette. (Tested on gnome-terminal requries ncurses-term package to be installed). tide42 supports clean minimal setups or full color-rice mode. Your terminal, your choice.
 > - Now supports opening new files editing files with tide42 followed by the filename
 > - Use flag --quiet or -q to suppress log output.
 > - Update tide42 from your anywhere with --update
