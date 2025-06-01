@@ -87,11 +87,10 @@ Check version: --version
 Silence log: --quiet
 Help: --help
 Install location: --whereami
-
-
-Or keep it classic:
-tide42
-
+Lite mode: --lite
+Low Color: --low-color, -lc
+Update: --update
+Force update: --force-update
 
 ## Controls
 
