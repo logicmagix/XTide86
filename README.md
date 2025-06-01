@@ -29,6 +29,7 @@ This project reflects that same spirit: a terminal IDE that encourages curiosity
 **Version:** `v1.2.0`
 >**New in v1.2.0:** tide42 now fully supports 256-color terminals!
 > 
+> - Lite mode with --lite to open tide42 with no tmux session for quick edits or low resource systems.
 > - Improved color rendering in all panes and status bars
 > - Toggle between classic **Portcullis** and modern **GRID** visual themes or medieval listchars in init.vim
 > - v1.1.0 Update: Added --color and -c for optional 256 color palette. (Tested on gnome-terminal requries ncurses-term package to be installed). tide42 supports clean minimal setups or full color-rice mode. Your terminal, your choice.
