@@ -134,7 +134,6 @@ EOF
       echo "  --low-color, -lc   Enable 88-color mode (warning: Home/End keys may not work)"
       echo "  --quiet,  -q       Suppress log output"
       echo "  --update           Pull latest Git changes to clean repo and reinstall"
-      echo "  --force-update     Reset local changes and update to latest version"
       echo "  --version          Show current version"
       echo "  --help,   -h       Show this help message"
       echo "  [filename]         Open specified file in Neovim"

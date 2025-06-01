@@ -99,7 +99,6 @@ Install location: --whereami
 Lite mode: --lite
 Low Color: --low-color, -lc
 Update: --update
-Force update: --force-update
 
 ## Controls
 

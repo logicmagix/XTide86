@@ -1,6 +1,9 @@
 # Changelog
+
 ## [1.2.0] - 2025-06-01
 ### Changed
+- `--update` now defaults to forced updates, discarding local changes and syncing to remote.
+- Users with local mods should maintain a fork or avoid `--update`.
 - Project renamed to `tide42` (formerly `xtide86`)
 - Installer, wrapper, and manpage updated accordingly
 - Legacy support for `xtide86 --update` remains functional
