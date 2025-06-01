@@ -1,4 +1,10 @@
 # Changelog
+## [1.2.0] - 2025-06-01
+### Changed
+- Project renamed to `tide42` (formerly `xtide86`)
+- Installer, wrapper, and manpage updated accordingly
+- Legacy support for `xtide86 --update` remains functional
+
 
 ## [1.1.0] - 2025-05-28
 ### Added
