@@ -1,0 +1,42 @@
+# === Generated Files ===
+tide42.1.gz         # Rebuilt every install
+install.sh          # Mode change shows up as modified
+
+# === Logs and Output ===
+*.log
+*.out
+*.tmp
+
+# === Neovim Artifacts ===
+*.swp
+*.swo
+*.swn
+*.un~
+.undodir/
+Session.vim
+
+# === System Junk ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Python Artifacts (for potential REPL/Radian dev) ===
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints/
+
+# === Installer Wrappers ===
+/usr/local/bin/tide42
+/usr/local/bin/xtide86
+/usr/local/bin/termic
+
+# === Manpage Cache (if generated) ===
+*.1.gz
+manpage.out
+
+# === Git backups / merges ===
+*.orig
+
+# === Backup / dev notes ===
+notes.md
+dev-scratchpad.txt
