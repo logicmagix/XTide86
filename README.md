@@ -28,6 +28,7 @@ Fixed intermittent NERDTree swapfile creation by disabling swap globally
 - Re-enabled swapfile only for non-NERDTree buffers via BufWinEnter autocmd
 - Eliminated rare `.swp` file generation in terminal sessions
 - Optional: silently delete swapfiles via SwapExists to suppress flash warnings
+- If you have not already done so, please run git pull within your repo directory, or simply re clone to update to the new stable release 1.2.0. Going forward, the method of updating will be to simply use the flag --update
 
 This resolves the last recurring UX bug for 1.2.0 stable.
 
