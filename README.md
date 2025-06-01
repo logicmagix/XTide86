@@ -22,8 +22,6 @@ This project reflects that same spirit: a terminal IDE that encourages curiosity
 # Tide42 NEWS:
 06.01.25 Added a new AppendToEditor function that lets you seamlessly append selected text from visual mode to another editor buffer with a single keypress. Enjoy a smooth workflow with silent operation or optional verbose debugging for easy troubleshooting! 
 
-Fixed intermittent NERDTree swapfile creation by disabling swap globally
-
 - Added global `set noswapfile` to prevent swap creation on startup
 - Re-enabled swapfile only for non-NERDTree buffers via BufWinEnter autocmd
 - Eliminated rare `.swp` file generation in terminal sessions
