@@ -10,7 +10,7 @@ tide42 includes `termic.sh`, a lightweight, interactive C/C++ environment launch
 
 This script is licensed under GPLv3 and included with permission.
 
-## tide42:
+## Terminal IDE 42:
 An ultra-efficient Neovim based IDE for Python and C/C++ prototyping.
 
 ### Why the name?
@@ -19,7 +19,7 @@ Tide42 is inspired in part by *The Hitchhiker’s Guide to the Galaxy*, where "4
 
 This project reflects that same spirit: a terminal IDE that encourages curiosity, simplicity, and discovery—*you ask the questions*. Tide42 is meant to be your solution, leaving the questions in your hands. 
 
-# Terminal IDE 42 NEWS:
+# Tide42 NEWS:
 06.01.25 Added a new AppendToEditor function that lets you seamlessly append selected text from visual mode to another editor buffer with a single keypress. Enjoy a smooth workflow with silent operation or optional verbose debugging for easy troubleshooting!
 
 05.30.25 tide42 now includes multi system support (Debian, Arch, MacOS) a man page and automated updating from anywhere! (not just the repo directory)
