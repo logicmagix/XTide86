@@ -79,16 +79,16 @@ EOF
           log "Error: Cannot connect to GitHub. Check network or remote configuration."
           exit 1
         fi
-        git fetch origin --tags >/dev/null 2>&1 || { log "Error: Failed to fetch updates."; exit 1; }
-        LATEST_VERSION=$(git ls-remote --tags origin | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | sort -V | tail -n1)
-        if [ -z "$LATEST_VERSION" ]; then
-          log "Error: Could not determine latest version. Check repository tags."
-          exit 1
-        fi
-        if [ "v$TIDE_VERSION" = "$LATEST_VERSION" ]; then
-          log "Already on the latest version: $TIDE_VERSION"
+        git fetch origin "$CURRENT_BRANCH" >/dev/null 2>&1 || { log "Error: Failed to fetch updates."; exit 1; }
+        LOCAL_HASH=$(git rev-parse HEAD)
+        REMOTE_HASH=$(git rev-parse origin/"$CURRENT_BRANCH")
+        if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
+          log "Already on the latest commit: $LOCAL_HASH"
           exit 0
+        else
+          log "Updating from $LOCAL_HASH to $REMOTE_HASH"
         fi
+
         # === Check for uncommitted changes ===
         if ! git diff --quiet || ! git diff --cached --quiet; then
           if [[ "$2" == "--force-update" ]]; then
