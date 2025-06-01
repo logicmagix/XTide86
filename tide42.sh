@@ -22,7 +22,7 @@
 set -e
 echo "[tide86] Running..."
 
-IS_LOW_COLOR=false  # Changed from IS_NO_COLOR to IS_LOW_COLOR for clarity
+IS_LOW_COLOR=false
 IS_QUIET=false
 FILENAME=""
 TIDE_VERSION="1.2.0"
@@ -47,7 +47,7 @@ while [ $# -gt 0 ]; do
     --quiet|-q)
       IS_QUIET=true
       ;;
-    --low-color|-lc)  # New flag for 88-color mode
+    --low-color|-lc) # 88 Color
       IS_LOW_COLOR=true
       COLOR_FLAG_PROVIDED=true
       log "Enabling low-color (88-color) mode. Warning: Home/End keys may not work."
@@ -84,15 +84,24 @@ EOF
           log "Already on the latest version: $TIDE_VERSION"
           exit 0
         fi
+        # === Check for uncommitted changes ===
+        if ! git diff --quiet || ! git diff --cached --quiet; then
+          if [[ "$2" == "--force-update" ]]; then
+            log "Uncommitted changes detected. Running forced restore..."
+            git restore .
+          else
+            log "⚠  Uncommitted changes detected."
+            log "Run '--update --force-update' to discard local changes and proceed."
+            log "Or manually run 'git restore .' in $SCRIPT_DIR"
+            exit 1
+          fi
+        fi
+
+        # === Pull updates ===
         if ! git pull origin "$CURRENT_BRANCH" >/dev/null 2>&1; then
           log "Error: Failed to pull updates. Check for conflicts or branch issues."
           exit 1
         fi
-      else
-        log "Error: Not a git repository. Cannot perform update."
-        log "To enable automatic updates, clone tide42 from GitHub:"
-        log "    git clone https://github.com/logicmagix/tide42.git"
-        exit 1
       fi
       INSTALL_SCRIPT="$SCRIPT_DIR/install.sh"
       if [ -f "$INSTALL_SCRIPT" ]; then
@@ -137,7 +146,7 @@ EOF
   shift
 done
 
-# Exit if --update was processed
+# === Exit if --update was processed ===
 if [ "$UPDATE_PROCESSED" = true ]; then
   log "Update process completed, exiting."
   exit 0
@@ -217,7 +226,7 @@ else
 fi
 tmux send-keys -t "$SESSION_NAME":0.1 'nvim' C-m
 
-# Keybindings
+# === Keybindings ===
 tmux unbind C-b
 tmux set-option -g prefix C-q
 tmux bind-key C-q send-prefix

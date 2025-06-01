@@ -191,15 +191,6 @@ if ! sudo chmod 755 /usr/local/bin/tide42 /usr/local/bin/termic; then
   exit 1
 fi
 
-# === Remove executable permissions from source scripts and installer ====
-echo "Removing executable permissions from source scripts and installer..."
-if ! chmod -x "$SCRIPT_DIR/tide42.sh" "$SCRIPT_DIR/termic.sh" "$SCRIPT_DIR/${BASH_SOURCE[0]}"; then
-  echo "Warning: Failed to remove executable permissions from some source files."
-fi
-echo "Source scripts are no longer executable. Use 'tide42' or 'termic' from /usr/local/bin."
-
-echo "Ensuring IPython is available..."
-
 # === Try apt install for system-wide fallback ===
 if ! command -v ipython3 &> /dev/null; then
   echo "Attempting to install ipython3 via apt..."
@@ -255,14 +246,6 @@ ensure_ipython() {
     fi
   fi
 }
-
-echo "Removing executable permissions from source scripts and installer..."
-if ! chmod -x "$SCRIPT_DIR/tide42.sh" "$SCRIPT_DIR/termic.sh" "$SCRIPT_DIR/${BASH_SOURCE[0]}"; then
-  echo "Warning: Failed to remove executable permissions from some source files."
-fi
-echo "Source scripts are no longer executable. Use 'tide42' or 'termic' from /usr/local/bin."
-
-ensure_ipython
 
 
 # === Install man page ===
