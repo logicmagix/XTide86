@@ -90,6 +90,17 @@ EOF
 
       LOCAL_HASH=$(git rev-parse HEAD)
       REMOTE_HASH=$(git rev-parse origin/"$CURRENT_BRANCH")
+      VERSION_FILE="$SCRIPT_DIR/VERSION"
+      VERSION_NUMBER="unknown"
+      [ -f "$VERSION_FILE" ] && VERSION_NUMBER=$(<"$VERSION_FILE")
+
+      if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
+        log "Already on the latest version: v$VERSION_NUMBER"
+        exit 0
+      else
+        log "Updating from $LOCAL_HASH to $REMOTE_HASH (v$VERSION_NUMBER)"
+      fi
+
 
       if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
         log "Already on the latest commit: $LOCAL_HASH"
