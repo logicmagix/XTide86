@@ -71,38 +71,37 @@ EOF
       SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
       SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
       cd "$SCRIPT_DIR" || { log "Error: Cannot access directory $SCRIPT_DIR"; exit 1; }
-      if [ -d .git ]; then
-        log "Working in repository: $SCRIPT_DIR"
-        CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
-        log "Current branch: $CURRENT_BRANCH"
-        if ! git ls-remote --exit-code origin >/dev/null 2>&1; then
-          log "Error: Cannot connect to GitHub. Check network or remote configuration."
-          exit 1
-        fi
-        git fetch origin "$CURRENT_BRANCH" >/dev/null 2>&1 || { log "Error: Failed to fetch updates."; exit 1; }
-        LOCAL_HASH=$(git rev-parse HEAD)
-        REMOTE_HASH=$(git rev-parse origin/"$CURRENT_BRANCH")
-        if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
-          log "Already on the latest commit: $LOCAL_HASH"
-          exit 0
-        else
-          log "Updating from $LOCAL_HASH to $REMOTE_HASH"
-        fi
 
-        # === Check for uncommitted changes ===
-        if ! git diff --quiet || ! git diff --cached --quiet; then
-          if [[ "$2" == "--force-update" ]]; then
-            log "Uncommitted changes detected. Running forced restore..."
-            git restore .
-          else
-            log "⚠  Uncommitted changes detected."
-            log "Run '--update --force-update' to discard local changes and proceed."
-            log "Or manually run 'git restore .' in $SCRIPT_DIR"
-            exit 1
-          fi
-        fi
+      if [ ! -d .git ]; then
+        log "Error: This directory is not a Git repository."
+        exit 1
+      fi
+      CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
+      log "Current branch: $CURRENT_BRANCH"
+      if ! git ls-remote --exit-code origin >/dev/null 2>&1; then
+        log "Error: Cannot connect to GitHub. Check network or remote configuration."
+        exit 1
+      fi
+      git fetch origin "$CURRENT_BRANCH" >/dev/null 2>&1 || { log "Error: Failed to fetch updates."; exit 1; }
+      LOCAL_HASH=$(git rev-parse HEAD)
+      REMOTE_HASH=$(git rev-parse origin/"$CURRENT_BRANCH")
+      if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
+        log "Already on the latest commit: $LOCAL_HASH"
+        exit 0
+      else
+        log "Updating from $LOCAL_HASH to $REMOTE_HASH"
+      fi
 
-        # === Pull updates ===
+      # === Hard reset to latest ===
+      log "Discarding local changes and syncing to remote..."
+      git restore . >/dev/null 2>&1
+      git reset --hard origin/"$CURRENT_BRANCH" >/dev/null 2>&1
+
+      log "Update complete. Restarting..."
+      exec "$0" --quiet
+      ;;
+      
+      # === Pull updates ===
         if ! git pull origin "$CURRENT_BRANCH" >/dev/null 2>&1; then
           log "Error: Failed to pull updates. Check for conflicts or branch issues."
           exit 1
