@@ -65,9 +65,10 @@ set -g mouse on
 EOF
       log "Applied 88-color config."
       ;;
-    --update)
+       --update)
       UPDATE_PROCESSED=true
       log "Checking for updates from GitHub..."
+
       SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
       SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
       cd "$SCRIPT_DIR" || { log "Error: Cannot access directory $SCRIPT_DIR"; exit 1; }
@@ -76,15 +77,20 @@ EOF
         log "Error: This directory is not a Git repository."
         exit 1
       fi
+
       CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
       log "Current branch: $CURRENT_BRANCH"
+
       if ! git ls-remote --exit-code origin >/dev/null 2>&1; then
         log "Error: Cannot connect to GitHub. Check network or remote configuration."
         exit 1
       fi
+
       git fetch origin "$CURRENT_BRANCH" >/dev/null 2>&1 || { log "Error: Failed to fetch updates."; exit 1; }
+
       LOCAL_HASH=$(git rev-parse HEAD)
       REMOTE_HASH=$(git rev-parse origin/"$CURRENT_BRANCH")
+
       if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
         log "Already on the latest commit: $LOCAL_HASH"
         exit 0
@@ -100,27 +106,7 @@ EOF
       log "Update complete. Restarting..."
       exec "$0" --quiet
       ;;
-      
-      # === Pull updates ===
-        if ! git pull origin "$CURRENT_BRANCH" >/dev/null 2>&1; then
-          log "Error: Failed to pull updates. Check for conflicts or branch issues."
-          exit 1
-        fi
-      fi
-      INSTALL_SCRIPT="$SCRIPT_DIR/install.sh"
-      if [ -f "$INSTALL_SCRIPT" ]; then
-        chmod +x "$INSTALL_SCRIPT"
-        if ! bash "$INSTALL_SCRIPT"; then
-          log "Error: Installation script failed."
-          exit 1
-        fi
-        log "Update completed successfully."
-      else
-        log "Error: install.sh not found at $INSTALL_SCRIPT"
-        exit 1
-      fi
-      exit 0
-      ;;
+
     --version)
       log "tide42 version $TIDE_VERSION"
       exit 0
