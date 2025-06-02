@@ -65,7 +65,7 @@ set -g mouse on
 EOF
       log "Applied 88-color config."
       ;;
-       --update)
+    --update)
       UPDATE_PROCESSED=true
       log "Checking for updates from GitHub..."
 
@@ -78,44 +78,40 @@ EOF
         exit 1
       fi
 
-      CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
-      log "Current branch: $CURRENT_BRANCH"
-
-      if ! git ls-remote --exit-code origin >/dev/null 2>&1; then
-        log "Error: Cannot connect to GitHub. Check network or remote configuration."
+      CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "detached")
+      [ "$CURRENT_BRANCH" = "detached" ] && {
+        log "Error: You are in a detached HEAD state. Cannot auto-update."
         exit 1
-      fi
+      }
 
-      git fetch origin "$CURRENT_BRANCH" >/dev/null 2>&1 || { log "Error: Failed to fetch updates."; exit 1; }
+      log "Current branch: $CURRENT_BRANCH"
+      
+      git fetch origin "$CURRENT_BRANCH" --prune || {
+        log "Error: Failed to fetch updates from origin."
+        exit 1
+      }
 
       LOCAL_HASH=$(git rev-parse HEAD)
-      REMOTE_HASH=$(git rev-parse origin/"$CURRENT_BRANCH")
+      REMOTE_HASH=$(git rev-parse "origin/$CURRENT_BRANCH")
       VERSION_FILE="$SCRIPT_DIR/VERSION"
       VERSION_NUMBER="unknown"
       [ -f "$VERSION_FILE" ] && VERSION_NUMBER=$(<"$VERSION_FILE")
 
       if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
-        log "Already on the latest version: v$VERSION_NUMBER"
+        log "Already on the latest version: v$VERSION_NUMBER ($LOCAL_HASH)"
         exit 0
-      else
-        log "Updating from $LOCAL_HASH to $REMOTE_HASH (v$VERSION_NUMBER)"
       fi
 
+      log "Updating from $LOCAL_HASH to $REMOTE_HASH (v$VERSION_NUMBER)"
+      log "Discarding local changes and syncing to latest commit..."
 
-      if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
-        log "Already on the latest commit: $LOCAL_HASH"
-        exit 0
-      else
-        log "Updating from $LOCAL_HASH to $REMOTE_HASH"
-      fi
+      git reset --hard "origin/$CURRENT_BRANCH" || {
+        log "Error: Failed to reset to latest version."
+        exit 1
+      }
 
-      # === Hard reset to latest ===
-      log "Discarding local changes and syncing to remote..."
-      git restore . >/dev/null 2>&1
-      git reset --hard origin/"$CURRENT_BRANCH" >/dev/null 2>&1
-
-      log "Update complete. Restarting..."
-      exec "$0" --quiet
+      log "Update complete."
+      # Removed: exec "$0" --quiet
       ;;
 
     --version)
