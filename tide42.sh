@@ -98,7 +98,8 @@ EOF
       [ -f "$VERSION_FILE" ] && VERSION_NUMBER=$(<"$VERSION_FILE")
 
       if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
-        log "Already on the latest version: v$VERSION_NUMBER ($LOCAL_HASH)"
+        SHORT_HASH=$(git rev-parse --short HEAD)
+        log "Already on the latest version: v$VERSION_NUMBER ($CURRENT_BRANCH@$SHORT_HASH)"
         exit 0
       fi
 
