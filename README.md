@@ -117,7 +117,7 @@ Ctrl|\
 ====  =
 qw  | wer        iop
 asd | sfg         l
-|zxcvbnm
+|zxcvb            m
 </code></pre>
 
 Tmux based command: Ctrl-q + d (or gui exit button) = Exit and save tmux state (lost on restart of PC) 
