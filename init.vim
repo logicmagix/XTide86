@@ -130,6 +130,7 @@ nnoremap <leader>w :W<CR>
 nnoremap <leader>r :Rg<CR>
 nnoremap <leader>e :Files<CR>
 inoremap jk <Esc>
+tnoremap jk <C-\><C-n>
 command! Hs split
 command! Q call ForceQuitAndKillTmux()
 
