@@ -175,7 +175,7 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 `\v` = Currently selected buffer
 ##
 `\b` = Back to default settings
-##
+##	
 
 
 ## Additional NeoVim commands for ease of buffer management
