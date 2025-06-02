@@ -118,7 +118,6 @@ nnoremap <silent> <leader>c :MaximizeIPythonBuffer<CR>
 nnoremap <silent> <leader>b :ResetWindowsDefault<CR>
 nnoremap <silent> <leader>z :ResetWindowsMaxEditor<CR>
 nnoremap <silent> <leader>v :EnlargedWindow<CR>
-nnoremap <silent> <leader>n :EqualizeWindows<CR>
 nnoremap <leader>i :vertical resize <C-r>=input('Resize to: ')<CR><CR>
 xnoremap <silent> <leader>p :<C-u>call SendToIPython()<CR>
 xnoremap <silent> <leader>l :<C-u>call SendToTermiC()<CR>
@@ -610,15 +609,6 @@ function! s:MaximizeTerminalBuffer(direction = 'left') abort
       execute l:initial_win . 'wincmd w'
     endif
   endtry
-endfunction
-
-" Equalize window sizes (mimic Ctrl-w =)
-function! s:EqualizeWindows() abort
-  wincmd =
-  wincmd j
-  wincmd j
-  wincmd l
-  echom "SET SIZE | (Display All)"
 endfunction
 
 " Enlarge current window (mimic Ctrl W _)
