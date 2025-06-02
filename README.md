@@ -22,6 +22,19 @@ This project reflects that same spirit: a terminal IDE that encourages curiosity
 # Tide42 NEWS:
 06.01.25 Added a new AppendToEditor function that lets you seamlessly append selected text from visual mode to another editor buffer with a single keypress. Enjoy a smooth workflow with silent operation or optional verbose debugging for easy troubleshooting! 
 
+NOTICE FOR EXISTING USERS!! Xtide86 has been renamed tide42 shortly after its release. This reflects a change that is meant to be geared towards you, the user, and your own questions, solutions, and outcomes. 
+
+If your repo is on main:
+- cd ~/PATH/TO/REPO
+- git fetch origin
+- git restore .
+- git checkout stable
+- git pull origin stable
+- chmod +x install.sh
+- ./install.com
+- All alias logic is handled by install.sh so that --update remains functional. Simply run xtide86 --update from anywhere and use either xtide86 or tide42 to launch.
+
+
 - Added global `set noswapfile` to prevent swap creation on startup
 - Re-enabled swapfile only for non-NERDTree buffers via BufWinEnter autocmd
 - Eliminated rare `.swp` file generation in terminal sessions
@@ -31,9 +44,6 @@ This project reflects that same spirit: a terminal IDE that encourages curiosity
 This resolves the last recurring UX bug for 1.2.0 stable.
 
 05.30.25 tide42 now includes multi system support (Debian, Arch, MacOS) a man page and automated updating from anywhere! (not just the repo directory)
-
-05.29.25 NOTICE FOR EXISTING USERS!! Xtide86 has been renamed tide42 shortly after its release. This reflects a change that is meant to be geared towards you, the user, and your own questions, solutions, and outcomes. All alias logic is handled by install.sh so that --update remains functional. Simply run xtide86 --update from anywhere and use either xtide86 or tide42 to launch.
-
 
 **Version:** `v1.2.0`
 >**New in v1.2.0:** - Functionality to yank text from any buffer (IPython, TermiC, Terminal) and append to file editor for easy notes.
