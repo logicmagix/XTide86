@@ -112,7 +112,18 @@ EOF
       }
 
       log "Update complete."
-      # Removed: exec "$0" --quiet
+
+      # === Re-run install script if present ===
+      INSTALL_SCRIPT="$SCRIPT_DIR/install.sh"
+      if [ -f "$INSTALL_SCRIPT" ]; then
+        log "Running installer to apply updates..."
+        chmod +x "$INSTALL_SCRIPT"
+        "$INSTALL_SCRIPT" --quiet || log "Warning: Installer exited with errors"
+      else
+        log "No installer found. Skipping install step."
+      fi
+
+      exit 0
       ;;
 
     --version)
