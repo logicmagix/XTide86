@@ -173,8 +173,7 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 ##
 `\b` = Back to default settings
 ##
-`\n` = Equalize vertical buffer dimensions
-##
+
 
 ## Additional NeoVim commands for ease of buffer management
 ##
