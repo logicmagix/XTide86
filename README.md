@@ -20,7 +20,9 @@ Tide42 is inspired in part by *The Hitchhiker’s Guide to the Galaxy*, where "4
 This project reflects that same spirit: a terminal IDE that encourages curiosity, simplicity, and discovery—*you ask the questions*. Tide42 is meant to be your solution, leaving the questions in your hands. 
 
 # Tide42 NEWS:
-06.03.25 
+
+06.03.25
+- Default input layout reformatted with latest push.. feedback requested or alternately change it to your likingin init.vim.
 - If you are having issues with the ipython buffer closing when running instances of gui libraries like pygame, use the RestartIPython function with :RestartIPython or \n to create a new buffer. 
 - WARNING!! If making your own modifications to tide42 make sure to back then up before running --update as it will wipe and copy over any existing changes in your repo or installed files including init.vim
 
