@@ -575,8 +575,6 @@ function! s:MaximizeTerminalBuffer(direction = 'left') abort
     endif
   endtry
 endfunction
-
-" Enlarge current window (mimic Ctrl W _)
 function! s:EnlargeWindow() abort
   wincmd _
   echom "SET SIZE | Focus: (Currently Selected Buffer)"
