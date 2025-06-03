@@ -191,7 +191,7 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 - NERTree may be refreshed with Shift+r after performing operations in the terminal buffer.
 - All NeoVim commands can also be used in any other buffer. 
 - Quickly enter focused and expanded file editor mode with Ctrl A/D (make sure you are in the correct tmux buffer), \z, \i <1000>
-- Switch between tty buffewrs and retain session. Handy if connecting through SSH.
+- Switch between tty sessions and retain tide42 session through tmux. Handy if connecting through SSH.
 
 
 ## tide42 Remote SSH Session
