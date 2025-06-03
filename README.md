@@ -103,6 +103,7 @@ This resolves the last recurring UX bug for 1.2.0 stable.
 
 
 ## Coming Soon!
+- Cleaner init.vim with more detailed commentary to help you modify the script yourself.
 - Opening second file in right tmux buffer if session is detached with a loaded file in the left (default).
 
 ## Flags
