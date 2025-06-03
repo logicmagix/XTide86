@@ -347,7 +347,6 @@ function! AppendToEditor() abort
         break
       endif
     endfor
-
     if editor_win == 0
       echom "Error: No suitable editor buffer found"
       return
@@ -371,8 +370,6 @@ function! s:ResetWindowSizes(maximize_editor) abort
   let term_win = 0
   let nerdtree_win = 0
   let edit_win = 0
-
-  " Identify windows by their buffer types and names
   for w in range(1, winnr('$'))
     let buf = winbufnr(w)
     let bufname = bufname(buf)
@@ -388,8 +385,6 @@ function! s:ResetWindowSizes(maximize_editor) abort
       let edit_win = w
     endif
   endfor
-
-  " Resize NERDTree (left, width 18)
   if nerdtree_win > 0
     execute nerdtree_win . 'wincmd w'
     vertical resize 18
@@ -419,7 +414,6 @@ function! s:ResetWindowSizes(maximize_editor) abort
     wincmd |  " Maximize width
   else
     vertical resize 89  " Default editor width
-    " Height is implicitly set by remaining space after terminals
   endif
   wincmd j
   wincmd l
