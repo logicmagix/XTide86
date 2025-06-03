@@ -188,7 +188,7 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 ##
 - ggVG to select all when in nvim command mode followed by  \p or \l for efficient transfer of text into IPython or TermiC
 - Once in insert mode in any ``nvim`` buffer, the recommended way of entering command mode is `jk` all other buffers will require `Esc`
-- NERTree may be refreshed with Shift+r after performing operations in the terminal buffer.
+- NERDTree may be refreshed with Shift+r after performing operations in the terminal buffer.
 - All NeoVim commands can also be used in any other buffer. 
 - Quickly enter focused and expanded file editor mode with Ctrl A/D (make sure you are in the correct tmux buffer), \z, \i <1000>
 - Switch between tty sessions and retain tide42 session through tmux. Handy if connecting through SSH.
