@@ -1,8 +1,9 @@
 # Changelog
-## [1.2.0] - 2025-06-03
+## [1.2.1] - 2025-06-03
 ### Added
 - RestartIpython function impemented for improved robustness of the REPL workflow for GUI-driven Python tasks.
 
+## [1.2.0] - 2025-06-01
 ### Changed
 - `--update` now defaults to forced updates, discarding local changes and syncing to remote.
 - Users with local mods should maintain a fork or avoid `--update`.
