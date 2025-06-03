@@ -20,6 +20,7 @@ Tide42 is inspired in part by *The Hitchhiker’s Guide to the Galaxy*, where "4
 This project reflects that same spirit: a terminal IDE that encourages curiosity, simplicity, and discovery—*you ask the questions*. Tide42 is meant to be your solution, leaving the questions in your hands. 
 
 # Tide42 NEWS:
+06.03.25 If you are having issues with the ipython buffer closing when running instances of gui libraries like pygame, use the RestartIPython function with :RestartIPython or \n to create a new buffer. 
 
 06.02.25 NOTICE FOR EXISTING USERS!! New --update logic is now fully functional and tested across multiple systems. You can either git restore . and git pull origin stable in your repo or re clone, chmod+x install.sh and ./install.sh; Use --update going forward.
 
@@ -119,8 +120,8 @@ This resolves the last recurring UX bug for 1.2.0 stable.
 Ctrl|\
 ====  =
 qw  | wer        iop
-asd | sfg         l
-|zxcvb            m
+asd | sfg          l
+    |zxcvb        nm
 </code></pre>
 
 Tmux based command: Ctrl-q + d (or gui exit button) = Exit and save tmux state (lost on restart of PC) 
@@ -129,6 +130,8 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 `Ctrl+ww` = Cycle between vim buffers within a tmux buffer
 ## Manually select vim buffer within seelcted tmux buffer
 `Ctrl+w` + <-, ^, ->, v = Selects vim buffer within current tmux buffer
+## Restart IPython
+`\n\ = Restart IPython buffer if process exits.
 ## Fuzzy Finder
 `\w` = fzf selects vim buffer from menu within current tmux buffer (fuzzy finder, vim plugin)
 ## Telescope

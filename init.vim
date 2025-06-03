@@ -119,6 +119,7 @@ nnoremap <silent> <leader>v :EnlargedWindow<CR>
 nnoremap <leader>i :vertical resize <C-r>=input('Resize to: ')<CR><CR>
 xnoremap <silent> <leader>p :<C-u>call SendToIPython()<CR>
 xnoremap <silent> <leader>l :<C-u>call SendToTermiC()<CR>
+nnoremap <silent> <leader>n :RestartIPython<CR>
 vnoremap <silent> <leader>m :<C-u>call AppendToEditor()<CR>
 nnoremap <silent> <leader>o :ChatGPT<CR>
 tnoremap <Esc> <C-\><C-n>
@@ -611,6 +612,40 @@ endfunction
 function! s:EnlargeWindow() abort
   wincmd _
   echom "SET SIZE | Focus: (Currently Selected Buffer)"
+endfunction
+
+" Command to restart IPython terminal
+command! RestartIPython call s:RestartIPython()
+function! s:RestartIPython() abort
+  let current_win = winnr()
+  let ipython_win = 0
+  let ipython_buf = 0
+  for w in range(1, winnr('$'))
+    let buf = winbufnr(w)
+    if getbufvar(buf, '&buftype') == 'terminal' && bufname(buf) =~ 'ipython'
+      let ipython_win = w
+      let ipython_buf = buf
+      break
+    endif
+  endfor
+  if ipython_buf > 0 && (term_getstatus(ipython_buf) =~ 'finished' || !bufexists(ipython_buf))
+    execute ipython_win . 'wincmd w'
+    execute 'bdelete! ' . ipython_buf
+    let ipython_buf = 0
+  endif
+  if ipython_buf == 0
+    echom "Restarting IPython buffer..."
+    " Create a new topleft split for IPython
+    execute 'topleft split'
+    " Start new IPython terminal
+    execute 'terminal ipython'
+    " Resize to match initial setup
+    execute 'resize 1'
+    echom "IPython buffer restarted"
+  else
+    echom "IPython buffer already running"
+  endif
+  execute current_win . 'wincmd w'
 endfunction
 
 " Grid: Draw 10x10 or 5X10 grid
