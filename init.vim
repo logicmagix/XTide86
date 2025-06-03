@@ -320,19 +320,14 @@ function! AppendToEditor() abort
     let s:last_run = 0
     let s:debounce_ms = 100
   endif
-
-  " Debounce check
   let current_time = reltimefloat(reltime()) * 1000
   if current_time - s:last_run < s:debounce_ms
     return
   endif
   let s:last_run = current_time
-
   try
     let src_buf = bufnr('%')
     let current_win = winnr()
-
-    " Check for visual mode
     if mode() =~# '[vV\<C-v>]'
       normal! gv"zy
       let src_lines = split(getreg('z'), '\n')
@@ -340,13 +335,10 @@ function! AppendToEditor() abort
       echom "Error: Not in visual mode"
       return
     endif
-
     if empty(src_lines)
       echom "Error: No content in selection"
       return
     endif
-
-    " Find editor window
     let editor_win = 0
     for w in range(1, winnr('$'))
       let buf = winbufnr(w)
@@ -360,8 +352,6 @@ function! AppendToEditor() abort
       echom "Error: No suitable editor buffer found"
       return
     endif
-
-    " Append to editor buffer
     execute editor_win . 'wincmd w'
     execute 'resize 35'
     let editor_buf = bufnr('%')
@@ -404,15 +394,11 @@ function! s:ResetWindowSizes(maximize_editor) abort
     execute nerdtree_win . 'wincmd w'
     vertical resize 18
   endif
-
-  " Resize IPython terminal (top, height 3 for single line)
   if ipython_win > 0
     execute ipython_win . 'wincmd w'
     resize 1
     setlocal winfixheight
   endif
-
-  " Resize termic terminal (vertical split, width 1, height 8)
   if term_win > 0
     execute term_win . 'wincmd w'
     vertical resize 1
@@ -422,16 +408,12 @@ function! s:ResetWindowSizes(maximize_editor) abort
       resize 1  " Minimize height when maximizing editor
     endif
   endif
-
-  " Handle editor window
   if edit_win > 0
     execute edit_win . 'wincmd w'
   else
     wincmd l
     let edit_win = winnr()
   endif
-
-  " Set editor size
   if a:maximize_editor
     wincmd _  " Maximize height
     wincmd |  " Maximize width
@@ -439,24 +421,16 @@ function! s:ResetWindowSizes(maximize_editor) abort
     vertical resize 89  " Default editor width
     " Height is implicitly set by remaining space after terminals
   endif
-
-  " Navigate to editor window as in initialization
   wincmd j
   wincmd l
-
-  " Ensure NERDTree width is consistent
   if nerdtree_win > 0
     execute nerdtree_win . 'wincmd w'
     vertical resize 18
   endif
-
-  " Ensure termic terminal width is consistent
   if term_win > 0
     execute term_win . 'wincmd w'
     vertical resize 8
   endif
-
-  " Return to editor window
   if edit_win > 0
     execute edit_win . 'wincmd w'
   else
@@ -634,16 +608,10 @@ function! s:RestartIPython() abort
     let ipython_buf = 0
   endif
   if ipython_buf == 0
-    echom "Restarting IPython buffer..."
-    " Create a new topleft split for IPython
     execute 'topleft split'
-    " Start new IPython terminal
     execute 'terminal ipython'
-    " Resize to match initial setup
     execute 'resize 1'
-    echom "IPython buffer restarted"
   else
-    echom "IPython buffer already running"
   endif
   execute current_win . 'wincmd w'
 endfunction
