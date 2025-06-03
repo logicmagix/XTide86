@@ -193,6 +193,7 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 
 ## Tips
 ##
+- If you would like to map tide42 to a keyboard shortcut the best method is to use this command and substitute your terminal name: <gnome-terminal> -- bash -c "/usr/local/bin/tide42; exec bash"
 - ggVG to select all when in nvim command mode followed by  \p or \l for efficient transfer of text into IPython or TermiC
 - Once in insert mode in any ``nvim`` buffer, the recommended way of entering command mode is `jk` all other buffers will require `Esc`
 - NERDTree may be refreshed with Shift+r after performing operations in the terminal buffer.
