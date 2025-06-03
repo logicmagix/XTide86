@@ -22,7 +22,7 @@ This project reflects that same spirit: a terminal IDE that encourages curiosity
 # Tide42 NEWS:
 06.03.25 
 - If you are having issues with the ipython buffer closing when running instances of gui libraries like pygame, use the RestartIPython function with :RestartIPython or \n to create a new buffer. 
-- If making your own modifications to tide42 make sure to back then up before running --update as it will wipe and copy over any existing changes in your repo or installed files including init.vim
+- WARNING!! If making your own modifications to tide42 make sure to back then up before running --update as it will wipe and copy over any existing changes in your repo or installed files including init.vim
 
 
 06.02.25 NOTICE FOR EXISTING USERS!! New --update logic is now fully functional and tested across multiple systems. You can either git restore . and git pull origin stable in your repo or re clone, chmod+x install.sh and ./install.sh; Use --update going forward.
