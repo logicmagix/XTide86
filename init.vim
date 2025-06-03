@@ -141,13 +141,13 @@ autocmd VimEnter * vertical resize 18
 autocmd VimEnter * wincmd l
 autocmd VimEnter * topleft split
 autocmd VimEnter * terminal ipython
-autocmd VimEnter * resize 3
+autocmd VimEnter * resize 26
 autocmd VimEnter * belowright split
 autocmd VimEnter * terminal bash -c 'termic cpp; exec bash -i'
 autocmd VimEnter * belowright vs
-autocmd VimEnter * vertical resize 86
+autocmd VimEnter * vertical resize 45
 autocmd VimEnter * terminal
-autocmd VimEnter * resize 8
+autocmd VimEnter * resize 12
 autocmd VimEnter * wincmd j
 autocmd VimEnter * wincmd l
 
@@ -363,7 +363,6 @@ function! AppendToEditor() abort
   endtry
 endfunction
 
-" Reset window sizes to init.vim defaults
 function! s:ResetWindowSizes(maximize_editor) abort
   let current_win = winnr()
   let ipython_win = 0
@@ -391,16 +390,17 @@ function! s:ResetWindowSizes(maximize_editor) abort
   endif
   if ipython_win > 0
     execute ipython_win . 'wincmd w'
-    resize 1
+    resize 12
     setlocal winfixheight
   endif
   if term_win > 0
     execute term_win . 'wincmd w'
-    vertical resize 1
     if !a:maximize_editor
-      resize 8
+      vertical resize 33  
+      resize 12          
     else
-      resize 1  " Minimize height when maximizing editor
+      vertical resize 1   " Minimize width when maximizing editor
+      resize 1           " Minimize height when maximizing editor
     endif
   endif
   if edit_win > 0
@@ -421,17 +421,12 @@ function! s:ResetWindowSizes(maximize_editor) abort
     execute nerdtree_win . 'wincmd w'
     vertical resize 18
   endif
-  if term_win > 0
-    execute term_win . 'wincmd w'
-    vertical resize 8
-  endif
   if edit_win > 0
     execute edit_win . 'wincmd w'
   else
     wincmd j
     wincmd l
   endif
-
   echom "SET SIZE | " . (a:maximize_editor ? "Focus : (File Editor)" : "Reset Default Configuration") . ""
 endfunction
 
