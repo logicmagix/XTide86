@@ -22,10 +22,19 @@
 set -e
 echo "[tide86] Running..."
 
+VERSION_PATH="$(dirname "$0")/VERSION"
+TIDE_VERSION="unknown"
+
+if [ -f "$VERSION_PATH" ]; then
+  TIDE_VERSION="$(cat "$VERSION_PATH")"
+fi
+
+GIT_BRANCH=$(git -C "$(dirname "$0")" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
+TIDE_VERSION="$TIDE_VERSION ($GIT_BRANCH)"
+
 IS_LOW_COLOR=false
 IS_QUIET=false
 FILENAME=""
-TIDE_VERSION="$(cat "$(dirname "$0")/VERSION")"
 COLOR_FLAG_PROVIDED=false
 UPDATE_PROCESSED=false
 SESSION_NAME="tide42"
