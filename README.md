@@ -102,14 +102,14 @@ This resolves the last recurring UX bug for 1.2.0 stable.
 - Opening second file in right tmux buffer if session is detached with a loaded file in the left (default).
 
 ## Flags
-Enable 88 color support (256 is default) with --low-color or -lcUpdate tide42 (anywhere):--update
-Check version: --version
-Silence log: --quiet
-Help: --help
-Install location: --whereami
-Lite mode: --lite
-Low Color: --low-color, -lc
-Update: --update
+- Enable 88 color support (256 is default) with --low-color or -lcUpdate tide42 (anywhere):--update
+- Check version: --version
+- Silence log: --quiet
+- Help: --help
+- Install location: --whereami
+- Lite mode: --lite
+- Low Color: --low-color, -lc
+- Update: --update
 
 ## Controls
 
@@ -242,7 +242,7 @@ ex. sudo nvim /etc/systemd/system/...
 ## Installation
 
 # Preferred for updates:
-```bash```
+:`bash`
 - git clone https://github.com/logicmagix/tide42.git
 - cd tide42
 
