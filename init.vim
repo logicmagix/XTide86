@@ -94,9 +94,6 @@ highlight MatchParen ctermbg=94 guibg=#875f00rmfg=94 guifg=#875f00
 highlight MatchParen ctermbg=94 guibg=#875f00
 
 " Key mappings and commands
-if !exists(':EqualizeWindows')
-  command! EqualizeWindows call s:EqualizeWindows()
-endif
 if !exists(':MaximizeTerminalBuffer')
   command! MaximizeTerminalBuffer call s:MaximizeTerminalBuffer()
 endif
@@ -112,6 +109,7 @@ endif
 if !exists(':ResetWindowsDefault')
   command! ResetWindowsDefault call s:ResetWindowSizes(0)
 endif
+
 nnoremap <leader>s :call <SID>MaximizeTerminalBuffer('left')<CR>
 nnoremap <leader>x :call <SID>MaximizeTerminalBuffer('right')<CR>
 nnoremap <silent> <leader>c :MaximizeIPythonBuffer<CR>
@@ -133,9 +131,6 @@ inoremap jk <Esc>
 tnoremap jk <C-\><C-n>
 command! Hs split
 command! Q call ForceQuitAndKillTmux()
-
-
-
 
 " Initialization
 autocmd! VimEnter *
