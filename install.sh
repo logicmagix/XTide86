@@ -96,7 +96,7 @@ case "$PKG_MANAGER" in
   pacman)
     PKG_NAMES["ncurses"]="ncurses"
     PKG_NAMES["python3-pip"]="python-pip"
-    PKG_NAMES["ipython"]="python-ipython"
+    PKG_NAMES["ipython"]="ipython"
     PKG_NAMES["fonts-powerline"]="powerline-fonts"
     ;;
   brew)
@@ -279,11 +279,24 @@ if [ "$GLOBAL_INSTALL" = true ]; then
   sudo update-desktop-database /usr/share/applications || true
 else
   echo "Installing user-local .desktop launcher..."
-  cp ./tide42.desktop ~/.local/share/applications/
-  mkdir -p ~/.local/share/icons/hicolor/64x64/apps
-  cp ./tide42.png ~/.local/share/icons/hicolor/64x64/apps/
-  update-desktop-database ~/.local/share/applications || true
+
+  if [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; then
+    echo "[tide42] GUI detected, installing launcher..."
+
+    if [ -f "$HOME/.local/share/applications" ]; then
+      rm -f "$HOME/.local/share/applications"
+    fi
+
+    mkdir -p "$HOME/.local/share/applications"
+    cp ./tide42.desktop "$HOME/.local/share/applications/"
+    mkdir -p "$HOME/.local/share/icons/hicolor/64x64/apps/"
+    cp ./tide42.png "$HOME/.local/share/icons/hicolor/64x64/apps/"
+    update-desktop-database "$HOME/.local/share/applications" || true
+  else
+    echo "[tide42] No GUI detected — skipping .desktop launcher install."
+  fi
 fi
+
 
 if [ ! -f "$HOME/.tmux.conf" ]; then
   cat <<EOF > "$HOME/.tmux.conf"
