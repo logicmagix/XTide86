@@ -87,8 +87,6 @@ highlight clear CursorLine
 highlight CursorLine cterm=underline gui=underline
 highlight clear CursorColumn
 highlight CursorColumn ctermbg=230 guibg=#4e4e4e
-
-" Other custom highlights
 augroup CustomHighlights
   autocmd!
   autocmd ColorScheme,VimEnter * highlight clear Visual | highlight Visual ctermbg=230 guibg=#4e4e4e
@@ -98,6 +96,20 @@ augroup END
 highlight Visual ctermbg=230 guibg=#4e4e4e
 highlight Search ctermbg=230 guibg=#4e4e4e ctermfg=230 guifg=#4e4e4e
 highlight MatchParen ctermbg=230 guibg=#4e4e4e
+" Colors:
+" Light Brown: ctermbg=95 guibg=#875f5f
+" Brown: ctermbg=94 guibg=#875f00
+" Olive Green: ctermbg=100 guibg=#878700
+" Lime Green: ctermbg=154 guibg=#afff00
+" Neon Green: ctermbg=118 guibg=#87ff00
+" Neon Pink: ctermbg=198 guibg=#ff0087
+" Purple: ctermbg=56 guibg=#5f00d7
+" Cyan: ctermbg=48 guibg=#00ff87
+" Dark Teal: ctermbg=23 guibg=#005f5f
+" Orange: ctermbg=208 guibg=#ff8700
+" Deep Red: ctermbg=124 guibg=#af0000
+" Soft Blue: ctermbg=110 guibg=#87afd7
+
 
 " Key mappings and commands
 if !exists(':MaximizeTerminalBuffer')
