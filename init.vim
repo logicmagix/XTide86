@@ -60,7 +60,7 @@ let g:NERDTreeWinSize=10
 let NERDTreeShowHidden=1
 
 " Visual settings
-"set cursorline
+set cursorline
 set cursorcolumn
 set number
 set relativenumber
@@ -74,24 +74,30 @@ set listchars=tab:>-,eol:$,trail:.,extends:>,precedes:<,space:.
 " Medieval Set:
 "set listchars=tab:⟭➳◎,eol:⚔,trail:♞,extends:♛,precedes:♚,space:␣,
 
-" Custom highlights
-augroup CustomHighlights
-    autocmd!
-    " Comment out or set CursorLine to underline only
-    autocmd ColorScheme * highlight clear CursorLine | highlight CursorLine cterm=underline gui=underline
-    autocmd ColorScheme * highlight clear CursorColumn | highlight CursorColumn ctermbg=230 guibg=#4e4e4e
-    autocmd ColorScheme * highlight clear Visual | highlight Visual ctermbg=58 guibg=#5f5f00
-    autocmd ColorScheme * highlight clear Search | highlight Search ctermbg=88 guibg=#870000 ctermfg=15 guifg=#ffffff
-    autocmd ColorScheme * highlight clear MatchParen | highlight MatchParen ctermbg=94 guibg=#875f00
+" Custom highlights (Underline for CursorLine, Lime Green for CursorColumn)
+augroup CursorHighlights
+  autocmd!
+  " Clear and set CursorLine to underline only
+  autocmd ColorScheme,VimEnter * highlight clear CursorLine | highlight CursorLine cterm=underline gui=underline
+  " Clear and set CursorColumn to lime green background
+  autocmd ColorScheme,VimEnter * highlight clear CursorColumn | highlight CursorColumn ctermbg=230 guibg=#4e4e4e
 augroup END
+" Apply highlights immediately
+highlight clear CursorLine
+highlight CursorLine cterm=underline gui=underline
+highlight clear CursorColumn
+highlight CursorColumn ctermbg=230 guibg=#4e4e4e
 
-" Comment out duplicate direct highlights to avoid conflicts
-" highlight CursorLine ctermbg=52 guibg=#3c2f00
-highlight CursorColumn ctermbg=239 guibg=#4e4e4e
-highlight Visual ctermbg=58 guibg=#5f5f00
-highlight Search ctermbg=88 guibg=#870000 ctermfg=94 guifg=#875f00
-highlight MatchParen ctermbg=94 guibg=#875f00rmfg=94 guifg=#875f00
-highlight MatchParen ctermbg=94 guibg=#875f00
+" Other custom highlights
+augroup CustomHighlights
+  autocmd!
+  autocmd ColorScheme,VimEnter * highlight clear Visual | highlight Visual ctermbg=230 guibg=#4e4e4e
+  autocmd ColorScheme,VimEnter * highlight clear Search | highlight Search ctermbg=230 guibg=#4e4e4e ctermfg=230 guifg=#4e4e4e
+  autocmd ColorScheme,VimEnter * highlight clear MatchParen | highlight MatchParen ctermbg=230 guibg=#4e4e4e
+augroup END
+highlight Visual ctermbg=230 guibg=#4e4e4e
+highlight Search ctermbg=230 guibg=#4e4e4e ctermfg=230 guifg=#4e4e4e
+highlight MatchParen ctermbg=230 guibg=#4e4e4e
 
 " Key mappings and commands
 if !exists(':MaximizeTerminalBuffer')
