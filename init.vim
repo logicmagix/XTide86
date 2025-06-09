@@ -151,7 +151,7 @@ command! Q call ForceQuitAndKillTmux()
 
 " Initialization
 autocmd! VimEnter *
-autocmd VimEnter * colorscheme defaul
+autocmd VimEnter * colorscheme default
 autocmd VimEnter * NERDTree
 autocmd FileType nerdtree nnoremap <buffer> <leader>w :wincmd l \| :W<CR>
 autocmd VimEnter * vertical resize 18
