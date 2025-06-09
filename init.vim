@@ -74,15 +74,12 @@ set listchars=tab:>-,eol:$,trail:.,extends:>,precedes:<,space:.
 " Medieval Set:
 "set listchars=tab:⟭➳◎,eol:⚔,trail:♞,extends:♛,precedes:♚,space:␣,
 
-" Custom highlights (Underline for CursorLine, Lime Green for CursorColumn)
+" Custom highlights
 augroup CursorHighlights
   autocmd!
-  " Clear and set CursorLine to underline only
   autocmd ColorScheme,VimEnter * highlight clear CursorLine | highlight CursorLine cterm=underline gui=underline
-  " Clear and set CursorColumn to lime green background
   autocmd ColorScheme,VimEnter * highlight clear CursorColumn | highlight CursorColumn ctermbg=230 guibg=#4e4e4e
 augroup END
-" Apply highlights immediately
 highlight clear CursorLine
 highlight CursorLine cterm=underline gui=underline
 highlight clear CursorColumn
@@ -109,6 +106,7 @@ highlight MatchParen ctermbg=230 guibg=#4e4e4e
 " Orange: ctermbg=208 guibg=#ff8700
 " Deep Red: ctermbg=124 guibg=#af0000
 " Soft Blue: ctermbg=110 guibg=#87afd7
+" Gray: ctermbg=230 guibg=#4e4e4e
 
 
 " Key mappings and commands
@@ -153,6 +151,7 @@ command! Q call ForceQuitAndKillTmux()
 
 " Initialization
 autocmd! VimEnter *
+autocmd VimEnter * colorscheme defaul
 autocmd VimEnter * NERDTree
 autocmd FileType nerdtree nnoremap <buffer> <leader>w :wincmd l \| :W<CR>
 autocmd VimEnter * vertical resize 18
