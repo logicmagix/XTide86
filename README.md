@@ -20,6 +20,9 @@ Tide42, formerly XTide86, is inspired in part by *The Hitchhiker’s Guide to th
 This project reflects that same spirit: a terminal IDE that encourages curiosity, simplicity, and discovery—*you ask the questions*. Tide42 is meant to be your solution, leaving the questions in your hands. 
 
 # Tide42 NEWS:
+06.09.25
+-Tide42 tested and working on 32bit systems and on the newest nvim version 0.11.2
+-Added autocmd for default colorscheme. Check lines 96 and 154 of init.vim to customize your own palette and theme like habamax, elflord, peachpuff, etc.
 
 06.03.25
 - Default input layout reformatted with latest push.. feedback requested or alternately change it to your liking in init.vim.
