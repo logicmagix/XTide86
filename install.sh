@@ -137,6 +137,17 @@ if [ ! -f ~/.local/share/nvim/site/autoload/plug.vim ]; then
 fi
 
 # === Copy nvim config ===
+echo "Checking for existing Neovim config..."
+if [ -f ~/.config/nvim/init.vim ] || [ -f ~/.config/nvim/init.lua ]; then
+  echo "[tide42] Existing config found. Backing up..."
+  [ -f ~/.config/nvim/init.vim ] && cp ~/.config/nvim/init.vim ~/.config/nvim/init.vim.bak
+  [ -f ~/.config/nvim/init.lua ] && cp ~/.config/nvim/init.lua ~/.config/nvim/init.lua.bak
+  if [ "$1" != "--force" ]; then
+    echo "[tide42] Use --force to overwrite, or edit ~/.config/nvim/init.vim manually."
+    echo "[tide42] Tide42 config available at $SCRIPT_DIR/init.vim."
+    exit 0
+  fi
+fi
 echo "Copying Neovim config..."
 mkdir -p ~/.config/nvim
 cp ./init.vim ~/.config/nvim/init.vim
