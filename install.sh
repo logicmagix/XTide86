@@ -320,4 +320,7 @@ fi
 echo "Installing Neovim plugins..."
 nvim +PlugInstall +qall
 
-echo "tide42 installed! You can now launch it from the app menu or by typing 'tide42'."
+
+echo "[tide42] Installed! Launch with 'tide42' or from the app menu."
+echo "[tide42] Love it? Hate it? Share feedback: github.com/logicmagix/tide42/discussions"
+echo "[tide42] Bugs or ideas? Post on r/neovim or DM @logicmagix on X."
