@@ -94,7 +94,7 @@ EOF
       }
 
       log "Current branch: $CURRENT_BRANCH"
-      
+  
       git fetch origin "$CURRENT_BRANCH" --prune || {
         log "Error: Failed to fetch updates from origin."
         exit 1
@@ -127,7 +127,24 @@ EOF
       if [ -f "$INSTALL_SCRIPT" ]; then
         log "Running installer to apply updates..."
         chmod +x "$INSTALL_SCRIPT"
-        "$INSTALL_SCRIPT" --quiet || log "Warning: Installer exited with errors"
+    
+        # Try running installer with --quiet first
+        if ! "$INSTALL_SCRIPT" --quiet; then
+          log "Warning: Installer failed, likely due to existing Neovim config."
+          # Check if Neovim config exists to determine if --force is needed
+          if [ -f "$HOME/.config/nvim/init.vim" ] || [ -f "$HOME/.config/nvim/init.lua" ]; then
+            log "Neovim config found. Retrying installer with --force..."
+            "$INSTALL_SCRIPT" --quiet --force && log "Installer ran successfully with --force." || {
+              log "Warning: Installer failed even with --force. Update completed, but manual installation may be needed."
+              log "Try running '$INSTALL_SCRIPT --force' manually to resolve."
+            }
+          else
+            log "No Neovim config found, but installer failed. Update completed, but manual installation may be needed."
+            log "Try running '$INSTALL_SCRIPT' manually to diagnose."
+          fi
+        else
+          log "Installer ran successfully."
+        fi
       else
         log "No installer found. Skipping install step."
       fi
