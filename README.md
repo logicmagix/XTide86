@@ -20,6 +20,7 @@ Tide42, formerly XTide86, is inspired in part by *The Hitchhiker’s Guide to th
 This project reflects that same spirit: a terminal IDE that encourages curiosity, simplicity, and discovery—*you ask the questions*. Tide42 is meant to be your solution, leaving the questions in your hands. 
 
 # Tide42 NEWS:
+
 06.11.25
 ⚠️ **PLEASE Back Up Your Configs!** ⚠️  
 Tide42 installs `init.vim` to `~/.config/nvim`, which may overwrite `init.vim`/`init.lua`. Back up first! Run mv init.lua or init.vim to save configs to `~/.config/nvim/backup/*.bak`. This should now be hanlded by the installer but the best way is to do it manually before running the installer to be sure. Don’t lose your hard work!
@@ -209,6 +210,12 @@ Nvim based command:Q = Force-quit the program (reset for new session)
 - All NeoVim commands can also be used in any other buffer. 
 - Quickly enter focused and expanded file editor mode with Ctrl A/D (make sure you are in the correct tmux buffer), \z, \i <1000>
 - Switch between tty sessions and retain tide42 session through tmux. Handy if connecting through SSH.
+-If you're running tide42 inside a tmux or custom terminal session, you might run into issues when trying to save root-owned files from within Neovim:
+Using commands like :w !sudo tee % in NeoVim may silently fail to prompt for a password and kick you out after 3 attempts.
+Solutions:
+Use a GUI editor instead within a tide42 terminal buffer to avoid leaving your session:
+ex. sudoedit /etc/systemd/system/...
+Launch a root nvim in a nested terminal within tide42:
 
 
 ## tide42 Remote SSH Session
@@ -242,19 +249,6 @@ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 - ``Anaconda3`` with ``IPython`` (preferred, but may work with base ``IPython``)
 - ``bash``
 - Works on ARM. Tested on a Raspberry Pi5 and nvim 0.9.5 had to be built from source. Check your distro and dependencies on ARM. 
-
-
-## Warning
-
-If you're running tide42 inside a tmux or custom terminal session, you might run into issues when trying to save root-owned files from within Neovim:
-Using commands like :w !sudo tee % in NeoVim may silently fail to prompt for a password and kick you out after 3 attempts.
-
-Solutions:
-Use a GUI editor instead within a tide42 terminal buffer to avoid leaving your session:
-ex. sudoedit /etc/systemd/system/...
-Launch a root nvim in a nested terminal within tide42:
-ex. sudo nvim /etc/systemd/system/...
-
 
 ## Installation
 
