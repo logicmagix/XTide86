@@ -21,8 +21,9 @@ This project reflects that same spirit: a terminal IDE that encourages curiosity
 
 # Tide42 NEWS:
 
-NOTICE FOR EXISTTING USERS!! New --update logic is now fully functional and tested across multiple systems. You can either git restore . and git pull origin stable in your repo or re clone, chmod+x install.sh and ./install.sh; Use --update going forward.
+-NOTICE FOR EXISTTING USERS!! New --update logic is now fully functional and tested across multiple systems. You can either git restore . and git pull origin stable in your repo or re clone, chmod+x install.sh and ./install.sh; Use --update going forward.
 06.11.25
+
 ⚠️ **PLEASE Back Up Your Configs!** ⚠️  
 Tide42 installs `init.vim` to `~/.config/nvim`, which may overwrite `init.vim`/`init.lua`. Back up first! Run mv init.lua or init.vim to save configs to `~/.config/nvim/backup/*.bak`. This should now be hanlded by the installer but the best way is to do it manually before running the installer to be sure. Don’t lose your hard work!
 
