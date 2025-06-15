@@ -20,8 +20,9 @@ Tide42, formerly XTide86, is inspired in part by *The Hitchhiker’s Guide to th
 This project reflects that same spirit: a terminal IDE that encourages curiosity, simplicity, and discovery—*you ask the questions*. Tide42 is meant to be your solution, leaving the questions in your hands. 
 
 # Tide42 NEWS:
+06
 
--NOTICE FOR EXISTTING USERS!! New --update logic is now fully functional and tested across multiple systems. You can either git restore . and git pull origin stable in your repo or re clone, chmod+x install.sh and ./install.sh; Use --update going forward.
+-NOTICE FOR EXISTING USERS!! New --update logic is now fully functional and tested across multiple systems. You can either git restore . and git pull origin stable in your repo or re clone, chmod+x install.sh and ./install.sh; Use --update going forward.
 06.11.25
 
 ⚠️ **PLEASE Back Up Your Configs!** ⚠️  
@@ -36,10 +37,6 @@ Tide42 installs `init.vim` to `~/.config/nvim`, which may overwrite `init.vim`/`
 - If you are having issues with the ipython buffer closing when running instances of gui libraries like pygame, use the RestartIPython function with :RestartIPython or \n to create a new buffer. 
 - WARNING!! If making your own modifications to tide42 make sure to back then up before running --update as it will wipe and copy over any existing changes in your repo or installed files including init.vim
 
-06.02.26 Implentation for an R interactive session buffer is in the works!
-
-06.01.25 Added a new AppendToEditor function that lets you seamlessly append selected text from visual mode to another editor buffer with a single keypress. Enjoy a smooth workflow with silent operation or optional verbose debugging for easy troubleshooting! 
-
 If your repo is on main:
 - cd ~/PATH/TO/REPO
 - git fetch origin
@@ -49,17 +46,11 @@ If your repo is on main:
 - chmod +x install.sh
 - ./install.com
 - All alias logic is handled by install.sh so that --update remains functional. Simply run xtide86 --update from anywhere and use either xtide86 or tide42 to launch.
-
-
 - Added global `set noswapfile` to prevent swap creation on startup
 - Re-enabled swapfile only for non-NERDTree buffers via BufWinEnter autocmd
 - Eliminated rare `.swp` file generation in terminal sessions
 - Optional: silently delete swapfiles via SwapExists to suppress flash warnings
 - If you have not already done so, please run git pull within your repo directory, or simply re clone to update to the new stable release 1.2.0. Going forward, the method of updating will be to simply use the flag --update
-
-This resolves the last recurring UX bug for 1.2.0 stable.
-
-05.30.25 tide42 now includes multi system support (Debian, Arch, MacOS) a man page and automated updating from anywhere! (not just the repo directory)
 
 **Version:** `v1.2.0`
 >**New in v1.2.0:** - Functionality to yank text from any buffer (IPython, TermiC, Terminal) and append to file editor for easy notes.
@@ -71,10 +62,6 @@ This resolves the last recurring UX bug for 1.2.0 stable.
 > - Use flag --quiet or -q to suppress log output.
 > - Update tide42 from your anywhere with --update
 > - Added keybinding \s to expand and select TermiC or \x to perform the same action for the terminal buffer. 
-
-
-
-
 
 
 <pre><code>
